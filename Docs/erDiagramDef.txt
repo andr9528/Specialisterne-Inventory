@@ -1,0 +1,34 @@
+erDiagram
+    ORDER ||--|{ ORDER_ITEM : contains
+    PRODUCT ||--o{ ORDER_ITEM : includes
+    PRODUCT ||--o{ LOCATION_ITEM : includes
+    LOCATION ||--o{ LOCATION_ITEM : contains
+    CATEGORY }|--|| PRODUCT : is
+        ORDER {
+        int id
+        date orderDate
+        string status
+    }
+    PRODUCT {
+        int id
+        string name
+        decimal price
+    }
+    ORDER_ITEM {
+        int quantity
+        decimal price
+    }
+    CATEGORY {
+        int id
+        string name
+    }
+    LOCATION{
+        int id
+        string name
+    }
+    LOCATION_ITEM{
+        int quantity
+        int targetQuantity
+    }
+
+https://mermaid.ai/open-source/syntax/entityRelationshipDiagram.html
