@@ -1,0 +1,10 @@
+{
+  "background_color": "#ffffff",
+  "description": "Inventory.Frontend",
+  "display": "standalone",
+  "name": "Inventory.Frontend",
+  "short_name": "Inventory.Frontend",
+  "start_url": "/index.html",
+  "theme_color": "#ffffff",
+  "scope": "/"
+}
