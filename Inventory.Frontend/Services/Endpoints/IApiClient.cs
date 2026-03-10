@@ -1,3 +1,4 @@
+//using Inventory.DataContracts;
 using Refit;
 
 namespace Inventory.Frontend.Services.Endpoints;

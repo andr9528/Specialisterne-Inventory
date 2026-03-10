@@ -49,8 +49,4 @@
     <ProjectReference Include="..\Inventory.Startup\Inventory.Startup.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\Caching\" />
-  </ItemGroup>
-
 </Project>

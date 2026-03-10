@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization.Metadata;
+//using Inventory.Server.Apis;
 using Serilog;
 using Uno.Wasm.Bootstrap.Server;
 
@@ -11,7 +12,7 @@ try
     var builder = WebApplication.CreateBuilder(args);
     SerilogHostBuilderExtensions.UseSerilog(builder.Host);
 
-    //// Configure the JsonOptions to use the generated WeatherForecastContext
+    // Configure the JsonOptions to use the generated WeatherForecastContext
     //builder.Services.Configure<JsonOptions>(options =>
     //    options.JsonSerializerOptions.TypeInfoResolver = JsonTypeInfoResolver.Combine(
     //        WeatherForecastContext.Default
@@ -48,6 +49,7 @@ try
     app.UseUnoFrameworkFiles();
     app.MapFallbackToFile("index.html");
 
+    //app.MapWeatherApi();
     app.UseStaticFiles();
 
     await app.RunAsync();

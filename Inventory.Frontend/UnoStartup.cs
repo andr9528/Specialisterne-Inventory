@@ -34,7 +34,7 @@ public class UnoStartup : ModularStartup<IApplicationBuilder>
     {
         base.ConfigureServices(services);
 
-        var uiDispatcherQueue = DispatcherQueue.GetForCurrentThread();
+        //var uiDispatcherQueue = DispatcherQueue.GetForCurrentThread();
         //services.AddSingleton<IUiDispatcher>(new UiDispatcher(uiDispatcherQueue));
     }
 
@@ -44,9 +44,10 @@ public class UnoStartup : ModularStartup<IApplicationBuilder>
         app.Configure(host => host
 #if DEBUG
             // Switch to Development environment when running in DEBUG
-            .UseEnvironment(Environments.Development)
+            //.UseEnvironment(Environments.Development)
 #endif
-            .UseConfiguration(configure: ConfigureConfigurationSource).UseLocalization(ConfigureLocalization)
+            .UseConfiguration(configure: ConfigureConfigurationSource)
+            .UseLocalization(ConfigureLocalization)
             .UseSerialization(ConfigureSerialization));
             //.UseAuthentication(ConfigureAuthentication)
             //.UseHttp(ConfigureHttp));

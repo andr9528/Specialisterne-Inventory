@@ -43,7 +43,7 @@ public partial class App : Application
 #endif
         MainWindow.SetWindowIcon();
 
-        Host = builder.Build();
+        //Host = builder.Build();
 
         // Do not repeat app initialization when the Window already has content,
         // just ensure that the window is active

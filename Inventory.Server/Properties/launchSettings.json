@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "Inventory.Server": {
+    "Inventory.Frontend.Server": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

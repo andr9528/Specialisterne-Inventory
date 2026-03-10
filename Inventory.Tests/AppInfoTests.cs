@@ -1,4 +1,4 @@
-namespace Inventory.Frontend.Tests;
+namespace Inventory.Tests;
 
 public class AppInfoTests
 {

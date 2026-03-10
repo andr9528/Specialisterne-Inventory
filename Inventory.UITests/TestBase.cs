@@ -1,5 +1,5 @@
 
-namespace Inventory.Frontend.UITests;
+namespace Inventory.UITests;
 
 public class TestBase
 {
