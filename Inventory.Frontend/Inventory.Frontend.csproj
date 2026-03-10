@@ -36,7 +36,6 @@
       Localization;
       Authentication;
       ThemeService;
-      SkiaRenderer;
     </UnoFeatures>
   </PropertyGroup>
 

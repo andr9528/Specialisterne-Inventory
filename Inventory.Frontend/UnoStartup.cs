@@ -41,14 +41,14 @@ public class UnoStartup : ModularStartup<IApplicationBuilder>
     /// <inheritdoc />
     protected override void ConfigureApplication(IApplicationBuilder app)
     {
-        app.Configure(host => host
+        //app.Configure(host => host
 #if DEBUG
             // Switch to Development environment when running in DEBUG
             //.UseEnvironment(Environments.Development)
 #endif
-            .UseConfiguration(configure: ConfigureConfigurationSource)
-            .UseLocalization(ConfigureLocalization)
-            .UseSerialization(ConfigureSerialization));
+            //.UseConfiguration(configure: ConfigureConfigurationSource)
+            //.UseLocalization(ConfigureLocalization)
+            //.UseSerialization(ConfigureSerialization)
             //.UseAuthentication(ConfigureAuthentication)
             //.UseHttp(ConfigureHttp));
 
