@@ -1,4 +1,4 @@
-#Project Structure
+## Project Structure
 The following structure is a baseline example. Should be updated when the project is under development.
 
 src/
