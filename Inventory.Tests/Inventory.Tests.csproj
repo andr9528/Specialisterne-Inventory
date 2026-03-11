@@ -17,8 +17,4 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Inventory.Frontend\Inventory.Frontend.csproj" />
-  </ItemGroup>
 </Project>

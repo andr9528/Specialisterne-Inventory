@@ -12,14 +12,8 @@
   <Project Path="Inventory.Server/Inventory.Server.csproj">
     <Deploy />
   </Project>
-  <Project Path="Inventory.Frontend/Inventory.Frontend.csproj">
-    <Deploy />
-  </Project>
   <Project Path="Inventory.Startup/Inventory.Startup.csproj" />
   <Project Path="Inventory.Tests/Inventory.Tests.csproj">
-    <Deploy />
-  </Project>
-  <Project Path="Inventory.UITests/Inventory.UITests.csproj">
     <Deploy />
   </Project>
 </Solution>
