@@ -1,5 +1,6 @@
 import { NavLink, type NavLinkRenderProps } from "react-router-dom";
 import { router } from "../../app/router";
+import { Package } from 'lucide-react';
 
 /**
  * The top navigation component
@@ -10,12 +11,12 @@ const TopNav = () => {
 
     const linkClassNames: ((props: NavLinkRenderProps) => string | undefined) | undefined = ({ isActive }) => {
         const baseStyle = "py-2 px-5 flex gap-2 items-center justify-center rounded-lg";
-        
+
         if (isActive) {
             return `text-primary bg-blue-50 ${baseStyle}`;
         }
-        
-        return `text-gray-600 hover:bg-gray-100 hover:text-gray-900 ${baseStyle}`;
+
+        return `text-gray hover:bg-gray-100 hover:text-gray-900 ${baseStyle}`;
     }
 
     const navLinks = routes[0].children!
@@ -31,8 +32,17 @@ const TopNav = () => {
 
     return (
         <nav className={`fixed top-0 left-0 right-0 z-50 text-lg bg-white`}>
-            <div className="w-full mx-auto px-4 mt-5">
-                <div className="flex justify-end gap-5">
+            <div className="w-full mx-auto px-10 mt-4 border-b border-gray-200">
+                <div className="flex justify-between gap-5 mb-2">
+
+                    <div className="flex flex-row gap-2 items-center">
+                        <Package size="35" className="text-primary"/>
+                        <div className="flex flex-col">
+                            <h1 className="">StockFlow</h1>
+                            <p>Lagerstyringssystem</p>
+                        </div>
+                    </div>
+
                     <ul className="flex gap-2">
                         {navLinks}
                     </ul>
