@@ -32,8 +32,8 @@ const TopNav = () => {
 
     return (
         <nav className={`fixed top-0 left-0 right-0 z-50 text-lg bg-white`}>
-            <div className="w-full mx-auto px-10 mt-4 border-b border-gray-200">
-                <div className="flex justify-between gap-5 mb-2">
+            <div className="w-full h-15 mx-auto px-10 mt-4 border-b border-gray-200">
+                <div className="flex justify-between gap-5">
 
                     <div className="flex flex-row gap-2 items-center">
                         <Package size="35" className="text-primary"/>
