@@ -28,6 +28,6 @@
     <PackageVersion Include="Xamarin.UITest" Version="4.3.4" />
   </ItemGroup>
   <ItemGroup Condition="$(UsingUnoSdk) != 'true'">
-    <PackageVersion Include="Uno.Wasm.Bootstrap.Server" Version="10.0.15" />
+    <PackageVersion Include="Uno.Wasm.Bootstrap.Server" Version="10.0.96" />
   </ItemGroup>
 </Project>
