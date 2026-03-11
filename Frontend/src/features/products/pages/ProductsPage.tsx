@@ -1,10 +1,11 @@
+import PageWrapper from "../../../shared/components/PageWrapper";
 
 const ProductsPage = () => {
 
     return (
-        <div className="pt-20 min-h-screen">
+        <PageWrapper>
             <h2>Products</h2>
-        </div>
+        </PageWrapper>
     )
 }
 
