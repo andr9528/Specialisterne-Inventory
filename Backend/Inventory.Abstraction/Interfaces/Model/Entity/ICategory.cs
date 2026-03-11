@@ -3,6 +3,6 @@ using Inventory.Abstraction.Interfaces.Persistence;
 
 namespace Inventory.Abstraction.Interfaces.Model.Entity;
 
-internal interface ICategory : ISearchableCategory, IEntity
+public interface ICategory : ISearchableCategory, IEntity
 {
 }

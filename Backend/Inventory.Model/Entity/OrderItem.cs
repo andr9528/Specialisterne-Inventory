@@ -3,7 +3,7 @@ using Inventory.Abstraction.Interfaces.Model.Entity;
 
 namespace Inventory.Model.Entity;
 
-internal class LocationItem : ILocationItem
+internal class OrderItem : IOrderItem
 {
     private int id;
 
@@ -12,7 +12,7 @@ internal class LocationItem : ILocationItem
     {
         get => id;
         set => throw new InvalidOperationException(
-            $"{nameof(Id)} cannot be changed after creation of {nameof(Example)} entity");
+            $"{nameof(Id)} cannot be changed after creation of {nameof(OrderItem)} entity");
     }
 
     /// <inheritdoc />
@@ -28,19 +28,17 @@ internal class LocationItem : ILocationItem
     public int Quantity { get ; set ; }
 
     /// <inheritdoc />
-    public int TargetQuantity { get ; set ; }
-
-    /// <inheritdoc />
     public IProduct Product { get; set; }
 
     /// <inheritdoc />
-    public ILocation Location { get; set; }
-
-    /// <inheritdoc />
-    public int LocationId { get; set; }
+    public IOrder Order { get; set; }
 
     /// <inheritdoc />
     public int ProductId { get; set; }
+
+    /// <inheritdoc />
+    public int OrderId { get; set; }
+    
 
     /// <summary>
     /// Constructor for Entity Framework Core to use.
@@ -49,12 +47,12 @@ internal class LocationItem : ILocationItem
     /// </summary>
     /// <param name="id"></param>
     [JsonConstructor]
-    private LocationItem(int id)
+    private OrderItem(int id)
     {
         this.id = id;
     }
     
-    public LocationItem()
+    public OrderItem()
     {
     }
 }

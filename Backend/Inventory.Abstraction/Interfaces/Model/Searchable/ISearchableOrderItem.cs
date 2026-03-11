@@ -2,7 +2,8 @@ using Inventory.Abstraction.Interfaces.Persistence;
 
 namespace Inventory.Abstraction.Interfaces.Model.Searchable;
 
-public interface ISearchableOrder : ISearchable
+public interface ISearchableOrderItem : ISearchable
 {
-    string Status { get; set; }
+    int OrderId { get; set; }
+    int ProductId { get; set; }
 }

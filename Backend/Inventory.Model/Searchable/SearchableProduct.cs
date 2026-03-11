@@ -6,6 +6,12 @@ namespace Inventory.Model.Searchable
     {
         /// <inheritdoc />
         public int Id { get; set; }
-        public string Name { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        /// <inheritdoc />
+        public string Name { get; set; }
+
+        /// <inheritdoc />
+        public decimal Price { get; set; }
+
     }
 }

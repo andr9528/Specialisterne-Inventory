@@ -2,12 +2,13 @@ using Inventory.Abstraction.Interfaces.Model.Searchable;
 
 namespace Inventory.Model.Searchable
 {
-    public class SearchableOrder : ISearchableOrder
+    public class SearchableCategory : ISearchableCategory
     {
         /// <inheritdoc />
         public int Id { get; set; }
 
         /// <inheritdoc />
-        public string Status { get; set; }
+        public string Name { get; set; }
+
     }
 }

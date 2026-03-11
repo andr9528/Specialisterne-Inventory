@@ -7,6 +7,7 @@ namespace Inventory.Model.Searchable
         /// <inheritdoc />
         public int Id { get; set; }
 
+        /// <inheritdoc />
         public string Name { get; set; }
     }
 }

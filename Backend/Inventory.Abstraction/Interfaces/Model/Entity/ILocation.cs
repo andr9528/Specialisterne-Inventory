@@ -5,4 +5,5 @@ namespace Inventory.Abstraction.Interfaces.Model.Entity;
 
 public interface ILocation : ISearchableLocation, IEntity
 {
+    ICollection<ILocationItem> Products { get; set; }
 }
