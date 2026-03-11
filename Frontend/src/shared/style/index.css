@@ -1,1 +1,17 @@
 @import "tailwindcss";
+
+
+@theme {
+    --color-background: #F3F4F6;
+    --color-primary: #1D4ED8
+}
+
+@layer base {
+    body {
+        @apply font-serif tracking-wide;
+    }
+
+    html {
+        font-weight: 400;
+    }
+}
