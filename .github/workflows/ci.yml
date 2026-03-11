@@ -31,9 +31,14 @@ jobs:
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v1.3.1
 
+      # Install WASM-Tools
+      - name: Install WebAssembly workload
+        shell: pwsh
+        run: dotnet workload install wasm-tools
+
       - name: Build Inventory.Frontend (Debug)
         shell: pwsh
-        run: dotnet build ./Inventory.Frontend/Inventory.Frontend.csproj /r
+        run: dotnet build ./Backend/Inventory.Frontend/Inventory.Frontend.csproj /r
 
   unit_test:
     name: Unit Tests
@@ -53,8 +58,8 @@ jobs:
 
       - name: Build Inventory.Tests (Release)
         shell: pwsh
-        run: dotnet build ./Inventory.Tests/Inventory.Tests.csproj /p:Configuration=Release /p:OverrideTargetFramework=net10.0 /r
+        run: dotnet build ./Backend/Inventory.Tests/Inventory.Tests.csproj /p:Configuration=Release /p:OverrideTargetFramework=net10.0 /r
 
       - name: Run Unit Tests
         shell: pwsh
-        run: dotnet test ./Inventory.Tests/Inventory.Tests.csproj --no-build -c Release --logger GitHubActions --blame-crash --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+        run: dotnet test ./Backend/Inventory.Tests/Inventory.Tests.csproj --no-build -c Release --logger GitHubActions --blame-crash --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
