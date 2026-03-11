@@ -1,8 +1,9 @@
+using Inventory.Abstraction.Enum;
 using Inventory.Abstraction.Interfaces.Persistence;
 
 namespace Inventory.Abstraction.Interfaces.Model.Searchable;
 
 public interface ISearchableOrder : ISearchable
 {
-    string Status { get; set; }
+    OrderStatus Status { get; set; }
 }

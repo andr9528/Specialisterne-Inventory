@@ -1,5 +1,7 @@
 using System.Text.Json.Serialization;
+using Inventory.Abstraction.Enum;
 using Inventory.Abstraction.Interfaces.Model.Entity;
+using Inventory.Abstraction.Interfaces.Model.Searchable;
 
 namespace Inventory.Model.Entity
 {
@@ -32,6 +34,7 @@ namespace Inventory.Model.Entity
 
         /// <inheritdoc />
         public string Status { get; set; }
+        OrderStatus ISearchableOrder.Status { get; set; }
 
         /// <summary>
         /// Constructor for Entity Framework Core to use.

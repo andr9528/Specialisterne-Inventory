@@ -1,3 +1,4 @@
+using Inventory.Abstraction.Enum;
 using Inventory.Abstraction.Interfaces.Model.Searchable;
 
 namespace Inventory.Model.Searchable
@@ -8,6 +9,6 @@ namespace Inventory.Model.Searchable
         public int Id { get; set; }
 
         /// <inheritdoc />
-        public string Status { get; set; }
+        public OrderStatus Status { get; set; }
     }
 }
