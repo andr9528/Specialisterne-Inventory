@@ -1,4 +1,4 @@
-﻿using Inventory.Abstraction.Interfaces.Persistence;
+using Inventory.Abstraction.Interfaces.Persistence;
 using Inventory.Model.Entity;
 using Inventory.Model.Searchable;
 using Inventory.Persistence.Core;

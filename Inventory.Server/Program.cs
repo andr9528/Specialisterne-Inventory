@@ -11,11 +11,6 @@ try
     var builder = WebApplication.CreateBuilder(args);
     SerilogHostBuilderExtensions.UseSerilog(builder.Host);
 
-    //// Configure the JsonOptions to use the generated WeatherForecastContext
-    //builder.Services.Configure<JsonOptions>(options =>
-    //    options.JsonSerializerOptions.TypeInfoResolver = JsonTypeInfoResolver.Combine(
-    //        WeatherForecastContext.Default
-    //    ));
     // Configure the RouteOptions to use lowercase URLs
     builder.Services.Configure<RouteOptions>(options =>
         options.LowercaseUrls = true);

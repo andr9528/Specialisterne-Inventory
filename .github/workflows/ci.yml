@@ -33,7 +33,7 @@ jobs:
 
       - name: Build Inventory.Frontend (Debug)
         shell: pwsh
-        run: msbuild ./Inventory.Frontend/Inventory.Frontend.csproj /r
+        run: dotnet build ./Inventory.Frontend/Inventory.Frontend.csproj /r
 
   unit_test:
     name: Unit Tests
@@ -53,7 +53,7 @@ jobs:
 
       - name: Build Inventory.Tests (Release)
         shell: pwsh
-        run: msbuild ./Inventory.Tests/Inventory.Tests.csproj /p:Configuration=Release /p:OverrideTargetFramework=net10.0 /r
+        run: dotnet build ./Inventory.Tests/Inventory.Tests.csproj /p:Configuration=Release /p:OverrideTargetFramework=net10.0 /r
 
       - name: Run Unit Tests
         shell: pwsh

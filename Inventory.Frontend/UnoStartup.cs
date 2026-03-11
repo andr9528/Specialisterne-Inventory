@@ -18,7 +18,7 @@ public class UnoStartup : ModularStartup<IApplicationBuilder>
 
     public UnoStartup()
     {
-        //AddModule(new LoggingStartupModule(GetApplicationDataPath()));
+        AddModule(new LoggingStartupModule(GetApplicationDataPath()));
     }
 
     private string GetApplicationDataPath()
@@ -46,10 +46,11 @@ public class UnoStartup : ModularStartup<IApplicationBuilder>
             // Switch to Development environment when running in DEBUG
             .UseEnvironment(Environments.Development)
 #endif
-            .UseConfiguration(configure: ConfigureConfigurationSource).UseLocalization(ConfigureLocalization)
-            .UseSerialization(ConfigureSerialization));
-            //.UseAuthentication(ConfigureAuthentication)
-            //.UseHttp(ConfigureHttp));
+            .UseConfiguration(configure: ConfigureConfigurationSource)
+            .UseLocalization(ConfigureLocalization)
+            .UseSerialization(ConfigureSerialization)
+            .UseAuthentication(ConfigureAuthentication)
+            .UseHttp(ConfigureHttp));
 
         base.ConfigureApplication(app);
 
@@ -60,15 +61,14 @@ public class UnoStartup : ModularStartup<IApplicationBuilder>
     {
 #if DEBUG
         // DelegatingHandler will be automatically injected
-        //services.AddTransient<DelegatingHandler, DebugHttpHandler>();
+        services.AddTransient<DelegatingHandler, DebugHttpHandler>();
 #endif
-        //services.AddSingleton<IWeatherCache, WeatherCache>();
         services.AddRefitClient<IApiClient>(host);
     }
 
     private void ConfigureAuthentication(IAuthenticationBuilder auth)
     {
-        //auth.AddCustom(custom => custom.Login(AttemptLogin).Refresh(AttemptRefreshLogin), name: "CustomAuth");
+        auth.AddCustom(custom => custom.Login(AttemptLogin).Refresh(AttemptRefreshLogin), name: "CustomAuth");
     }
 
     private ValueTask<IDictionary<string, string>?> AttemptRefreshLogin(IServiceProvider sp, IDictionary<string, string> tokenDictionary, CancellationToken cancellationToken)
@@ -106,9 +106,6 @@ public class UnoStartup : ModularStartup<IApplicationBuilder>
 
     private void ConfigureSerialization(HostBuilderContext host, IServiceCollection services)
     {
-        //services.AddContentSerializer(host)
-        //    .AddJsonTypeInfo(WeatherForecastContext.Default.IImmutableListWeatherForecast);
-
         services.AddSingleton(new JsonSerializerOptions { IncludeFields = true, });
     }
 
