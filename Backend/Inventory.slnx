@@ -9,9 +9,7 @@
   <Project Path="Inventory.Abstraction/Inventory.Abstraction.csproj" />
   <Project Path="Inventory.Model/Inventory.Model.csproj" />
   <Project Path="Inventory.Persistence/Inventory.Persistence.csproj" />
-  <Project Path="Inventory.Server/Inventory.Server.csproj">
-    <Deploy />
-  </Project>
+  <Project Path="Inventory.Server/Inventory.Server.csproj" Id="6d64cd9e-26ea-4f70-a4b6-148685d90256" />
   <Project Path="Inventory.Startup/Inventory.Startup.csproj" />
   <Project Path="Inventory.Tests/Inventory.Tests.csproj">
     <Deploy />
