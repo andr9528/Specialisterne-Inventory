@@ -1,63 +1,18 @@
-using System.Text.Json.Serialization.Metadata;
-using Serilog;
-using Uno.Wasm.Bootstrap.Server;
 
-try
+namespace Inventory.Server;
+
+public class Program
 {
-    Log.Logger = new LoggerConfiguration()
-            .WriteTo.Console()
-            .WriteTo.File(Path.Combine("App_Data", "Logs", "log.txt"))
-            .CreateLogger();
-    var builder = WebApplication.CreateBuilder(args);
-    SerilogHostBuilderExtensions.UseSerilog(builder.Host);
-
-    // Configure the RouteOptions to use lowercase URLs
-    builder.Services.Configure<RouteOptions>(options =>
-        options.LowercaseUrls = true);
-
-    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-    builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen(c =>
+    public static void Main(string[] args)
     {
-        // Include XML comments for all included assemblies
-        Directory.EnumerateFiles(AppContext.BaseDirectory, "*.xml")
-            .Where(x => x.Contains("Inventory.Frontend")
-                && File.Exists(Path.Combine(
-                    AppContext.BaseDirectory,
-                    $"{Path.GetFileNameWithoutExtension(x)}.dll")))
-            .ToList()
-            .ForEach(path => c.IncludeXmlComments(path));
-    });
+        var startup = new ApiStartup();
 
-    var app = builder.Build();
+        var builder = WebApplication.CreateBuilder(args);
 
-    // Configure the HTTP request pipeline.
-    if (app.Environment.IsDevelopment())
-    {
-        app.UseSwagger();
-        app.UseSwaggerUI();
+        startup.SetupServices(builder.Services);
+        var app = builder.Build();
+        startup.SetupApplication(app);
+
+        app.Run();
     }
-
-    app.UseHttpsRedirection();
-
-    app.UseUnoFrameworkFiles();
-    app.MapFallbackToFile("index.html");
-
-    app.UseStaticFiles();
-
-    await app.RunAsync();
-}
-catch (Exception ex)
-{
-    Log.Fatal(ex, "Application terminated unexpectedly");
-#if DEBUG
-    if (System.Diagnostics.Debugger.IsAttached)
-    {
-        System.Diagnostics.Debugger.Break();
-    }
-#endif
-}
-finally
-{
-    Log.CloseAndFlush();
 }
