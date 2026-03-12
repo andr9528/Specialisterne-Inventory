@@ -23,7 +23,7 @@ public class OrderItemQueryService : BaseEntityQueryService<InventoryDatabaseCon
     /// <inheritdoc />
     protected override IQueryable<OrderItem> GetBaseQuery()
     {
-        return context.OrderItems.AsQueryable().Include(x => x.Order).Include(x=> x.Product)
+        return context.OrderItems.AsQueryable().Include(x => x.Order).Include(x => x.Product);
     }
 
     /// <inheritdoc />
