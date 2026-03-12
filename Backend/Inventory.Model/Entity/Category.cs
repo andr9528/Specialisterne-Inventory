@@ -25,7 +25,7 @@ namespace Inventory.Model.Entity
         public DateTime UpdatedDateTime { get; set; }
 
         /// <inheritdoc />
-        public string Name { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string Name { get; set; }
 
         /// <summary>
         /// Constructor for Entity Framework Core to use.
