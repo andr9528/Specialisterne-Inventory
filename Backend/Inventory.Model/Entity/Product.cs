@@ -49,11 +49,12 @@ namespace Inventory.Model.Entity
         /// </summary>
         /// <param name="id"></param>
         [JsonConstructor]
-        private Product(int id, List<LocationItem> locations, List<OrderItem> orders)
+        private Product(int id, List<LocationItem> locations, List<OrderItem> orders, Category category)
         {
             this.id = id;
             Locations = locations.Cast<ILocationItem>().ToList();
             Orders = orders.Cast<IOrderItem>().ToList();
+            Category = (ICategory)category;
         }
 
         public Product()

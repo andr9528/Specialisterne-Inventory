@@ -49,9 +49,11 @@ public class LocationItem : ILocationItem
     /// </summary>
     /// <param name="id"></param>
     [JsonConstructor]
-    private LocationItem(int id)
+    private LocationItem(int id, Product product, Location location)
     {
         this.id = id;
+        Product = (IProduct)product;
+        Location = (ILocation)location;
     }
     
     public LocationItem()
