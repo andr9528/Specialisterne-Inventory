@@ -37,10 +37,10 @@ namespace Inventory.Model.Entity
         /// </summary>
         /// <param name="id"></param>
         [JsonConstructor]
-        private Location(int id, ICollection<ILocationItem> products)
+        private Location(int id, List<LocationItem> products)
         {
             this.id = id;
-            Products = products;
+            Products = products.Cast<ILocationItem>().ToList();
         }
 
         public Location()
