@@ -3,7 +3,7 @@ using Inventory.Abstraction.Interfaces.Model.Entity;
 
 namespace Inventory.Model.Entity;
 
-internal class OrderItem : IOrderItem
+public class OrderItem : IOrderItem
 {
     private int id;
 

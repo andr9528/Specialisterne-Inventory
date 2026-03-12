@@ -3,7 +3,7 @@ using Inventory.Abstraction.Interfaces.Model.Entity;
 
 namespace Inventory.Model.Entity;
 
-internal class LocationItem : ILocationItem
+public class LocationItem : ILocationItem
 {
     private int id;
 
