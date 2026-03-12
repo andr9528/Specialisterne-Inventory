@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Inventory.Persistence.Configuration;
 
-public class CategoryConfiguration: EntityConfiguration<Category>
+public class OrderConfiguration : EntityConfiguration<Order>
 {
     /// <inheritdoc />
-    public CategoryConfiguration(DatabaseType type) : base(type)
+    public OrderConfiguration(DatabaseType type) : base(type)
     {
     }
 
-    public override void Configure(EntityTypeBuilder<Category> builder)
+    public override void Configure(EntityTypeBuilder<Order> builder)
     {
         base.Configure(builder);
     }
