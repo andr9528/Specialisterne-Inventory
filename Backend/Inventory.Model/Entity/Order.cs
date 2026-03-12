@@ -33,8 +33,7 @@ namespace Inventory.Model.Entity
         public ICollection<IOrderItem> Products { get ; set ; }
 
         /// <inheritdoc />
-        public string Status { get; set; }
-        OrderStatus ISearchableOrder.Status { get; set; }
+        public OrderStatus Status { get; set; }
 
         /// <summary>
         /// Constructor for Entity Framework Core to use.

@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Inventory.Abstraction.Interfaces.Persistence;
 
 namespace Inventory.Persistence.Core
@@ -41,9 +41,25 @@ namespace Inventory.Persistence.Core
         }
 
         /// <inheritdoc />
+        public async Task<TEntity> GetEntityComplex(IComplexSearchable<TSearchable> complex)
+        {
+            var basicQuery = BuildQuery(complex.Searchable);
+
+            return (await AddComplexQueryArguments(basicQuery, complex).ToListAsync()).First();
+        }
+
+        /// <inheritdoc />
         public async Task<IEnumerable<TEntity>> GetEntities(TSearchable searchable)
         {
             return await BuildQuery(searchable).ToListAsync();
+        }
+
+        /// <inheritdoc />
+        public async Task<IEnumerable<TEntity>> GetEntitiesComplex(IComplexSearchable<TSearchable> complex)
+        {
+            var basicQuery = BuildQuery(complex.Searchable);
+
+            return await AddComplexQueryArguments(basicQuery, complex).ToListAsync();
         }
 
         /// <inheritdoc />
@@ -98,8 +114,30 @@ namespace Inventory.Persistence.Core
             return query;
         }
 
+        /// <summary>
+        /// Add Query Arguments from the supplied <see cref="IComplexSearchable{TSearchable}"/>.
+        /// </summary>
+        /// <param name="basicQuery"></param>
+        /// <param name="complex"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException">Thrown when there are no implementation of <see cref="IComplexSearchable{TSearchable}"/></exception>
+        /// <exception cref="InvalidOperationException">Thrown when supplied properties would guarantee no results.</exception>
+        protected abstract IQueryable<TEntity> AddComplexQueryArguments(
+            IQueryable<TEntity> basicQuery, IComplexSearchable<TSearchable> complex);
+
+        /// <summary>
+        /// Gets the base <see cref="IQueryable{TEntity}"/> from the <see cref="TContext"/>.
+        /// </summary>
+        /// <returns></returns>
         protected abstract IQueryable<TEntity> GetBaseQuery();
 
+
+        /// <summary>
+        /// Add Query Arguments from the supplied <see cref="TSearchable"/>.
+        /// </summary>
+        /// <param name="searchable"></param>
+        /// <param name="query"></param>
+        /// <returns></returns>
         protected abstract IQueryable<TEntity> AddQueryArguments(TSearchable searchable, IQueryable<TEntity> query);
     }
 }
