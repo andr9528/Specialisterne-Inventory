@@ -1,4 +1,4 @@
-﻿namespace Inventory.Abstraction.Interfaces.Persistence
+namespace Inventory.Abstraction.Interfaces.Persistence
 {
     public interface IEntityQueryService<TEntity, TSearchable> where TEntity : class, IEntity
         where TSearchable : class, ISearchable
@@ -31,6 +31,17 @@
         Task<TEntity> GetEntity(TSearchable searchable);
 
         /// <summary>
+        ///     Get the first <typeparamref name="TEntity" /> matching properties defined in supplied
+        ///     Complex <typeparamref name="TSearchable"></typeparamref>.
+        /// </summary>
+        /// <param name="complex">The <typeparamref name="TSearchable"></typeparamref> with query arguments set</param>
+        /// <returns>
+        ///     Returns first entry that matches properties defined in supplied
+        ///     <param name="complex"></param>
+        /// </returns>
+        Task<TEntity> GetEntityComplex(IComplexSearchable<TSearchable> complex);
+
+        /// <summary>
         ///     Get all <typeparamref name="TEntity" /> matching properties defined in supplied
         ///     <typeparamref name="TSearchable"></typeparamref>.
         /// </summary>
@@ -41,6 +52,18 @@
         ///     .
         /// </returns>
         Task<IEnumerable<TEntity>> GetEntities(TSearchable searchable);
+
+        /// <summary>
+        ///     Get all <typeparamref name="TEntity" /> matching properties defined in supplied
+        ///     Complex <typeparamref name="TSearchable"></typeparamref>.
+        /// </summary>
+        /// <param name="complex">The <typeparamref name="TSearchable"></typeparamref> with query arguments set.</param>
+        /// <returns>
+        ///     Returns all entries matching properties defined in supplied
+        ///     <param name="complex"></param>
+        ///     .
+        /// </returns>
+        Task<IEnumerable<TEntity>> GetEntitiesComplex(IComplexSearchable<TSearchable> complex);
 
         /// <summary>
         ///     Gets all entities of type <typeparamref name="TEntity" />.
