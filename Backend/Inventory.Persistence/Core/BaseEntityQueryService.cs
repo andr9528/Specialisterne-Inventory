@@ -48,8 +48,6 @@ namespace Inventory.Persistence.Core
             return (await AddComplexQueryArguments(basicQuery, complex).ToListAsync()).First();
         }
 
-
-
         /// <inheritdoc />
         public async Task<IEnumerable<TEntity>> GetEntities(TSearchable searchable)
         {

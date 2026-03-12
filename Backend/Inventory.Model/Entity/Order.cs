@@ -50,7 +50,5 @@ namespace Inventory.Model.Entity
         public Order()
         {
         }
-
-
     }
 }
