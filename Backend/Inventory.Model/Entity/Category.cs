@@ -25,7 +25,10 @@ namespace Inventory.Model.Entity
         public DateTime UpdatedDateTime { get; set; }
 
         /// <inheritdoc />
-        public string Name { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string Name { get; set; }
+
+        /// <inheritdoc />
+        public ICollection<IProduct> Products { get; set; }
 
         /// <summary>
         /// Constructor for Entity Framework Core to use.
@@ -34,9 +37,10 @@ namespace Inventory.Model.Entity
         /// </summary>
         /// <param name="id"></param>
         [JsonConstructor]
-        private Category(int id)
+        private Category(int id, List<Product> products)
         {
             this.id = id;
+            Products = products.Cast<IProduct>().ToList();
         }
 
         public Category()

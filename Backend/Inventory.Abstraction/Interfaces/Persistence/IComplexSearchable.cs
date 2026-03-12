@@ -1,0 +1,12 @@
+namespace Inventory.Abstraction.Interfaces.Persistence;
+
+// Todo: Consider at better name...
+
+/// <summary>
+/// Add Implementation for things that need a Complex search.
+/// </summary>
+/// <typeparam name="TSearchable"></typeparam>
+public interface IComplexSearchable<TSearchable> where TSearchable : ISearchable
+{
+    TSearchable Searchable { get; set; }
+}

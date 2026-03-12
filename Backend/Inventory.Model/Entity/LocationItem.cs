@@ -3,7 +3,7 @@ using Inventory.Abstraction.Interfaces.Model.Entity;
 
 namespace Inventory.Model.Entity;
 
-internal class LocationItem : ILocationItem
+public class LocationItem : ILocationItem
 {
     private int id;
 
@@ -49,9 +49,11 @@ internal class LocationItem : ILocationItem
     /// </summary>
     /// <param name="id"></param>
     [JsonConstructor]
-    private LocationItem(int id)
+    private LocationItem(int id, Product product, Location location)
     {
         this.id = id;
+        Product = (IProduct)product;
+        Location = (ILocation)location;
     }
     
     public LocationItem()

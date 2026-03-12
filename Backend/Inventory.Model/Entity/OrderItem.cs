@@ -3,7 +3,7 @@ using Inventory.Abstraction.Interfaces.Model.Entity;
 
 namespace Inventory.Model.Entity;
 
-internal class OrderItem : IOrderItem
+public class OrderItem : IOrderItem
 {
     private int id;
 
@@ -38,7 +38,7 @@ internal class OrderItem : IOrderItem
 
     /// <inheritdoc />
     public int OrderId { get; set; }
-    
+
 
     /// <summary>
     /// Constructor for Entity Framework Core to use.
@@ -47,9 +47,11 @@ internal class OrderItem : IOrderItem
     /// </summary>
     /// <param name="id"></param>
     [JsonConstructor]
-    private OrderItem(int id)
+    private OrderItem(int id, Product product, Order order)
     {
         this.id = id;
+        Product = (IProduct)product;
+        Order = (IOrder)order;
     }
     
     public OrderItem()
