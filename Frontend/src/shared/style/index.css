@@ -3,13 +3,18 @@
 :root {
     --font-weight-medium: 400;
     --font-weight-bold: 600;
+    --default-margin-x: 40px;
 }
 
 @theme {
     --color-background: #F3F4F6;
     --color-primary: #1D4ED8;
     --color-gray: #4B5563;
+    --color-destructive: #EF4444;
 }
+
+
+
 
 @layer base {
     body {
@@ -33,5 +38,15 @@
     p {
         font-size: var(--text-sm);
         color: var(--color-gray)
+    }
+
+    th {
+        font-weight: var(--font-weight-bold);
+        color: var(--color-gray);
+    }
+
+    td {
+        font-weight: var(--font-weight-medium);
+        color: var(--color-gray);
     }
 }
