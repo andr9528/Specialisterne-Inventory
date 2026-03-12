@@ -38,6 +38,9 @@ namespace Inventory.Model.Entity
 
         /// <inheritdoc />
         public ICollection<IOrderItem> Orders { get; set; }
+        
+        /// <inheritdoc />
+        public int CategoryId { get; set; }
 
         /// <summary>
         /// Constructor for Entity Framework Core to use.
@@ -46,9 +49,12 @@ namespace Inventory.Model.Entity
         /// </summary>
         /// <param name="id"></param>
         [JsonConstructor]
-        private Product(int id)
+        private Product(int id, List<LocationItem> locations, List<OrderItem> orders, Category category)
         {
             this.id = id;
+            Locations = locations.Cast<ILocationItem>().ToList();
+            Orders = orders.Cast<IOrderItem>().ToList();
+            Category = (ICategory)category;
         }
 
         public Product()

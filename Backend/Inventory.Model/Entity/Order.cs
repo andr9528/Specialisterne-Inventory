@@ -42,9 +42,10 @@ namespace Inventory.Model.Entity
         /// </summary>
         /// <param name="id"></param>
         [JsonConstructor]
-        private Order(int id)
+        private Order(int id, List<OrderItem> products)
         {
             this.id = id;
+            this.Products = products.Cast<IOrderItem>().ToList();
         }
 
         public Order()
