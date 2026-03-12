@@ -29,7 +29,7 @@ public class ApiStartup : ModularStartup<IApplicationBuilder>
         AddModule(new LoggingStartupModule(GetApplicationDataPath()));
         AddModule(new SwaggerStartupModule("Inventory"));
 
-        AddModule(new DatabaseContextStartupModule<ExampleDatabaseContext>(GetDatabaseOptions));
+        AddModule(new DatabaseContextStartupModule<InventoryDatabaseContext>(GetDatabaseOptions));
 
         // Todo: Replace below with multiple calls - one for each entity.
         AddModule(new EntityQueryServiceStartupModule<ExampleQueryService, Example, SearchableExample>());
