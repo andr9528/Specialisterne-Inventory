@@ -38,6 +38,9 @@ namespace Inventory.Model.Entity
 
         /// <inheritdoc />
         public ICollection<IOrderItem> Orders { get; set; }
+        
+        /// <inheritdoc />
+        public int CategoryId { get; set; }
 
         /// <summary>
         /// Constructor for Entity Framework Core to use.

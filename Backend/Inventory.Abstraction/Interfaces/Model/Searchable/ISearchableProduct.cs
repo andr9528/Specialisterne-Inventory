@@ -7,4 +7,6 @@ public interface ISearchableProduct : ISearchable
     string Name { get; set; }
 
     decimal Price { get; set; }
+
+    int CategoryId { get; set; }
 }
