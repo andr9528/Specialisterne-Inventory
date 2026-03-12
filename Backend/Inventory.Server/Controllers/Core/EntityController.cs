@@ -10,7 +10,9 @@ namespace Inventory.Server.Controllers.Core;
 //[Route(Constants.ROUTE_TEMPLATE)]
 //[ApiController]
 public abstract class EntityController<TEntity, TSearchable, TController> : ControllerBase
-    where TEntity : class, IEntity where TSearchable : class, ISearchable, new() where TController : ControllerBase
+    where TEntity : class, IEntity
+    where TSearchable : class, ISearchable, new()
+    where TController : ControllerBase
 {
     protected readonly IEntityQueryService<TEntity, TSearchable> entityService;
     private readonly ILogger<TController> logger;
@@ -22,7 +24,7 @@ public abstract class EntityController<TEntity, TSearchable, TController> : Cont
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public virtual async Task<IActionResult> GetAll()
     {
         try
         {
@@ -37,16 +39,17 @@ public abstract class EntityController<TEntity, TSearchable, TController> : Cont
     }
 
     [HttpGet("id")]
-    public async Task<IActionResult> GetById(int id)
+    public virtual async Task<IActionResult> GetById(int id)
     {
         try
         {
-            IEntity entity = await entityService.GetEntity(new TSearchable { Id = id, });
+            IEntity entity = await entityService.GetEntity(new TSearchable { Id = id });
             return Ok(entity);
         }
         catch (Exception e)
         {
-            logger.LogError(e,
+            logger.LogError(
+                e,
                 "An exception was caught while attempting to get an entity by id of the controllers type. Id: {Id}",
                 id);
             throw;
@@ -54,7 +57,7 @@ public abstract class EntityController<TEntity, TSearchable, TController> : Cont
     }
 
     [HttpPost]
-    public async Task<IActionResult> GetByQuery([FromBody] TSearchable searchable)
+    public virtual async Task<IActionResult> GetByQuery([FromBody] TSearchable searchable)
     {
         try
         {
@@ -63,15 +66,34 @@ public abstract class EntityController<TEntity, TSearchable, TController> : Cont
         }
         catch (Exception e)
         {
-            logger.LogError(e,
-                "An exception was caught while attempting to get entities matching specified query of the controllers type. Query: {@Searchable}",
+            logger.LogError(
+                e,
+                "An exception was caught while attempting to get entity matching specified query of the controllers type. Query: {@Searchable}",
                 searchable);
             throw;
         }
     }
 
     [HttpPost]
-    public async Task<IActionResult> GetAllByQuery([FromBody] TSearchable searchable)
+    public virtual async Task<IActionResult> GetByComplexQuery([FromBody] IComplexSearchable<TSearchable> complex)
+    {
+        try
+        {
+            IEntity entity = await entityService.GetEntityComplex(complex);
+            return Ok(entity);
+        }
+        catch (Exception e)
+        {
+            logger.LogError(
+                e,
+                "An exception was caught while attempting to get entity matching specified query of the controllers type. Query: {@Searchable}",
+                complex);
+            throw;
+        }
+    }
+
+    [HttpPost]
+    public virtual async Task<IActionResult> GetAllByQuery([FromBody] TSearchable searchable)
     {
         try
         {
@@ -80,7 +102,8 @@ public abstract class EntityController<TEntity, TSearchable, TController> : Cont
         }
         catch (Exception e)
         {
-            logger.LogError(e,
+            logger.LogError(
+                e,
                 "An exception was caught while attempting to get entities matching specified query of the controllers type. Query: {@Searchable}",
                 searchable);
             throw;
@@ -88,7 +111,25 @@ public abstract class EntityController<TEntity, TSearchable, TController> : Cont
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddSingle([FromBody] TEntity entity)
+    public virtual async Task<IActionResult> GetAllByComplexQuery([FromBody] IComplexSearchable<TSearchable> complex)
+    {
+        try
+        {
+            var entities = await entityService.GetEntitiesComplex(complex);
+            return Ok(entities);
+        }
+        catch (Exception e)
+        {
+            logger.LogError(
+                e,
+                "An exception was caught while attempting to get entities matching specified query of the controllers type. Query: {@Searchable}",
+                complex);
+            throw;
+        }
+    }
+
+    [HttpPost]
+    public virtual async Task<IActionResult> AddSingle([FromBody] TEntity entity)
     {
         try
         {
@@ -97,7 +138,8 @@ public abstract class EntityController<TEntity, TSearchable, TController> : Cont
         }
         catch (Exception e)
         {
-            logger.LogError(e,
+            logger.LogError(
+                e,
                 "An exception was caught while attempting to add a single entity of the controllers type. Entity: {@Entity}",
                 entity);
             throw;
@@ -105,7 +147,7 @@ public abstract class EntityController<TEntity, TSearchable, TController> : Cont
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddMultiple([FromBody] IEnumerable<TEntity> entities)
+    public virtual async Task<IActionResult> AddMultiple([FromBody] IEnumerable<TEntity> entities)
     {
         try
         {
@@ -114,7 +156,8 @@ public abstract class EntityController<TEntity, TSearchable, TController> : Cont
         }
         catch (Exception e)
         {
-            logger.LogError(e,
+            logger.LogError(
+                e,
                 "An exception was caught while attempting to add multiple entities of the controllers type. Entities: {@Entities}",
                 entities);
             throw;
@@ -122,7 +165,7 @@ public abstract class EntityController<TEntity, TSearchable, TController> : Cont
     }
 
     [HttpPut]
-    public async Task<IActionResult> UpdateSingle([FromBody] TEntity entity)
+    public virtual async Task<IActionResult> UpdateSingle([FromBody] TEntity entity)
     {
         try
         {
@@ -131,7 +174,8 @@ public abstract class EntityController<TEntity, TSearchable, TController> : Cont
         }
         catch (Exception e)
         {
-            logger.LogError(e,
+            logger.LogError(
+                e,
                 "An exception was caught while attempting to update a specific entity of the controllers type. Entity: {@Entity}",
                 entity);
             throw;
@@ -139,7 +183,7 @@ public abstract class EntityController<TEntity, TSearchable, TController> : Cont
     }
 
     [HttpPut]
-    public async Task<IActionResult> UpdateMultiple([FromBody] IEnumerable<TEntity> entities)
+    public virtual async Task<IActionResult> UpdateMultiple([FromBody] IEnumerable<TEntity> entities)
     {
         try
         {
@@ -148,7 +192,8 @@ public abstract class EntityController<TEntity, TSearchable, TController> : Cont
         }
         catch (Exception e)
         {
-            logger.LogError(e,
+            logger.LogError(
+                e,
                 "An exception was caught while attempting to update multiple entities of the controllers type. Entities: {@Entities}",
                 entities);
             throw;
@@ -156,7 +201,7 @@ public abstract class EntityController<TEntity, TSearchable, TController> : Cont
     }
 
     [HttpDelete]
-    public async Task<IActionResult> DeleteByQuery([FromBody] TSearchable searchable)
+    public virtual async Task<IActionResult> DeleteByQuery([FromBody] TSearchable searchable)
     {
         try
         {
@@ -165,7 +210,8 @@ public abstract class EntityController<TEntity, TSearchable, TController> : Cont
         }
         catch (Exception e)
         {
-            logger.LogError(e,
+            logger.LogError(
+                e,
                 "An exception was caught while attempting to delete a specific entity by specified query of the controllers type. Query: {@Searchable}",
                 searchable);
             throw;
@@ -173,7 +219,7 @@ public abstract class EntityController<TEntity, TSearchable, TController> : Cont
     }
 
     [HttpDelete("id")]
-    public async Task<IActionResult> DeleteById(int id)
+    public virtual async Task<IActionResult> DeleteById(int id)
     {
         try
         {
@@ -182,10 +228,18 @@ public abstract class EntityController<TEntity, TSearchable, TController> : Cont
         }
         catch (Exception e)
         {
-            logger.LogError(e,
+            logger.LogError(
+                e,
                 "An exception was caught while attempting to delete an entity by id of the controllers type. Id: {Id}",
                 id);
             throw;
         }
+    }
+
+    protected IActionResult MethodNotSupported(string methodName)
+    {
+        return StatusCode(
+            StatusCodes.Status405MethodNotAllowed,
+            $"{GetType().Name} does not support endpoint '{methodName}'.");
     }
 }
