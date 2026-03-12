@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+:root {
+    --font-weight-medium: 400;
+    --font-weight-bold: 600;
+}
+
+@theme {
+    --color-background: #F3F4F6;
+    --color-primary: #1D4ED8;
+    --color-gray: #4B5563;
+}
+
+@layer base {
+    body {
+        @apply font-serif tracking-wide;
+    }
+
+    html {
+        font-weight: var(--font-weight-medium);
+    }
+
+    h1 {
+        font-size: var(--text-2xl);
+        font-weight: var(--font-weight-bold);
+        line-height: 1.2;
+    }
+
+    h2 {
+        font-size: var(--text-xl);
+    }
+
+    p {
+        font-size: var(--text-sm);
+        color: var(--color-gray)
+    }
+}
