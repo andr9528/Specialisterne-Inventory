@@ -30,7 +30,12 @@ namespace Inventory.Persistence
             var databaseType =
                 DatabaseType.POSTGRESQL; // This can be made dynamic based on configuration or environment variables.
 
-            modelBuilder.ApplyConfiguration(new ExampleConfiguration(databaseType));
+            modelBuilder.ApplyConfiguration(new CategoryConfiguration(databaseType));
+            modelBuilder.ApplyConfiguration(new LocationConfiguration(databaseType));
+            modelBuilder.ApplyConfiguration(new LocationItemConfiguration(databaseType));
+            modelBuilder.ApplyConfiguration(new OrderConfiguration(databaseType));
+            modelBuilder.ApplyConfiguration(new OrderItemConfiguration(databaseType));
+            modelBuilder.ApplyConfiguration(new ProductConfiguration(databaseType));
         }
     }
 }
