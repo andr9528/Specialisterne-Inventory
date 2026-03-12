@@ -13,5 +13,7 @@ namespace Inventory.Model.Searchable
         /// <inheritdoc />
         public decimal Price { get; set; }
 
+        /// <inheritdoc />
+        public int CategoryId { get; set; }
     }
 }

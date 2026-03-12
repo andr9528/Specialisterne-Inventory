@@ -27,6 +27,9 @@ namespace Inventory.Model.Entity
         /// <inheritdoc />
         public string Name { get; set; }
 
+        /// <inheritdoc />
+        public ICollection<IProduct> Products { get; set; }
+
         /// <summary>
         /// Constructor for Entity Framework Core to use.
         /// Enables the 'Id' to be immutable after the entity is created, which is a good practice for entities.
