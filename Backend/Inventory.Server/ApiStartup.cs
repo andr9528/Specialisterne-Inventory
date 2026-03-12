@@ -31,8 +31,12 @@ public class ApiStartup : ModularStartup<IApplicationBuilder>
 
         AddModule(new DatabaseContextStartupModule<InventoryDatabaseContext>(GetDatabaseOptions));
 
-        // Todo: Replace below with multiple calls - one for each entity.
-        //AddModule(new EntityQueryServiceStartupModule<ExampleQueryService, Example, SearchableExample>());
+        AddModule(new EntityQueryServiceStartupModule<CategoryQueryService, Category, SearchableCategory>());
+        AddModule(new EntityQueryServiceStartupModule<LocationItemQueryService, LocationItem, SearchableLocationItem>());
+        AddModule(new EntityQueryServiceStartupModule<LocationQueryService, Location, SearchableLocation>());
+        AddModule(new EntityQueryServiceStartupModule<OrderItemQueryService, OrderItem, SearchableOrderItem>());
+        AddModule(new EntityQueryServiceStartupModule<OrderQueryService, Order, SearchableOrder>());
+        AddModule(new EntityQueryServiceStartupModule<ProductQueryService, Product, SearchableProduct>());
     }
 
     private void GetDatabaseOptions(DbContextOptionsBuilder options)
