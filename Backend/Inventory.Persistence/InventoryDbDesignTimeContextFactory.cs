@@ -1,12 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
 namespace Inventory.Persistence
 {
-    public class ExampleDbDesignTimeContextFactory : IDesignTimeDbContextFactory<ExampleDatabaseContext>
+    // Todo: Figure out how to get the connection string from the `appsettings.secrets.json` file at design time.
+    public class InventoryDbDesignTimeContextFactory : IDesignTimeDbContextFactory<InventoryDatabaseContext>
     {
         /// <inheritdoc />
-        public ExampleDatabaseContext CreateDbContext(string[] args)
+        public InventoryDatabaseContext CreateDbContext(string[] args)
         {
             // In a real implementation the DbContext needs to be configured with the
             // same provider used by the application (for example SQLite).
@@ -14,9 +15,9 @@ namespace Inventory.Persistence
             // Example of how a SQLite path could be constructed:
             //
             // var basePath = Directory.GetCurrentDirectory();
-            // var dbPath = Path.Combine(basePath, ExampleDatabaseContext.CONNECTION_STRING);
+            // var dbPath = Path.Combine(basePath, InventoryDatabaseContext.CONNECTION_STRING);
 
-            var optionsBuilder = new DbContextOptionsBuilder<ExampleDatabaseContext>();
+            var optionsBuilder = new DbContextOptionsBuilder<InventoryDatabaseContext>();
 
             // Example of configuring SQLite for migrations:
             //
@@ -26,7 +27,7 @@ namespace Inventory.Persistence
             // This allows the code to compile while still demonstrating where the
             // configuration would normally occur.
 
-            return new ExampleDatabaseContext(optionsBuilder.Options);
+            return new InventoryDatabaseContext(optionsBuilder.Options);
         }
     }
 }
