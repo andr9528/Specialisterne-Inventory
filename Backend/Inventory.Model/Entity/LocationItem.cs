@@ -12,7 +12,7 @@ public class LocationItem : ILocationItem
     {
         get => id;
         set => throw new InvalidOperationException(
-            $"{nameof(Id)} cannot be changed after creation of {nameof(Example)} entity");
+            $"{nameof(Id)} cannot be changed after creation of {nameof(LocationItem)} entity");
     }
 
     /// <inheritdoc />
