@@ -27,9 +27,6 @@ namespace Inventory.Model.Entity
         public DateTime UpdatedDateTime { get; set; }
 
         /// <inheritdoc />
-        public string Name { get; set; }
-
-        /// <inheritdoc />
         public ICollection<IOrderItem> Products { get ; set ; }
 
         /// <inheritdoc />
