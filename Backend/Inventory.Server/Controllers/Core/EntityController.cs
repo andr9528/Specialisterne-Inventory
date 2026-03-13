@@ -15,7 +15,7 @@ public abstract class EntityController<TEntity, TSearchable, TController> : Cont
     where TController : ControllerBase
 {
     protected readonly IEntityQueryService<TEntity, TSearchable> entityService;
-    private readonly ILogger<TController> logger;
+    protected readonly ILogger<TController> logger;
 
     protected EntityController(IEntityQueryService<TEntity, TSearchable> entityService, ILogger<TController> logger)
     {
