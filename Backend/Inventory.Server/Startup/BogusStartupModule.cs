@@ -85,8 +85,9 @@ public static class FakeData
 
 
         var orderItemFaker = new Faker<OrderItem>()
-            .RuleFor(o => o.Id, f => f.IndexFaker + 1)
-            .RuleFor(li => li.ProductId, f => f.PickRandom(FakeData.Products).Id);
+            .RuleFor(oi => oi.Id, f => f.IndexFaker + 1)
+            .RuleFor(oi => oi.ProductId, f => f.PickRandom(FakeData.Products).Id)
+            .RuleFor(oi => oi.Quantity, f => f.Random.Number(1, 10));
 
         var orderFaker = new Faker<Order>()
             .RuleFor(o => o.Id, f => f.IndexFaker + 1)
