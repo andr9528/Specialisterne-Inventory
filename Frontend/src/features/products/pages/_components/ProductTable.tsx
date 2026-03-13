@@ -1,0 +1,43 @@
+import useProducts from "../../hooks/useProducts";
+import { productColumns } from "../../table/productColumns";
+
+import ProductRow from "./ProductRow";
+
+const ProductTable = () => {
+    const { products } = useProducts();
+
+
+
+    return (
+        <table className="w-full border border-gray-300 rounded-lg table-fixed border-separate border-spacing-0 overflow-hidden">
+            <thead>
+                <tr className="border-b border-gray-200">
+                    {/* Emtpy header col for the chevron icon */}
+                    <th style={{ width: "3%" }}></th>
+
+                    {productColumns.map(col => {
+                        const textFloat = col.textFloat ? `text-${col.textFloat}` : "text-left";
+                        return (
+                            <th key={col.key} className={`px-4 py-2 ${textFloat}`} style={{ width: col.width }}>
+                                {col.label}
+                            </th>
+                        )
+                    }
+                    )}
+                </tr>
+            </thead>
+
+            <tbody>
+                {products.map((product, index, arr) => {
+                    const showBorder: boolean = index !== arr.length - 1;
+
+                    return (
+                        <ProductRow product={product} productColumns={productColumns} showBorder={showBorder} key={product.sku} />
+                    )
+                })}
+            </tbody>
+        </table>
+    )
+}
+
+export default ProductTable;
