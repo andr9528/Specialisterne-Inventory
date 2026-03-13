@@ -35,17 +35,17 @@ namespace Inventory.Persistence.Core
         }
 
         /// <inheritdoc />
-        public async Task<TEntity> GetEntity(TSearchable searchable)
+        public async Task<TEntity?> GetEntity(TSearchable searchable)
         {
-            return (await BuildQuery(searchable).ToListAsync()).First();
+            return (await BuildQuery(searchable).ToListAsync()).FirstOrDefault();
         }
 
         /// <inheritdoc />
-        public async Task<TEntity> GetEntityComplex(IComplexSearchable<TSearchable> complex)
+        public async Task<TEntity?> GetEntityComplex(IComplexSearchable<TSearchable> complex)
         {
             var basicQuery = BuildQuery(complex.Searchable);
 
-            return (await AddComplexQueryArguments(basicQuery, complex).ToListAsync()).First();
+            return (await AddComplexQueryArguments(basicQuery, complex).ToListAsync()).FirstOrDefault();
         }
 
         /// <inheritdoc />
@@ -117,13 +117,13 @@ namespace Inventory.Persistence.Core
         /// <summary>
         /// Add Query Arguments from the supplied <see cref="IComplexSearchable{TSearchable}"/>.
         /// </summary>
-        /// <param name="basicQuery"></param>
+        /// <param name="query"></param>
         /// <param name="complex"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException">Thrown when there are no implementation of <see cref="IComplexSearchable{TSearchable}"/></exception>
         /// <exception cref="InvalidOperationException">Thrown when supplied properties would guarantee no results.</exception>
         protected abstract IQueryable<TEntity> AddComplexQueryArguments(
-            IQueryable<TEntity> basicQuery, IComplexSearchable<TSearchable> complex);
+            IQueryable<TEntity> query, IComplexSearchable<TSearchable> complex);
 
         /// <summary>
         /// Gets the base <see cref="IQueryable{TEntity}"/> from the <see cref="TContext"/>.

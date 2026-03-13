@@ -8,7 +8,6 @@ namespace Inventory.Abstraction.Interfaces.Persistence
         /// </summary>
         /// <param name="entity">The data for a(n) <typeparamref name="TEntity" /> to be added.</param>
         /// <param name="saveImmediately">Determines if method will immediately call SaveChangesAsync(), or not.</param>
-        /// <returns>The newly added <typeparamref name="TEntity" />.</returns>
         Task AddEntity(TEntity entity, bool saveImmediately = true);
 
         /// <summary>
@@ -16,7 +15,6 @@ namespace Inventory.Abstraction.Interfaces.Persistence
         /// </summary>
         /// <param name="entities">The data for a(n) <typeparamref name="TEntity" /> to be added.</param>
         /// <param name="saveImmediately">Determines if method will immediately call SaveChangesAsync(), or not.</param>
-        /// <returns>All the newly added <typeparamref name="TEntity" />.</returns>
         Task AddEntities(IEnumerable<TEntity> entities, bool saveImmediately = true);
 
         /// <summary>
@@ -28,7 +26,7 @@ namespace Inventory.Abstraction.Interfaces.Persistence
         ///     Returns first entry that matches properties defined in supplied
         ///     <param name="searchable"></param>
         /// </returns>
-        Task<TEntity> GetEntity(TSearchable searchable);
+        Task<TEntity?> GetEntity(TSearchable searchable);
 
         /// <summary>
         ///     Get the first <typeparamref name="TEntity" /> matching properties defined in supplied
@@ -39,7 +37,7 @@ namespace Inventory.Abstraction.Interfaces.Persistence
         ///     Returns first entry that matches properties defined in supplied
         ///     <param name="complex"></param>
         /// </returns>
-        Task<TEntity> GetEntityComplex(IComplexSearchable<TSearchable> complex);
+        Task<TEntity?> GetEntityComplex(IComplexSearchable<TSearchable> complex);
 
         /// <summary>
         ///     Get all <typeparamref name="TEntity" /> matching properties defined in supplied
