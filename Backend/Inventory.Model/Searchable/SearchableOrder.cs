@@ -10,5 +10,11 @@ namespace Inventory.Model.Searchable
 
         /// <inheritdoc />
         public OrderStatus Status { get; set; }
+
+        /// <inheritdoc />
+        public Guid ReferenceId { get; set; }
+
+        /// <inheritdoc />
+        public int? LocationId { get; set; }
     }
 }
