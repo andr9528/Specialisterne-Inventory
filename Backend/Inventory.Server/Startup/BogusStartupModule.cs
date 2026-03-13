@@ -13,9 +13,10 @@ public class BogusStartupModule : IServiceStartupModule
     public void ConfigureServices(IServiceCollection services)
     {
         ServiceProvider? provider = services.BuildServiceProvider();
-        FakeData.Init();
         using (var context = provider.GetService<InventoryDatabaseContext>())
         {
+            //Is this the right place?
+            FakeData.Init();
             context.Categories.AddRange(FakeData.Categories);
             context.Locations.AddRange(FakeData.Locations);
             context.Products.AddRange(FakeData.Products);
@@ -23,6 +24,7 @@ public class BogusStartupModule : IServiceStartupModule
             context.Orders.AddRange(FakeData.Orders);
             context.OrderItems.AddRange(FakeData.OrderItems);
 
+            //TODO: save
             //context.SaveChanges();
         }
     }
@@ -61,7 +63,9 @@ public static class FakeData
 
         var locationItemFaker = new Faker<LocationItem>()
             .RuleFor(li => li.Id, f => f.IndexFaker + 1)
-            .RuleFor(li => li.ProductId, f=> f.PickRandom( FakeData.Products).Id);
+            .RuleFor(li => li.ProductId, f => f.PickRandom( FakeData.Products).Id)
+            .RuleFor(li => li.Quantity, f => f.Random.Number(0, 1000))
+            .RuleFor(li => li.TargetQuantity, f=> f.Random.Number(10, 500));
             
 
 
@@ -88,7 +92,8 @@ public static class FakeData
             .RuleFor(o => o.Id, f => f.IndexFaker + 1)
             .RuleFor(o => o.Status, f => f.PickRandom<OrderStatus>())
             .RuleFor(o => o.ReferenceId, f => Guid.NewGuid())
-            .RuleFor(o => o.LocationId, f=> f.PickRandom(FakeData.Locations).Id)
+            //Perhaps remove the OrNull?
+            .RuleFor(o => o.LocationId, f=> f.PickRandom(FakeData.Locations).Id.OrNull(f))
             .RuleFor(o => o.Products, (f, o) =>
             {
                 orderItemFaker.RuleFor(oi => oi.OrderId, _ => o.Id);
@@ -97,8 +102,7 @@ public static class FakeData
 
                 return null;
             });
-        FakeData.Orders.AddRange(orderFaker.Generate(5));
-        
+        FakeData.Orders.AddRange(orderFaker.Generate(10));
         
     }
 }
