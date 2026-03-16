@@ -1,10 +1,8 @@
-using System.Security.Cryptography.X509Certificates;
 using Bogus;
 using Inventory.Abstraction.Enum;
 using Inventory.Abstraction.Interfaces.Startup;
 using Inventory.Model.Entity;
 using Inventory.Persistence;
-using Microsoft.EntityFrameworkCore;
 
 namespace Inventory.Server.Startup;
 
