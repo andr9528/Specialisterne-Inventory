@@ -1,11 +1,10 @@
 import { LoaderIcon, type LucideProps } from "lucide-react";
 import type { ButtonHTMLAttributes } from "react";
 
-export type ButtonVariant = "primary" | "ghost" | "tag";
+export type ButtonVariant = "primary" | "ghost" | "tag" | "outline";
 
 interface ButtoneProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: ButtonVariant;
-    size?: "small" | "medium" | "large";
     isLoading?: boolean;
     icon?: React.ForwardRefExoticComponent<Omit<LucideProps, "ref">> | null;
 }
@@ -13,7 +12,6 @@ interface ButtoneProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 const Button: React.FC<ButtoneProps> = ({
     children,
     variant = "primary",
-    size = "medium",
     className = "",
     icon: Icon,
     isLoading = false,
@@ -27,6 +25,9 @@ const Button: React.FC<ButtoneProps> = ({
     switch (variant) {
         case "primary":
             variantStyle = "bg-blue-600 hover:bg-blue-700 rounded-lg text-white p-2 px-3";
+            break;
+        case "outline":
+            variantStyle = "rounded-lg p-1 px-3 border border-gray-300 hover:bg-gray-100";
             break;
         case "ghost":
             variantStyle = "border-none";

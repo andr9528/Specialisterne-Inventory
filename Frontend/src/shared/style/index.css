@@ -4,6 +4,7 @@
     --font-weight-medium: 400;
     --font-weight-bold: 600;
     --default-margin-x: 40px;
+    --ring: oklch(0.708 0 0);
 }
 
 @theme {

@@ -1,10 +1,10 @@
 import { useState } from "react";
-import FilterSelect from "../../../../shared/components/ui/FilterSelect";
 import type { SortItemType } from "../../../../shared/types/SelectTypes";
 import { Search } from "lucide-react";
 import Button from "../../../../shared/components/ui/Button";
 import { textKeys } from "../../../../shared/constants/textKeys";
 import Input from "../../../../shared/components/ui/Input";
+import Select from "../../../../shared/components/ui/Select";
 
 
 const ProductFilter = () => {
@@ -43,7 +43,7 @@ const ProductFilter = () => {
 
     return (
         <div className="my-5 bg-gray-50 p-3 w-full border border-gray-300 rounded-lg overflow-hidden">
-            <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
                 <div className="lg:col-span-2">
                     <div className="relative">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-gray-400" />
@@ -56,11 +56,11 @@ const ProductFilter = () => {
                     </div>
                 </div>
 
-                <FilterSelect selectValue={categoryValue} setSelectValue={setCategoryValue} items={["Elektronik", "Møbler", "Audio"]} defaultItem="Alle kategorier" defaultItemValue={defaultItemValue} />
+                <Select selectValue={categoryValue} setSelectValue={setCategoryValue} items={["Elektronik", "Møbler", "Audio"]} defaultItem="Alle kategorier" defaultItemValue={defaultItemValue} />
 
-                <FilterSelect selectValue={warehouseValue} setSelectValue={setWarehouseValue} items={["Lager A", "Lager B", "Lager C"]} defaultItem="Alle Lagre" defaultItemValue={defaultItemValue} />
+                <Select selectValue={warehouseValue} setSelectValue={setWarehouseValue} items={["Lager A", "Lager B", "Lager C"]} defaultItem="Alle Lagre" defaultItemValue={defaultItemValue} />
 
-                <FilterSelect selectValue={sortValue} setSelectValue={setSortValue} items={sortItems} />
+                <Select selectValue={sortValue} setSelectValue={setSortValue} items={sortItems} />
             </div>
 
             <div className="flex flex-wrap mt-7 gap-2">

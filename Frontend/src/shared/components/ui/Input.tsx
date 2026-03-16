@@ -8,7 +8,7 @@ const Input: React.FC<InputProps> = ({ ...props }) => {
     return (
         <div className="relative">
             <input
-                className="py-1 px-2 bg-input-background rounded-lg border border-gray-300 outline-none focus-visible:ring-[1px] focus-visible:border-ring focus-visible:ring-ring w-full"
+                className="min-h-8 py-1 px-2 bg-input-background rounded-lg border border-gray-300 outline-none focus-visible:ring-[1px] focus-visible:border-ring focus-visible:ring-ring w-full"
                 {...props}
             />
         </div>
