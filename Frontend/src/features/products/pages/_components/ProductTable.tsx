@@ -11,14 +11,14 @@ const ProductTable = () => {
     return (
         <table className="w-full border border-gray-300 rounded-lg table-fixed border-separate border-spacing-0 overflow-hidden">
             <thead>
-                <tr className="border-b border-gray-200">
+                <tr>
                     {/* Emtpy header col for the chevron icon */}
-                    <th style={{ width: "3%" }}></th>
+                    <th className="border-b border-gray-200" style={{ width: "3%" }}></th>
 
                     {productColumns.map(col => {
                         const textFloat = col.textFloat ? `text-${col.textFloat}` : "text-left";
                         return (
-                            <th key={col.key} className={`px-4 py-2 ${textFloat}`} style={{ width: col.width }}>
+                            <th key={col.key} className={`border-b border-gray-200 px-4 py-2 ${textFloat}`} style={{ width: col.width }}>
                                 {col.label}
                             </th>
                         )

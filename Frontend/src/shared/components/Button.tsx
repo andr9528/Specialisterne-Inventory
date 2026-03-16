@@ -1,7 +1,7 @@
 import { LoaderIcon } from "lucide-react";
 import type { ButtonHTMLAttributes } from "react";
 
-export type ButtonVariant = "primary" | "ghost";
+export type ButtonVariant = "primary" | "ghost" | "tag";
 interface ButtoneProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: ButtonVariant;
     size?: "small" | "medium" | "large";
@@ -26,7 +26,10 @@ const Button: React.FC<ButtoneProps> = ({
             variantStyle = "";
             break;
         case "ghost":
-            variantStyle = "border-none"
+            variantStyle = "border-none";
+            break;
+        case "tag":
+            variantStyle = "bg-gray-200 text-gray-700 hover:bg-gray-300 rounded-2xl px-3 py-0.5 text-sm font-medium";
             break;
     }
 

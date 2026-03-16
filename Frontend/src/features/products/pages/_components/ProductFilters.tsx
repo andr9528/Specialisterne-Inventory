@@ -1,24 +1,72 @@
 import { useState } from "react";
 import FilterSelect from "../../../../shared/components/FilterSelect";
+import type { SortItemType } from "../../../../shared/types/SelectTypes";
+import { Search } from "lucide-react";
+import Button from "../../../../shared/components/Button";
+import { textKeys } from "../../../../shared/constants/textKeys";
 
 
 const ProductFilter = () => {
-    const [categoryValue, setCategoryValue] = useState<string>("all");
-    const [warehouseValue, setWarehouseValue] = useState<string>("all");
+    const defaultItemValue = "ALL";
+
+    const [searchQuery, setSearchQuery] = useState<string>("");
+    const [categoryValue, setCategoryValue] = useState<string>(defaultItemValue);
+    const [warehouseValue, setWarehouseValue] = useState<string>(defaultItemValue);
+    const [sortValue, setSortValue] = useState<string>("name");
+    const [statusFilter, setStatusFilter] = useState<string>(defaultItemValue);
+
+    const sortItems: SortItemType = [
+        { value: "name", text: "Navn (A-Å)" },
+        { value: "price-asc", text: "Pris (lav-høj)" },
+        { value: "price-desc", text: "Pris (høj-lav)" },
+        { value: "quantity-asc", text: "Antal (lav-høj)" },
+        { value: "quantity-desc", text: "Antal (høj-lav)" },
+    ]
+
+    const filterStatusStyle = (statusFilterValue: string, buttonValue: string): string => {
+        if (statusFilterValue !== buttonValue) return "";
+
+        switch (statusFilterValue) {
+            case defaultItemValue:
+                return "bg-blue-500! text-white!";
+            case "IN_STOCK":
+                return "bg-green-500! text-white!";
+            case "LOW_STOCK":
+                return "bg-amber-500! text-white!";
+            case "OUT_OF_STOCK":
+                return "bg-red-500! text-white!";
+            default:
+                return "";
+        }
+    }
 
     return (
-        <div className="bg-gray-50 p-3 w-full border border-gray-300 rounded-lg overflow-hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-            <div className="lg:col-span-2">
-                <input type="search" />
+        <div className="my-5 bg-gray-50 p-3 w-full border border-gray-300 rounded-lg overflow-hidden">
+            <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                <div className="lg:col-span-2">
+                    <div className="relative">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-gray-400" />
+                        <input
+                            type="search"
+                            placeholder="Søg efter produkt eller SKU..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="pl-10 py-1 px-2 rounded-lg border border-gray-300 outline-none focus-visible:ring-[1px] focus-visible:border-ring focus-visible:ring-ring w-full" />
+                    </div>
+                </div>
+
+                <FilterSelect selectValue={categoryValue} setSelectValue={setCategoryValue} items={["Elektronik", "Møbler", "Audio"]} defaultItem="Alle kategorier" defaultItemValue={defaultItemValue} />
+
+                <FilterSelect selectValue={warehouseValue} setSelectValue={setWarehouseValue} items={["Lager A", "Lager B", "Lager C"]} defaultItem="Alle Lagre" defaultItemValue={defaultItemValue} />
+
+                <FilterSelect selectValue={sortValue} setSelectValue={setSortValue} items={sortItems} />
             </div>
-            <div className="">
-                <FilterSelect selectValue={categoryValue} setSelectValue={setCategoryValue} items={["Elektronik", "Møbler", "Audio"]} selectDefaultItemText="Alle kategorier" />
-            </div>
-            <div className="">
-                <FilterSelect selectValue={warehouseValue} setSelectValue={setWarehouseValue} items={["Lager A", "Lager B", "Lager C"]} selectDefaultItemText="Alle Lagre" />
-            </div>
-            <div className="">
-                <FilterSelect selectValue={categoryValue} setSelectValue={setCategoryValue} items={["Elektronik", "Møbler", "Audio"]} selectDefaultItemText="testing" />
+
+            <div className="flex flex-wrap mt-7 gap-2">
+                <Button variant="tag" className={filterStatusStyle(statusFilter, defaultItemValue)} onClick={() => setStatusFilter(defaultItemValue)}>{textKeys.ALL}</Button>
+                <Button variant="tag" className={filterStatusStyle(statusFilter, "IN_STOCK")} onClick={() => setStatusFilter("IN_STOCK")}>{textKeys.IN_STOCK}</Button>
+                <Button variant="tag" className={filterStatusStyle(statusFilter, "LOW_STOCK")} onClick={() => setStatusFilter("LOW_STOCK")}>{textKeys.LOW_STOCK}</Button>
+                <Button variant="tag" className={filterStatusStyle(statusFilter, "OUT_OF_STOCK")} onClick={() => setStatusFilter("OUT_OF_STOCK")}>{textKeys.OUT_OF_STOCK}</Button>
             </div>
         </div>
     )

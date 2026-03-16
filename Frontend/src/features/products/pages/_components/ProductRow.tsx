@@ -14,13 +14,13 @@ const ProductRow = ({ product, productColumns, showBorder }: ProdutcRowType) => 
 
     const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
-    showBorder = showBorder === false && isExpanded === true;
+    const borderVisiable = showBorder && !isExpanded;
 
     return (
         <>
             <tr className="bg-gray-50 hover:cursor-pointer hover:bg-gray-100" onClick={() => setIsExpanded(prev => !prev)}>
                 {/* Adds a chevron icon */}
-                <td className={`${showBorder ? "border-b border-gray-200" : ""}`}>
+                <td className={`${borderVisiable ? "border-b border-gray-200" : ""}`}>
                     {
                         isExpanded ? (
                             <ChevronDown className="mx-auto" />
@@ -35,7 +35,7 @@ const ProductRow = ({ product, productColumns, showBorder }: ProdutcRowType) => 
 
                     if (col.key === "totalStock") {
                         return (
-                            <td key={col.key} className={`px-4 py-2 ${showBorder ? "border-b border-gray-200" : ""}`}>
+                            <td key={col.key} className={`px-4 py-2 ${borderVisiable ? "border-b border-gray-200" : ""}`}>
                                 <div className="flex flex-col">
                                     <span className="font-bold">{product.totalStock} stk</span>
                                     <span className="text-sm">{product.warehouses.length + " " + textKeys.WAREHOUSES}</span>
@@ -46,12 +46,12 @@ const ProductRow = ({ product, productColumns, showBorder }: ProdutcRowType) => 
 
                     if (col.key === "price") {
                         return (
-                            <td key={col.key} className={`px-4 py-2 ${showBorder ? "border-b border-gray-200" : ""}`}>{product[col.key]} kr.</td>
+                            <td key={col.key} className={`px-4 py-2 ${borderVisiable ? "border-b border-gray-200" : ""}`}>{product[col.key]} kr.</td>
                         )
                     }
 
                     return (
-                        <td key={col.key} className={`px-4 py-2 ${showBorder ? "border-b border-gray-200" : ""} ${textBold}`}>
+                        <td key={col.key} className={`px-4 py-2 ${borderVisiable ? "border-b border-gray-200" : ""} ${textBold}`}>
                             {col.render ? col.render(product) : product[col.key as keyof Omit<ProductType, "warehouses">]}
                         </td>
                     )
