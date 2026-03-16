@@ -9,10 +9,11 @@ namespace Inventory.Server.Controllers.Core;
 // Add the two lines below to any controller.
 //[Route(Constants.ROUTE_TEMPLATE)]
 //[ApiController]
-public abstract class EntityController<TEntity, TSearchable, TController> : ControllerBase
+public abstract class EntityController<TEntity, TSearchable, TController, TComplex> : ControllerBase
     where TEntity : class, IEntity
     where TSearchable : class, ISearchable, new()
     where TController : ControllerBase
+    where TComplex : IComplexSearchable<TSearchable>
 {
     protected readonly IEntityQueryService<TEntity, TSearchable> entityService;
     protected readonly ILogger<TController> logger;
@@ -75,7 +76,7 @@ public abstract class EntityController<TEntity, TSearchable, TController> : Cont
     }
 
     [HttpPost]
-    public virtual async Task<IActionResult> GetByComplexQuery([FromBody] IComplexSearchable<TSearchable> complex)
+    public virtual async Task<IActionResult> GetByComplexQuery([FromBody] TComplex complex)
     {
         try
         {
@@ -111,7 +112,7 @@ public abstract class EntityController<TEntity, TSearchable, TController> : Cont
     }
 
     [HttpPost]
-    public virtual async Task<IActionResult> GetAllByComplexQuery([FromBody] IComplexSearchable<TSearchable> complex)
+    public virtual async Task<IActionResult> GetAllByComplexQuery([FromBody] TComplex complex)
     {
         try
         {

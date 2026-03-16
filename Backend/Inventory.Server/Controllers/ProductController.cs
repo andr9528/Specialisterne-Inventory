@@ -8,7 +8,7 @@ namespace Inventory.Server.Controllers;
 
 [Route(Constants.ROUTE_TEMPLATE)]
 [ApiController]
-public class ProductController : EntityController<Product, SearchableProduct, ProductController>
+public class ProductController : EntityController<Product, SearchableProduct, ProductController, IComplexSearchable<SearchableProduct>>
 {
     /// <inheritdoc />
     public ProductController(IEntityQueryService<Product, SearchableProduct> entityService, ILogger<ProductController> logger) : base(entityService, logger)

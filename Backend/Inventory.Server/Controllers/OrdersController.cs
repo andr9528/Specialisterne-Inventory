@@ -11,7 +11,7 @@ namespace Inventory.Server.Controllers;
 
 [Route(Constants.ROUTE_TEMPLATE)]
 [ApiController]
-public sealed class OrdersController : EntityController<Order, SearchableOrder, OrdersController>
+public sealed class OrdersController : EntityController<Order, SearchableOrder, OrdersController, IComplexSearchable<SearchableOrder>>
 {
     private readonly IOrderService orderService;
 
