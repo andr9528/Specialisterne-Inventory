@@ -41,7 +41,7 @@ public static class FakeData
     public static List<OrderItem> OrderItems = new List<OrderItem>();
     public static List<Order> Orders = new List<Order>();
 
-    public static IEnumerable<Category> GetCategories ()
+    public static IEnumerable<Category> GetCategories()
     {
         var categoryFaker = new Faker<Category>()
             .RuleFor(c => c.Name, f => f.Commerce.Department());
@@ -63,19 +63,19 @@ public static class FakeData
             .RuleFor(p => p.Name, f => f.Commerce.ProductName())
             .RuleFor(p => p.Price, f => decimal.Parse(f.Commerce.Price()))
             ;
-        return productFaker.Generate(5);
+        return productFaker.Generate(25);
     }
 
     internal static IEnumerable<LocationItem> GetLocationItems(List<Location> locations, List<Product> products)
     {
         var locationItemFaker = new Faker<LocationItem>()
             .RuleFor(li => li.Product, f => f.PickRandom(products))
-            .RuleFor(li=> li.Location, f=> f.PickRandom(locations))
+            .RuleFor(li => li.Location, f => f.PickRandom(locations))
             .RuleFor(li => li.Quantity, f => f.Random.Number(0, 1000))
-            .RuleFor(li => li.TargetQuantity, f => f.Random.Number(10, 500))
+            .RuleFor(li => li.TargetQuantity, f => f.Random.Number(100, 500))
             .RuleFor(li => li.ReservedQuantity, f => f.Random.Number(0, 50))
             .RuleFor(li => li.Status, f => f.PickRandom<InventoryStatus>());
-        return locationItemFaker.Generate(50);
+        return locationItemFaker.Generate(100);
     }
 
     internal static IEnumerable<Order> GetOrders(List<Location> locations)
@@ -86,7 +86,7 @@ public static class FakeData
             //Perhaps remove the OrNull?
             .RuleFor(o => o.Location, f => f.PickRandom(locations).OrNull(f))
             ;
-        
+
         return orderFaker.Generate(5);
     }
 
