@@ -18,7 +18,7 @@ namespace Inventory.Persistence.Migrations
                 {
                     CategoryId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Version = table.Column<byte[]>(type: "bytea", rowVersion: true, nullable: false),
+                    xmin = table.Column<uint>(type: "xid", rowVersion: true, nullable: false),
                     CreatedDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false)
@@ -34,7 +34,7 @@ namespace Inventory.Persistence.Migrations
                 {
                     LocationId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Version = table.Column<byte[]>(type: "bytea", rowVersion: true, nullable: false),
+                    xmin = table.Column<uint>(type: "xid", rowVersion: true, nullable: false),
                     CreatedDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false)
@@ -50,7 +50,7 @@ namespace Inventory.Persistence.Migrations
                 {
                     ProductId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Version = table.Column<byte[]>(type: "bytea", rowVersion: true, nullable: false),
+                    xmin = table.Column<uint>(type: "xid", rowVersion: true, nullable: false),
                     CreatedDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
@@ -74,10 +74,9 @@ namespace Inventory.Persistence.Migrations
                 {
                     OrderId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Version = table.Column<byte[]>(type: "bytea", rowVersion: true, nullable: false),
+                    xmin = table.Column<uint>(type: "xid", rowVersion: true, nullable: false),
                     CreatedDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false),
                     Status = table.Column<int>(type: "integer", nullable: false),
                     ReferenceId = table.Column<Guid>(type: "uuid", nullable: false),
                     LocationId = table.Column<int>(type: "integer", nullable: true)
@@ -98,7 +97,7 @@ namespace Inventory.Persistence.Migrations
                 {
                     LocationItemId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Version = table.Column<byte[]>(type: "bytea", rowVersion: true, nullable: false),
+                    xmin = table.Column<uint>(type: "xid", rowVersion: true, nullable: false),
                     CreatedDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Quantity = table.Column<int>(type: "integer", nullable: false),
@@ -130,7 +129,7 @@ namespace Inventory.Persistence.Migrations
                 {
                     OrderItemId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Version = table.Column<byte[]>(type: "bytea", rowVersion: true, nullable: false),
+                    xmin = table.Column<uint>(type: "xid", rowVersion: true, nullable: false),
                     CreatedDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Quantity = table.Column<int>(type: "integer", nullable: false),

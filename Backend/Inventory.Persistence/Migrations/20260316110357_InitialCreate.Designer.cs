@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Inventory.Persistence.Migrations
 {
     [DbContext(typeof(InventoryDatabaseContext))]
-    [Migration("20260316093458_InitialCreate")]
+    [Migration("20260316110357_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -44,11 +44,11 @@ namespace Inventory.Persistence.Migrations
                     b.Property<DateTime>("UpdatedDateTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<byte[]>("Version")
+                    b.Property<uint>("Version")
                         .IsConcurrencyToken()
-                        .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("bytea");
+                        .HasColumnType("xid")
+                        .HasColumnName("xmin");
 
                     b.HasKey("Id");
 
@@ -74,11 +74,11 @@ namespace Inventory.Persistence.Migrations
                     b.Property<DateTime>("UpdatedDateTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<byte[]>("Version")
+                    b.Property<uint>("Version")
                         .IsConcurrencyToken()
-                        .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("bytea");
+                        .HasColumnType("xid")
+                        .HasColumnName("xmin");
 
                     b.HasKey("Id");
 
@@ -115,11 +115,11 @@ namespace Inventory.Persistence.Migrations
                     b.Property<DateTime>("UpdatedDateTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<byte[]>("Version")
+                    b.Property<uint>("Version")
                         .IsConcurrencyToken()
-                        .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("bytea");
+                        .HasColumnType("xid")
+                        .HasColumnName("xmin");
 
                     b.HasKey("Id");
 
@@ -145,10 +145,6 @@ namespace Inventory.Persistence.Migrations
                     b.Property<int?>("LocationId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<Guid>("ReferenceId")
                         .HasColumnType("uuid");
 
@@ -158,11 +154,11 @@ namespace Inventory.Persistence.Migrations
                     b.Property<DateTime>("UpdatedDateTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<byte[]>("Version")
+                    b.Property<uint>("Version")
                         .IsConcurrencyToken()
-                        .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("bytea");
+                        .HasColumnType("xid")
+                        .HasColumnName("xmin");
 
                     b.HasKey("Id");
 
@@ -198,11 +194,11 @@ namespace Inventory.Persistence.Migrations
                     b.Property<DateTime>("UpdatedDateTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<byte[]>("Version")
+                    b.Property<uint>("Version")
                         .IsConcurrencyToken()
-                        .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("bytea");
+                        .HasColumnType("xid")
+                        .HasColumnName("xmin");
 
                     b.HasKey("Id");
 
@@ -238,11 +234,11 @@ namespace Inventory.Persistence.Migrations
                     b.Property<DateTime>("UpdatedDateTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<byte[]>("Version")
+                    b.Property<uint>("Version")
                         .IsConcurrencyToken()
-                        .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("bytea");
+                        .HasColumnType("xid")
+                        .HasColumnName("xmin");
 
                     b.HasKey("Id");
 
