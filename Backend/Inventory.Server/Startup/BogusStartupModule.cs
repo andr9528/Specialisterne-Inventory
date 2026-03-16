@@ -15,18 +15,19 @@ public class BogusStartupModule : IServiceStartupModule
         ServiceProvider? provider = services.BuildServiceProvider();
         using (var context = provider.GetService<InventoryDatabaseContext>())
         {
-            //Is this the right place?
-            FakeData.Init();
+            //If no Categories, assume no data only table that does not depend on Categories is Locations
             if (!context.Categories.Any())
             {
-                context.Categories.AddRange(FakeData.Categories);
-                context.Locations.AddRange(FakeData.Locations);
-                context.Products.AddRange(FakeData.Products);
-                context.LocationItems.AddRange(FakeData.LocationItems);
-                context.Orders.AddRange(FakeData.Orders);
-                context.OrderItems.AddRange(FakeData.OrderItems);
+                context.Categories.AddRange(FakeData.GetCategories());
+                context.Locations.AddRange(FakeData.GetLocations());
+                context.SaveChanges();
 
-                //TODO: save
+                context.Products.AddRange(FakeData.GetProducts(context.Categories.ToList()));
+                context.Orders.AddRange(FakeData.GetOrders(context.Locations.ToList()));
+                context.SaveChanges();
+
+                context.LocationItems.AddRange(FakeData.GetLocationItems(context.Locations.ToList(), context.Products.ToList()));
+                context.OrderItems.AddRange(FakeData.GetOrderItems(context.Orders.ToList(), context.Products.ToList()));
                 context.SaveChanges();
             }
         }
@@ -42,65 +43,63 @@ public static class FakeData
     public static List<OrderItem> OrderItems = new List<OrderItem>();
     public static List<Order> Orders = new List<Order>();
 
-    public static void Init()
+    public static IEnumerable<Category> GetCategories ()
+    {
+        var categoryFaker = new Faker<Category>()
+            .RuleFor(c => c.Name, f => f.Commerce.Department());
+        return categoryFaker.Generate(5);
+    }
+
+
+    internal static IEnumerable<Location> GetLocations()
+    {
+        var locationFaker = new Faker<Location>()
+            .RuleFor(l => l.Name, f => f.Company.CompanyName());
+        return locationFaker.Generate(5);
+    }
+
+    internal static IEnumerable<Product> GetProducts(IEnumerable<Category> categories)
     {
         var productFaker = new Faker<Product>()
-            //.RuleFor(c => c.Id, f => f.IndexFaker + 1)
+            .RuleFor(p => p.Category, f => f.PickRandom(categories))
             .RuleFor(p => p.Name, f => f.Commerce.ProductName())
             .RuleFor(p => p.Price, f => decimal.Parse(f.Commerce.Price()))
             ;
+        return productFaker.Generate(5);
+    }
 
-        var categoryFaker = new Faker<Category>()
-            .RuleFor(c => c.Name, f => f.Commerce.Department())
-            .RuleFor(c => c.Products, (f, c) =>
-            {
-                productFaker.RuleFor(p => p.CategoryId, _ => c.Id);
-                var products = productFaker.GenerateBetween(3, 5);
-                FakeData.Products.AddRange(products);
-
-                return null;
-            });
-        FakeData.Categories.AddRange(categoryFaker.Generate(5));
-
+    internal static IEnumerable<LocationItem> GetLocationItems(List<Location> locations, List<Product> products)
+    {
         var locationItemFaker = new Faker<LocationItem>()
-            .RuleFor(li => li.ProductId, f => f.PickRandom(FakeData.Products).Id)
+            .RuleFor(li => li.Product, f => f.PickRandom(products))
+            .RuleFor(li=> li.Location, f=> f.PickRandom(locations))
             .RuleFor(li => li.Quantity, f => f.Random.Number(0, 1000))
-            .RuleFor(li => li.TargetQuantity, f => f.Random.Number(10, 500));
+            .RuleFor(li => li.TargetQuantity, f => f.Random.Number(10, 500))
+            .RuleFor(li => li.ReservedQuantity, f => f.Random.Number(0, 50))
+            .RuleFor(li => li.Status, f => f.PickRandom<InventoryStatus>());
+        return locationItemFaker.Generate(50);
+    }
 
-
-
-        var locationFaker = new Faker<Location>()
-            .RuleFor(l => l.Name, f => f.Company.CompanyName())
-            .RuleFor(l => l.Products, (f, l) =>
-            {
-                locationItemFaker.RuleFor(li => li.LocationId, _ => l.Id);
-                var locationItems = locationItemFaker.GenerateBetween(5, 10);
-                FakeData.LocationItems.AddRange(locationItems);
-
-                return null;
-            });
-
-        FakeData.Locations.AddRange(locationFaker.Generate(5));
-
-
-        var orderItemFaker = new Faker<OrderItem>()
-            .RuleFor(oi => oi.ProductId, f => f.PickRandom(FakeData.Products).Id)
-            .RuleFor(oi => oi.Quantity, f => f.Random.Number(1, 10));
-
+    internal static IEnumerable<Order> GetOrders(List<Location> locations)
+    {
         var orderFaker = new Faker<Order>()
             .RuleFor(o => o.Status, f => f.PickRandom<OrderStatus>())
             .RuleFor(o => o.ReferenceId, f => Guid.NewGuid())
             //Perhaps remove the OrNull?
-            .RuleFor(o => o.LocationId, f => f.PickRandom(FakeData.Locations).Id.OrNull(f))
-            .RuleFor(o => o.Products, (f, o) =>
-            {
-                orderItemFaker.RuleFor(oi => oi.OrderId, _ => o.Id);
-                var orderItems = orderItemFaker.GenerateBetween(1, 5);
-                FakeData.OrderItems.AddRange(orderItems);
+            .RuleFor(o => o.Location, f => f.PickRandom(locations).OrNull(f))
+            ;
+        
+        return orderFaker.Generate(5);
+    }
 
-                return null;
-            });
-        FakeData.Orders.AddRange(orderFaker.Generate(10));
 
+    internal static IEnumerable<OrderItem> GetOrderItems(List<Order> orders, List<Product> products)
+    {
+        var orderItemFaker = new Faker<OrderItem>()
+            .RuleFor(oi => oi.Product, f => f.PickRandom(products))
+            .RuleFor(oi => oi.Order, f => f.PickRandom(orders))
+            .RuleFor(oi => oi.Quantity, f => f.Random.Number(1, 10));
+
+        return orderItemFaker.Generate(30);
     }
 }
