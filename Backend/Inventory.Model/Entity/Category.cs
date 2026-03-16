@@ -27,9 +27,6 @@ namespace Inventory.Model.Entity
         /// <inheritdoc />
         public string Name { get; set; }
 
-        /// <inheritdoc />
-        public ICollection<IProduct> Products { get; set; }
-
         /// <summary>
         /// Constructor for Entity Framework Core to use.
         /// Enables the 'Id' to be immutable after the entity is created, which is a good practice for entities.
@@ -37,10 +34,9 @@ namespace Inventory.Model.Entity
         /// </summary>
         /// <param name="id"></param>
         [JsonConstructor]
-        private Category(int id, List<Product> products)
+        private Category(int id)
         {
             this.id = id;
-            Products = products.Cast<IProduct>().ToList();
         }
 
         public Category()
