@@ -45,14 +45,12 @@ public static class FakeData
     public static void Init()
     {
         var productFaker = new Faker<Product>()
-            //.StrictMode(true)
             //.RuleFor(c => c.Id, f => f.IndexFaker + 1)
             .RuleFor(p => p.Name, f => f.Commerce.ProductName())
             .RuleFor(p => p.Price, f => decimal.Parse(f.Commerce.Price()))
             ;
 
         var categoryFaker = new Faker<Category>()
-            //.RuleFor(c => c.Id, f => f.IndexFaker + 1)
             .RuleFor(c => c.Name, f => f.Commerce.Department())
             .RuleFor(c => c.Products, (f, c) =>
             {
@@ -65,7 +63,6 @@ public static class FakeData
         FakeData.Categories.AddRange(categoryFaker.Generate(5));
 
         var locationItemFaker = new Faker<LocationItem>()
-            //.RuleFor(li => li.Id, f => f.IndexFaker + 1)
             .RuleFor(li => li.ProductId, f => f.PickRandom(FakeData.Products).Id)
             .RuleFor(li => li.Quantity, f => f.Random.Number(0, 1000))
             .RuleFor(li => li.TargetQuantity, f => f.Random.Number(10, 500));
@@ -73,7 +70,6 @@ public static class FakeData
 
 
         var locationFaker = new Faker<Location>()
-            //.RuleFor(l => l.Id, f => f.IndexFaker + 1)
             .RuleFor(l => l.Name, f => f.Company.CompanyName())
             .RuleFor(l => l.Products, (f, l) =>
             {
@@ -88,12 +84,10 @@ public static class FakeData
 
 
         var orderItemFaker = new Faker<OrderItem>()
-            //.RuleFor(oi => oi.Id, f => f.IndexFaker + 1)
             .RuleFor(oi => oi.ProductId, f => f.PickRandom(FakeData.Products).Id)
             .RuleFor(oi => oi.Quantity, f => f.Random.Number(1, 10));
 
         var orderFaker = new Faker<Order>()
-            //.RuleFor(o => o.Id, f => f.IndexFaker + 1)
             .RuleFor(o => o.Status, f => f.PickRandom<OrderStatus>())
             .RuleFor(o => o.ReferenceId, f => Guid.NewGuid())
             //Perhaps remove the OrNull?
