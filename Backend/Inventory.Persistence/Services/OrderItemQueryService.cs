@@ -14,7 +14,7 @@ public class OrderItemQueryService : BaseEntityQueryService<InventoryDatabaseCon
     }
 
     /// <inheritdoc />
-    protected override IQueryable<OrderItem> AddComplexQueryArguments(IQueryable<OrderItem> basicQuery, IComplexSearchable<SearchableOrderItem> complex)
+    protected override IQueryable<OrderItem> AddComplexQueryArguments(IQueryable<OrderItem> query, IComplexSearchable<SearchableOrderItem> complex)
     {
         // No implementation of `IComplexSearchable<SearchableOrderItem>` exist - Throwing.
         throw new NotImplementedException();

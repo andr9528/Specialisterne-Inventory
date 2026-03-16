@@ -12,7 +12,7 @@ public class LocationItem : ILocationItem
     {
         get => id;
         set => throw new InvalidOperationException(
-            $"{nameof(Id)} cannot be changed after creation of {nameof(Example)} entity");
+            $"{nameof(Id)} cannot be changed after creation of {nameof(LocationItem)} entity");
     }
 
     /// <inheritdoc />
@@ -26,6 +26,9 @@ public class LocationItem : ILocationItem
 
     /// <inheritdoc />
     public int Quantity { get ; set ; }
+
+    /// <inheritdoc />
+    public int ReservedQuantity { get; set; }
 
     /// <inheritdoc />
     public int TargetQuantity { get ; set ; }

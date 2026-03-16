@@ -1,4 +1,6 @@
 using System.Text.Json;
+using Inventory.Abstraction.Interfaces.Persistence;
+using Inventory.Model.ComplexSearchable;
 using Inventory.Model.Entity;
 using Inventory.Model.Searchable;
 using Inventory.Model.Server;
@@ -169,6 +171,9 @@ public class ApiStartup : ModularStartup<IApplicationBuilder>
         base.ConfigureServices(services);
 
         services.AddControllers();
+
+        // When a class implementation for a Complex Searchable is added, Add a line below, and update the Type used in the Controller.
+        services.AddTransient<IComplexSearchable<SearchableLocationItem>, ComplexSearchableLocationItem>();
 
         services.AddCors();
     }

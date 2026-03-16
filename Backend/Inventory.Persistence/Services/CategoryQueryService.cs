@@ -13,7 +13,7 @@ public class CategoryQueryService : BaseEntityQueryService<InventoryDatabaseCont
     }
 
     /// <inheritdoc />
-    protected override IQueryable<Category> AddComplexQueryArguments(IQueryable<Category> basicQuery, IComplexSearchable<SearchableCategory> complex)
+    protected override IQueryable<Category> AddComplexQueryArguments(IQueryable<Category> query, IComplexSearchable<SearchableCategory> complex)
     {
         // No implementation of `IComplexSearchable<SearchableCategory>` exist - Throwing.
         throw new NotImplementedException();

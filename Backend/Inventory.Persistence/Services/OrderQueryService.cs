@@ -14,7 +14,7 @@ public class OrderQueryService : BaseEntityQueryService<InventoryDatabaseContext
     }
 
     /// <inheritdoc />
-    protected override IQueryable<Order> AddComplexQueryArguments(IQueryable<Order> basicQuery, IComplexSearchable<SearchableOrder> complex)
+    protected override IQueryable<Order> AddComplexQueryArguments(IQueryable<Order> query, IComplexSearchable<SearchableOrder> complex)
     {
         // No implementation of `IComplexSearchable<SearchableOrder>` exist - Throwing.
         throw new NotImplementedException();
@@ -32,6 +32,16 @@ public class OrderQueryService : BaseEntityQueryService<InventoryDatabaseContext
         if (!Equals(searchable.Status, default(OrderStatus)))
         {
             query = query.Where(x => x.Status == searchable.Status);
+        }
+
+        if (!Equals(searchable.ReferenceId, Guid.Empty))
+        {
+            query = query.Where(x => x.ReferenceId == searchable.ReferenceId);
+        }
+
+        if (searchable.LocationId != 0)
+        {
+            query = query.Where(x => x.LocationId == searchable.LocationId);
         }
 
         return query;

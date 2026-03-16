@@ -13,7 +13,7 @@ public class LocationQueryService : BaseEntityQueryService<InventoryDatabaseCont
     }
 
     /// <inheritdoc />
-    protected override IQueryable<Location> AddComplexQueryArguments(IQueryable<Location> basicQuery, IComplexSearchable<SearchableLocation> complex)
+    protected override IQueryable<Location> AddComplexQueryArguments(IQueryable<Location> query, IComplexSearchable<SearchableLocation> complex)
     {
         // No implementation of `IComplexSearchable<SearchableLocation>` exist - Throwing.
         throw new NotImplementedException();

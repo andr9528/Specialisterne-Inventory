@@ -8,7 +8,7 @@ namespace Inventory.Server.Controllers;
 
 [Route(Constants.ROUTE_TEMPLATE)]
 [ApiController]
-public class LocationController : EntityController<Location, SearchableLocation, LocationController>
+public class LocationController : EntityController<Location, SearchableLocation, LocationController, IComplexSearchable<SearchableLocation>>
 {
     /// <inheritdoc />
     public LocationController(IEntityQueryService<Location, SearchableLocation> entityService, ILogger<LocationController> logger) : base(entityService, logger)
