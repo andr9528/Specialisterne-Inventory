@@ -157,7 +157,7 @@ public class ApiStartup : ModularStartup<IApplicationBuilder>
                 $"Expected Supplied App to be of type {nameof(WebApplication)}, but it was a {app.GetType().Name}.");
 
         webApplication.UseHttpsRedirection();
-
+        webApplication.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().SetIsOriginAllowed(origin => true).AllowCredentials());
         webApplication.UseAuthorization();
 
         webApplication.MapControllers();
@@ -169,5 +169,7 @@ public class ApiStartup : ModularStartup<IApplicationBuilder>
         base.ConfigureServices(services);
 
         services.AddControllers();
+
+        services.AddCors();
     }
 }
