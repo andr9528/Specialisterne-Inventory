@@ -12,6 +12,7 @@ using Inventory.Startup;
 using Inventory.Startup.Modules;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 
 namespace Inventory.Server;
 
@@ -61,10 +62,14 @@ public class ApiStartup : ModularStartup<IApplicationBuilder>
     {
         base.ConfigureServices(services);
 
-        services.AddControllers();
+        services.AddControllers().AddNewtonsoftJson(options =>
+        {
+            options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+        });
 
         // When a class implementation for a Complex Searchable is added, Add a line below, and update the Type used in the Controller.
         services.AddTransient<IComplexSearchable<SearchableLocationItem>, ComplexSearchableLocationItem>();
+        services.AddTransient<IComplexSearchable<SearchableProduct>, ComplexSearchableProduct>();
 
         services.AddCors();
     }
