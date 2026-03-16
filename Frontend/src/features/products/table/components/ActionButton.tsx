@@ -1,6 +1,6 @@
 import { Edit, Trash2 } from "lucide-react";
 import type { ProductType } from "../../types/productType";
-import Button from "../../../../shared/components/Button";
+import Button from "../../../../shared/components/ui/Button";
 
 
 const ActionButtons = (product: ProductType) => {

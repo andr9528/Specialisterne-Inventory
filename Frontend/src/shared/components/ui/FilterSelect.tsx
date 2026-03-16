@@ -1,4 +1,4 @@
-import type { SortItemType } from "../types/SelectTypes";
+import type { SortItemType } from "../../types/SelectTypes";
 import { Select, SelectContent, SelectIcon, SelectItem, SelectTriger, SelectValue, SelectViewport } from "./RadixSelect";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 

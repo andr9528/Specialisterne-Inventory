@@ -37,6 +37,11 @@
         font-weight: var(--font-weight-semibold);
     }
 
+    h3 {
+        font-size: var(--text-xl);
+        font-weight: var(--font-weight-medium);
+    }
+
     p {
         font-size: var(--text-sm);
         color: var(--color-gray)

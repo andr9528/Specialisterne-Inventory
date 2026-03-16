@@ -1,9 +1,10 @@
 import { useState } from "react";
-import FilterSelect from "../../../../shared/components/FilterSelect";
+import FilterSelect from "../../../../shared/components/ui/FilterSelect";
 import type { SortItemType } from "../../../../shared/types/SelectTypes";
 import { Search } from "lucide-react";
-import Button from "../../../../shared/components/Button";
+import Button from "../../../../shared/components/ui/Button";
 import { textKeys } from "../../../../shared/constants/textKeys";
+import Input from "../../../../shared/components/ui/Input";
 
 
 const ProductFilter = () => {
@@ -46,12 +47,12 @@ const ProductFilter = () => {
                 <div className="lg:col-span-2">
                     <div className="relative">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-gray-400" />
-                        <input
+                        <Input
                             type="search"
                             placeholder="Søg efter produkt eller SKU..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="pl-10 py-1 px-2 rounded-lg border border-gray-300 outline-none focus-visible:ring-[1px] focus-visible:border-ring focus-visible:ring-ring w-full" />
+                        />
                     </div>
                 </div>
 

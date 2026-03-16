@@ -1,11 +1,13 @@
-import { LoaderIcon } from "lucide-react";
+import { LoaderIcon, type LucideProps } from "lucide-react";
 import type { ButtonHTMLAttributes } from "react";
 
 export type ButtonVariant = "primary" | "ghost" | "tag";
+
 interface ButtoneProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: ButtonVariant;
     size?: "small" | "medium" | "large";
     isLoading?: boolean;
+    icon?: React.ForwardRefExoticComponent<Omit<LucideProps, "ref">> | null;
 }
 
 const Button: React.FC<ButtoneProps> = ({
@@ -13,17 +15,18 @@ const Button: React.FC<ButtoneProps> = ({
     variant = "primary",
     size = "medium",
     className = "",
+    icon: Icon,
     isLoading = false,
     ...props
 }) => {
 
-    const baseStyle = "hover:cursor-pointer outline-none disabled:pointer-events-none disabled:opacity-50 transition-colors";
+    const baseStyle = "hover:cursor-pointer outline-none disabled:pointer-events-none disabled:opacity-50 transition-colors flex";
 
     let variantStyle = "";
 
     switch (variant) {
         case "primary":
-            variantStyle = "";
+            variantStyle = "bg-blue-600 hover:bg-blue-700 rounded-lg text-white p-2 px-3";
             break;
         case "ghost":
             variantStyle = "border-none";
@@ -33,11 +36,18 @@ const Button: React.FC<ButtoneProps> = ({
             break;
     }
 
+    const iconStyle = "size-4 mt-1 mr-3";
+
     return (
         <button
             className={`${baseStyle} ${variantStyle}  ${className}`}
             {...props}
         >
+            {Icon &&
+                <span>
+                    <Icon className={iconStyle} />
+                </span>
+            }
             {isLoading ? <LoaderIcon className="animate-spin" style={{ animation: "spin 2.5s linear infinite" }} /> : children}
         </button>
     )
