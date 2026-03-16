@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
     <ProjectReference Include="..\Inventory.Abstraction\Inventory.Abstraction.csproj" />
     <ProjectReference Include="..\Inventory.Model\Inventory.Model.csproj" />
   </ItemGroup>
