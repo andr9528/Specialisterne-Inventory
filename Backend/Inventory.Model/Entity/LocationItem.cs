@@ -1,4 +1,6 @@
+using System.Diagnostics;
 using System.Text.Json.Serialization;
+using Inventory.Abstraction.Enum;
 using Inventory.Abstraction.Interfaces.Model.Entity;
 
 namespace Inventory.Model.Entity;
@@ -34,6 +36,12 @@ public class LocationItem : ILocationItem
     public int TargetQuantity { get ; set ; }
 
     /// <inheritdoc />
+    public InventoryStatus Status
+    {
+        get => GetStatus(Quantity, TargetQuantity);
+    }
+
+    /// <inheritdoc />
     public IProduct Product { get; set; }
 
     /// <inheritdoc />
@@ -61,5 +69,19 @@ public class LocationItem : ILocationItem
     
     public LocationItem()
     {
+    }
+
+    public static InventoryStatus GetStatus(int quantity, int target)
+    {
+        if (quantity == 0)
+            return InventoryStatus.OUT_OF_STOCK;
+
+        if (quantity < target)
+            return InventoryStatus.LOW_STOCK;
+
+        if (quantity >= target)
+            return InventoryStatus.IN_STOCK;
+
+        return InventoryStatus.UNKNOWN;
     }
 }

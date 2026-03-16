@@ -19,7 +19,7 @@ public class LocationItemQueryService : BaseEntityQueryService<InventoryDatabase
     {
         if (complex is not ComplexSearchableLocationItem complexSearchableLocationItem)
         {
-            throw new ArgumentException($"Expected {nameof(complex)} to be of type {nameof(ComplexSearchableLocationItem)}, but it wasn't");
+            throw new ArgumentException($"Expected {nameof(complex)} to be of type {nameof(ComplexSearchableLocationItem)}, but it wasn't.");
         }
 
         if (complexSearchableLocationItem.MinimumItemsInStock.HasValue)

@@ -1,3 +1,4 @@
+using Inventory.Abstraction.Enum;
 using Inventory.Abstraction.Interfaces.Model.Searchable;
 using Inventory.Abstraction.Interfaces.Persistence;
 
@@ -8,4 +9,8 @@ public interface IProduct : ISearchableProduct, IEntity
     ICategory Category { get; set; }
     ICollection<ILocationItem> Locations { get; set; }
     ICollection<IOrderItem> Orders { get; set; }
+
+    InventoryStatus Status { get; }
+    int TotalQuantity { get; }
+    int TotalTargetQuantity { get; }
 }
