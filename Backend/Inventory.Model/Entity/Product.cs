@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Inventory.Abstraction.Enum;
 using Inventory.Abstraction.Interfaces.Model.Entity;
 
 namespace Inventory.Model.Entity
@@ -28,7 +29,7 @@ namespace Inventory.Model.Entity
         public string Name { get; set; }
 
         /// <inheritdoc />
-        public ICollection<ILocationItem> Locations { get ; set ; }
+        public ICollection<ILocationItem> Locations { get; set; } = new List<ILocationItem>();
 
         /// <inheritdoc />
         public ICategory Category { get; set; }
@@ -37,8 +38,41 @@ namespace Inventory.Model.Entity
         public decimal Price { get; set; }
 
         /// <inheritdoc />
-        public ICollection<IOrderItem> Orders { get; set; }
-        
+        public ICollection<IOrderItem> Orders { get; set; } = new List<IOrderItem>();
+
+        /// <inheritdoc />
+        public InventoryStatus Status
+        {
+            get => GetStatus();
+        }
+
+        private InventoryStatus GetStatus()
+        {
+            return LocationItem.GetStatus(TotalQuantity, TotalTargetQuantity);
+        }
+
+        /// <inheritdoc />
+        public int TotalQuantity
+        {
+            get => GetTotalQuantity();
+        }
+
+        private int GetTotalQuantity()
+        {
+            return Locations.Sum(x => x.Quantity);
+        }
+
+        /// <inheritdoc />
+        public int TotalTargetQuantity
+        {
+            get => GetTotalTargetQuantity();
+        }
+
+        private int GetTotalTargetQuantity()
+        {
+            return Locations.Sum(x => x.TargetQuantity);
+        }
+
         /// <inheritdoc />
         public int CategoryId { get; set; }
 

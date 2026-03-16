@@ -17,5 +17,9 @@ public class ProductConfiguration: EntityConfiguration<Product>
         base.Configure(builder);
         builder.HasOne(x => (Category)x.Category).WithMany(x => (ICollection<Product>)x.Products)
             .HasForeignKey(x => x.CategoryId);
+
+        builder.Ignore(x => x.Status);
+        builder.Ignore(x => x.TotalQuantity);
+        builder.Ignore(x => x.TotalTargetQuantity);
     }
 }

@@ -1,3 +1,4 @@
+using Inventory.Abstraction.Enum;
 using Inventory.Abstraction.Interfaces.Model.Searchable;
 using Inventory.Abstraction.Interfaces.Persistence;
 
@@ -9,4 +10,6 @@ public interface ILocationItem: ISearchableLocationItem, IEntity
     ILocation Location { get; set; }
 
     int TargetQuantity { get; set; }
+
+    InventoryStatus Status { get; }
 }
