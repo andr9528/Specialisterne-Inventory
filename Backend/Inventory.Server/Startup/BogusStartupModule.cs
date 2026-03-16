@@ -17,15 +17,18 @@ public class BogusStartupModule : IServiceStartupModule
         {
             //Is this the right place?
             FakeData.Init();
-            context.Categories.AddRange(FakeData.Categories);
-            context.Locations.AddRange(FakeData.Locations);
-            context.Products.AddRange(FakeData.Products);
-            context.LocationItems.AddRange(FakeData.LocationItems);
-            context.Orders.AddRange(FakeData.Orders);
-            context.OrderItems.AddRange(FakeData.OrderItems);
+            if (!context.Categories.Any())
+            {
+                context.Categories.AddRange(FakeData.Categories);
+                context.Locations.AddRange(FakeData.Locations);
+                context.Products.AddRange(FakeData.Products);
+                context.LocationItems.AddRange(FakeData.LocationItems);
+                context.Orders.AddRange(FakeData.Orders);
+                context.OrderItems.AddRange(FakeData.OrderItems);
 
-            //TODO: save
-            //context.SaveChanges();
+                //TODO: save
+                context.SaveChanges();
+            }
         }
     }
 }
@@ -43,13 +46,13 @@ public static class FakeData
     {
         var productFaker = new Faker<Product>()
             //.StrictMode(true)
-            .RuleFor(c => c.Id, f => f.IndexFaker + 1)
+            //.RuleFor(c => c.Id, f => f.IndexFaker + 1)
             .RuleFor(p => p.Name, f => f.Commerce.ProductName())
             .RuleFor(p => p.Price, f => decimal.Parse(f.Commerce.Price()))
             ;
 
         var categoryFaker = new Faker<Category>()
-            .RuleFor(c => c.Id, f => f.IndexFaker + 1)
+            //.RuleFor(c => c.Id, f => f.IndexFaker + 1)
             .RuleFor(c => c.Name, f => f.Commerce.Department())
             .RuleFor(c => c.Products, (f, c) =>
             {
@@ -62,22 +65,22 @@ public static class FakeData
         FakeData.Categories.AddRange(categoryFaker.Generate(5));
 
         var locationItemFaker = new Faker<LocationItem>()
-            .RuleFor(li => li.Id, f => f.IndexFaker + 1)
-            .RuleFor(li => li.ProductId, f => f.PickRandom( FakeData.Products).Id)
+            //.RuleFor(li => li.Id, f => f.IndexFaker + 1)
+            .RuleFor(li => li.ProductId, f => f.PickRandom(FakeData.Products).Id)
             .RuleFor(li => li.Quantity, f => f.Random.Number(0, 1000))
-            .RuleFor(li => li.TargetQuantity, f=> f.Random.Number(10, 500));
-            
+            .RuleFor(li => li.TargetQuantity, f => f.Random.Number(10, 500));
+
 
 
         var locationFaker = new Faker<Location>()
-            .RuleFor(l => l.Id, f => f.IndexFaker + 1)
+            //.RuleFor(l => l.Id, f => f.IndexFaker + 1)
             .RuleFor(l => l.Name, f => f.Company.CompanyName())
             .RuleFor(l => l.Products, (f, l) =>
             {
                 locationItemFaker.RuleFor(li => li.LocationId, _ => l.Id);
                 var locationItems = locationItemFaker.GenerateBetween(5, 10);
                 FakeData.LocationItems.AddRange(locationItems);
-                
+
                 return null;
             });
 
@@ -85,16 +88,16 @@ public static class FakeData
 
 
         var orderItemFaker = new Faker<OrderItem>()
-            .RuleFor(oi => oi.Id, f => f.IndexFaker + 1)
+            //.RuleFor(oi => oi.Id, f => f.IndexFaker + 1)
             .RuleFor(oi => oi.ProductId, f => f.PickRandom(FakeData.Products).Id)
             .RuleFor(oi => oi.Quantity, f => f.Random.Number(1, 10));
 
         var orderFaker = new Faker<Order>()
-            .RuleFor(o => o.Id, f => f.IndexFaker + 1)
+            //.RuleFor(o => o.Id, f => f.IndexFaker + 1)
             .RuleFor(o => o.Status, f => f.PickRandom<OrderStatus>())
             .RuleFor(o => o.ReferenceId, f => Guid.NewGuid())
             //Perhaps remove the OrNull?
-            .RuleFor(o => o.LocationId, f=> f.PickRandom(FakeData.Locations).Id.OrNull(f))
+            .RuleFor(o => o.LocationId, f => f.PickRandom(FakeData.Locations).Id.OrNull(f))
             .RuleFor(o => o.Products, (f, o) =>
             {
                 orderItemFaker.RuleFor(oi => oi.OrderId, _ => o.Id);
@@ -104,6 +107,6 @@ public static class FakeData
                 return null;
             });
         FakeData.Orders.AddRange(orderFaker.Generate(10));
-        
+
     }
 }

@@ -36,6 +36,8 @@ public class ApiStartup : ModularStartup<IApplicationBuilder>
         AddModule(new EntityQueryServiceStartupModule<OrderItemQueryService, OrderItem, SearchableOrderItem>());
         AddModule(new EntityQueryServiceStartupModule<OrderQueryService, Order, SearchableOrder>());
         AddModule(new EntityQueryServiceStartupModule<ProductQueryService, Product, SearchableProduct>());
+
+        AddModule(new BogusStartupModule());
     }
 
     /// <inheritdoc />
