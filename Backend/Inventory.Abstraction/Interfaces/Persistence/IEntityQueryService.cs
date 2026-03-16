@@ -1,7 +1,7 @@
 namespace Inventory.Abstraction.Interfaces.Persistence
 {
     public interface IEntityQueryService<TEntity, TSearchable> where TEntity : class, IEntity
-        where TSearchable : class, ISearchable
+        where TSearchable : class, ISearchable, new()
     {
         /// <summary>
         ///     Add one <typeparamref name="TEntity" /> to the database.
