@@ -22,5 +22,8 @@ public class LocationItemConfiguration : EntityConfiguration<LocationItem>
             .HasForeignKey(x => x.ProductId);
 
         builder.Ignore(x => x.Status);
+
+        // Todo: Cannot add below requirements, until we figure out how Bogus will handle the uniqueness.
+        //builder.HasIndex(x => new {x.LocationId, x.ProductId}).IsUnique();
     }
 }
