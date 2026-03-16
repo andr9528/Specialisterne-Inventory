@@ -159,7 +159,9 @@ public class ApiStartup : ModularStartup<IApplicationBuilder>
                 $"Expected Supplied App to be of type {nameof(WebApplication)}, but it was a {app.GetType().Name}.");
 
         webApplication.UseHttpsRedirection();
+        webApplication.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().SetIsOriginAllowed(origin => true).AllowCredentials());
         webApplication.UseAuthorization();
+
         webApplication.MapControllers();
     }
 
@@ -172,5 +174,7 @@ public class ApiStartup : ModularStartup<IApplicationBuilder>
 
         // When a class implementation for a Complex Searchable is added, Add a line below, and update the Type used in the Controller.
         services.AddTransient<IComplexSearchable<SearchableLocationItem>, ComplexSearchableLocationItem>();
+
+        services.AddCors();
     }
 }
