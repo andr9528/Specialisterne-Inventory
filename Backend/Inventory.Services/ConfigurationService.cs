@@ -39,12 +39,10 @@ public class ConfigurationService
     }
 
     /// <summary>
-    /// Configures the database options using the configured connection string.
+    /// Configures the database options using the supplied connection string.
     /// </summary>
-    public void BuildDatabaseOptions(DbContextOptionsBuilder options)
+    public void ConfigureDatabaseOptions(DbContextOptionsBuilder options, string connectionString)
     {
-        var connectionString = GetConnectionString();
-
         options.UseNpgsql(connectionString);
 
 #if DEBUG
@@ -53,6 +51,15 @@ public class ConfigurationService
 #endif
     }
 
+    /// <summary>
+    /// Configures the database options using the configured connection string.
+    /// </summary>
+    public void ConfigureDatabaseOptions(DbContextOptionsBuilder options)
+    {
+        var connectionString = GetConnectionString();
+
+        ConfigureDatabaseOptions(options, connectionString);
+    }
 
     public string GetConnectionString()
     {

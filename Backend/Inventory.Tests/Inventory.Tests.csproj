@@ -8,13 +8,15 @@
 
   <ItemGroup>
     <PackageReference Include="FluentAssertions" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="NUnit" />
-    <PackageReference Include="NUnit3TestAdapter" />
-    <PackageReference Include="coverlet.collector" />
     <PackageReference Include="GitHubActionsTestLogger">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Moq" />
+    <PackageReference Include="TUnit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Inventory.Persistence\Inventory.Persistence.csproj" />
   </ItemGroup>
 </Project>
