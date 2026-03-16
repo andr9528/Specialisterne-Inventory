@@ -15,7 +15,7 @@ public class BogusStartupModule : IServiceStartupModule
         ServiceProvider? provider = services.BuildServiceProvider();
         using (var context = provider.GetService<InventoryDatabaseContext>())
         {
-            //If no Categories, assume no data only table that does not depend on Categories is Locations
+            //If no Categories, assume no data. Only table that does not depend on Categories is Locations
             if (!context.Categories.Any())
             {
                 context.Categories.AddRange(FakeData.GetCategories());
