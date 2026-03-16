@@ -9,9 +9,10 @@ type SelectType = {
     items: string[] | SortItemType;
     selectValue: string;
     setSelectValue: (value: string) => void;
+    id?: string;
 }
 
-const Select = ({ items, placeholder, defaultItem, defaultItemValue = "ALL", selectValue, setSelectValue }: SelectType) => {
+const Select = ({ id, items, placeholder, defaultItem, defaultItemValue = "ALL", selectValue, setSelectValue }: SelectType) => {
 
     const isObjectItem = (item: any): item is SortItemType[number] => {
         return item && typeof item === "object" && "value" in item && "text" in item;
@@ -19,7 +20,7 @@ const Select = ({ items, placeholder, defaultItem, defaultItemValue = "ALL", sel
 
     return (
         <RadixSelect value={selectValue} onValueChange={setSelectValue}>
-            <SelectTriger className="min-h-8 rounded-lg border border-gray-300 outline-none focus-visible:ring-[1px] focus-visible:border-ring focus-visible:ring-ring py-1 px-2 flex flex-row justify-between w-full items-center bg-input-background font-bold text-sm ">
+            <SelectTriger id={id} className="min-h-8 rounded-lg border border-gray-300 outline-none focus-visible:ring-[1px] focus-visible:border-ring focus-visible:ring-ring py-1 px-2 flex flex-row justify-between w-full items-center bg-input-background font-bold text-sm ">
                 <SelectValue placeholder={placeholder} />
                 <SelectIcon className="SelectIcon">
                     <ChevronDownIcon />
