@@ -18,7 +18,7 @@ public class LocationItem : ILocationItem
     }
 
     /// <inheritdoc />
-    public byte[] Version { get; set; }
+    public uint Version { get; set; }
 
     /// <inheritdoc />
     public DateTime CreatedDateTime { get; set; }
