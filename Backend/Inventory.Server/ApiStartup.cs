@@ -28,7 +28,7 @@ public class ApiStartup : ModularStartup<IApplicationBuilder>
         AddModule(new LoggingStartupModule(configurationService.GetApplicationDataPath()));
         AddModule(new SwaggerStartupModule("Inventory"));
 
-        AddModule(new DatabaseContextStartupModule<InventoryDatabaseContext>(configurationService.BuildDatabaseOptions));
+        AddModule(new DatabaseContextStartupModule<InventoryDatabaseContext>(configurationService.ConfigureDatabaseOptions));
 
         AddModule(new EntityQueryServiceStartupModule<CategoryQueryService, Category, SearchableCategory>());
         AddModule(new EntityQueryServiceStartupModule<LocationItemQueryService, LocationItem, SearchableLocationItem>());
