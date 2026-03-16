@@ -28,6 +28,9 @@ public class LocationItem : ILocationItem
     public int Quantity { get ; set ; }
 
     /// <inheritdoc />
+    public int ReservedQuantity { get; set; }
+
+    /// <inheritdoc />
     public int TargetQuantity { get ; set ; }
 
     /// <inheritdoc />

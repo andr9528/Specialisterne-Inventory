@@ -10,6 +10,10 @@ namespace Inventory.Model.Searchable
         public int ProductId { get; set; }
         /// <inheritdoc />
         public int Quantity { get; set; }
+
+        /// <inheritdoc />
+        public int ReservedQuantity { get; set; }
+
         /// <inheritdoc />
         public int Id { get; set; }
     }
