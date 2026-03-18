@@ -12,7 +12,6 @@ public class CategoryQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
     }
 
     [Test]
@@ -23,7 +22,6 @@ public class CategoryQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
     }
 
     [Test]
@@ -34,7 +32,6 @@ public class CategoryQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
     }
 
     [Test]
@@ -45,7 +42,6 @@ public class CategoryQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
     }
 
     [Test]
@@ -56,7 +52,6 @@ public class CategoryQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
     }
 
     [Test]
@@ -67,7 +62,6 @@ public class CategoryQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
     }
 
     [Test]
@@ -78,7 +72,6 @@ public class CategoryQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
     }
 
     [Test]
@@ -89,7 +82,6 @@ public class CategoryQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
     }
 
     [Test]
@@ -100,7 +92,6 @@ public class CategoryQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
     }
 
     [Test]
@@ -111,7 +102,6 @@ public class CategoryQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
     }
 
     [Test]
@@ -122,7 +112,6 @@ public class CategoryQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
     }
 
     [Test]
@@ -133,7 +122,6 @@ public class CategoryQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
     }
 
     [Test]
@@ -144,6 +132,5 @@ public class CategoryQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
     }
 }

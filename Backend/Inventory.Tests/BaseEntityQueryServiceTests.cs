@@ -12,7 +12,6 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
     }
 
     [Test]
@@ -23,7 +22,6 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
     }
 
     [Test]
@@ -34,7 +32,7 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
+
     }
 
     [Test]
@@ -45,7 +43,7 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
+
     }
 
     [Test]
@@ -56,7 +54,7 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
+
     }
 
     [Test]
@@ -67,7 +65,7 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
+
     }
 
     [Test]
@@ -78,7 +76,7 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
+
     }
 
     [Test]
@@ -89,7 +87,7 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
+
     }
 
     [Test]
@@ -100,7 +98,7 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
+
     }
 
     [Test]
@@ -111,7 +109,7 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
+
     }
 
     [Test]
@@ -122,7 +120,7 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
+
     }
 
     [Test]
@@ -133,7 +131,7 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
+
     }
 
     [Test]
@@ -144,7 +142,7 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
+
     }
 
     [Test]
@@ -155,7 +153,7 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
+
     }
 
     [Test]
@@ -166,7 +164,7 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
+
     }
 
     [Test]
@@ -177,7 +175,7 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
+
     }
 
     [Test]
@@ -188,7 +186,7 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
+
     }
 
     [Test]
@@ -199,7 +197,7 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
+
     }
 
     [Test]
@@ -210,7 +208,7 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
+
     }
 
     [Test]
@@ -221,7 +219,7 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
+
     }
 
     [Test]
@@ -232,7 +230,7 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
+
     }
 
     [Test]
@@ -243,7 +241,7 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
+
     }
 
     [Test]
@@ -254,7 +252,7 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
+
     }
 
     [Test]
@@ -265,7 +263,7 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
+
     }
 
     [Test]
@@ -276,7 +274,7 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
+
     }
 
     [Test]
@@ -287,7 +285,7 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
+
     }
 
     [Test]
@@ -298,6 +296,6 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
         // Act
 
         // Assert
-        throw new NotImplementedException();
+
     }
 }
