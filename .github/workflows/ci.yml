@@ -63,7 +63,7 @@ jobs:
       - name: Run Unit Tests
         shell: pwsh
         working-directory: ./Backend
-        run: dotnet test ./Inventory.Tests/Inventory.Tests.csproj --no-build -c Release --results-directory ../TestResults -- --coverage --report-trx
+        run: dotnet test --project ./Inventory.Tests/Inventory.Tests.csproj --no-build -c Release --results-directory ../TestResults -- --coverage --report-trx
 
       - name: Upload test results
         if: always()
