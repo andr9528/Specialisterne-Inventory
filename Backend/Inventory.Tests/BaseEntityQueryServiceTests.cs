@@ -1,5 +1,8 @@
+using Inventory.Model.Entity;
 using Inventory.Persistence.Services;
+using Inventory.Services;
 using Inventory.Tests.Core;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 
 namespace Inventory.Tests;
 
@@ -10,21 +13,46 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
     {
         // Arrange
         var c = CreateContext();
+        
+        var cat = BogusService.GetCategories(1);
+        var loc = BogusService.GetLocations(1);
+        var prod = BogusService.GetProducts(1, cat);
+        c.AddRange(cat.First(), loc.First(), prod.First());
+        await c.SaveChangesAsync();
+
+        var li = BogusService.GetLocationItemsForEach(loc, prod).First();
         var x = new LocationItemQueryService(c);
 
         // Act
+        await x.AddEntity(li, true);
 
         // Assert
+        await Assert.That(c.LocationItems).Contains(li);
+        
     }
 
     [Test]
     public async Task AddEntity_WithSaveImmediatelyFalse_DoesNotPersistUntilSaveChangesIsCalled()
     {
         // Arrange
+        var c = CreateContext();
+
+        var cat = BogusService.GetCategories(1);
+        var loc = BogusService.GetLocations(1);
+        var prod = BogusService.GetProducts(1, cat);
+        var ord = BogusService.GetOrders(1, loc);
+        c.AddRange(cat.First(), loc.First(), prod.First());
+        await c.SaveChangesAsync();
+
+        var oi = BogusService.GetOrderItems(1, ord, prod.ToList()).First();
+        var x = new OrderItemQueryService(c);
 
         // Act
+        await x.AddEntity(oi, false);
+
 
         // Assert
+        await Assert.That(c.OrderItems).DoesNotContain(oi);
     }
 
     [Test]

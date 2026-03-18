@@ -13,16 +13,17 @@ public class BogusStartupModule : IServiceStartupModule
             //If no Categories, assume no data. Only table that does not depend on Categories is Locations
             if (!context.Categories.Any())
             {
-                context.Categories.AddRange(Services.BogusService.GetCategories(10));
-                context.Locations.AddRange(Services.BogusService.GetLocations(10));
-                context.SaveChanges();
+                var c = Services.BogusService.GetCategories(10);
+                var l = Services.BogusService.GetLocations(10);
+                var p = Services.BogusService.GetProducts(100, c);
+                var o = Services.BogusService.GetOrders(10, l);
 
-                context.Products.AddRange(Services.BogusService.GetProducts(100, context.Categories));
-                context.Orders.AddRange(Services.BogusService.GetOrders(10, context.Locations));
-                context.SaveChanges();
-
-                context.LocationItems.AddRange(Services.BogusService.GetLocationItemsForEach(context.Locations, context.Products));
-                context.OrderItems.AddRange(Services.BogusService.GetOrderItems(10, context.Orders, context.Products.ToList()));
+                context.AddRange(o);
+                context.AddRange(c);
+                context.AddRange(l);
+                context.AddRange(p);
+                context.AddRange(Services.BogusService.GetLocationItemsForEach(l, p));
+                context.AddRange(Services.BogusService.GetOrderItems(10, o, p.ToList()));
                 context.SaveChanges();
             }
         }
