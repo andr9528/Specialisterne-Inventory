@@ -18,5 +18,18 @@ export const createProductService = (api: AxiosInstance) => ({
         }
 
         return parsed.data.map(p => mapProduct(p));
+    },
+    addProduct: async () => {
+
+    },
+    editProduct: async () => {
+
+    },
+    deleteProduct: async (id: number) => {
+        const res = await api.delete(`/Product/DeleteById/id?id=${id}`);
+
+        if (res.status !== 200) {
+            throw `Product deletion failed with error: ${res.statusText}`;
+        }
     }
 })

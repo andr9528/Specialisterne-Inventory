@@ -1,12 +1,14 @@
-import { useState, type ChangeEvent } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
 import Modal from "../../../shared/components/Modal";
-import type { WarehouseType } from "../types/productType";
+import type { ProductWarehouseType } from "../types/productType";
 import { textKeys } from "../../../app/constants/textKeys";
 import Input from "../../../shared/components/ui/Input";
 import Select from "../../../shared/components/ui/Select";
 import Button from "../../../shared/components/ui/Button";
 import { Plus } from "lucide-react";
 import ActionButtons from "./ActionButtons";
+import useCategories from "../hooks/useCategories";
+import useWarehouses from "../hooks/useWarehouses";
 
 type ProductModalType = {
     modalIsOpen: boolean;
@@ -14,21 +16,36 @@ type ProductModalType = {
 }
 
 const ProductModal = ({ modalIsOpen, setModalIsOpen }: ProductModalType) => {
-    const warehouses = ["Lager A", "Lager B", "Lager C"];
-    const categories = ["Elektronik", "Møbler", "Audio"];
+    const { warehouses } = useWarehouses();
+    const { categories } = useCategories();
+
     const initialFormData = {
         name: "",
         category: categories[0],
         price: 0,
-        warehouses: [] as Omit<WarehouseType, "inventoryStatus">[],
+        warehouses: [] as Omit<ProductWarehouseType, "inventoryStatus">[],
     }
 
     const [formData, setFormData] = useState(initialFormData);
 
+    useEffect(() => {
+        if (categories.length === 0) return;
+
+        // Only set it if it's not already set
+        setFormData(prev => {
+            if (prev.category) return prev;
+
+            return { ...prev, category: categories[0] }
+        })
+    }, [categories]);
+
     const totalQuantity = formData.warehouses.reduce((prev, current) => prev + Number(current.stock), 0);
 
     const handleSubmit = () => {
+        // TO-DO handle form submit
 
+        setFormData(initialFormData);
+        setModalIsOpen(false);
     }
 
     const handleCancel = () => {
@@ -162,7 +179,7 @@ const ProductModal = ({ modalIsOpen, setModalIsOpen }: ProductModalType) => {
 
                         <div className="flex flex-row justify-end gap-3 mt-auto">
                             <Button variant="outline" onClick={handleCancel}>{textKeys.CANCEL}</Button>
-                            <Button variant="primary" onClick={() => setModalIsOpen(true)}>{textKeys.ADD_PRODUCT}</Button>
+                            <Button variant="primary" onClick={handleSubmit}>{textKeys.ADD_PRODUCT}</Button>
                         </div>
                     </form>
                 </div>

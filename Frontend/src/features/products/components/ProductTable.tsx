@@ -1,12 +1,29 @@
 import useProducts from "../hooks/useProducts";
 import { productColumns } from "../table/productColumns";
+import type { ProductType } from "../types/productType";
+import ActionButtons from "./ActionButtons";
 
 import ProductRow from "./ProductRow";
 
 const ProductTable = () => {
-    const { products } = useProducts();
+    const { products, deleteProductMutation } = useProducts();
 
+    const columns = productColumns.map(column => {
+        if (column.key === "action") {
+            return {
+                ...column,
+                render: (row: ProductType) => (
+                    <ActionButtons
+                        row={row}
+                        onDelete={(row) => deleteProductMutation.mutate({ id: isNaN(Number(row.sku)) ? 0 : Number(row.sku) })}
+                        excludeEdit={false}
+                    />
+                )
+            }
+        }
 
+        return column;
+    });
 
     return (
         <table className="w-full border border-gray-300 rounded-lg table-fixed border-separate border-spacing-0 overflow-hidden">
@@ -15,15 +32,14 @@ const ProductTable = () => {
                     {/* Emtpy header col for the chevron icon */}
                     <th className="border-b border-gray-200" style={{ width: "3%" }}></th>
 
-                    {productColumns.map(col => {
+                    {columns.map(col => {
                         const textFloat = col.textFloat ? `text-${col.textFloat}` : "text-left";
                         return (
                             <th key={col.key} className={`border-b border-gray-200 px-4 py-2 ${textFloat}`} style={{ width: col.width }}>
                                 {col.label}
                             </th>
                         )
-                    }
-                    )}
+                    })}
                 </tr>
             </thead>
 
@@ -32,7 +48,7 @@ const ProductTable = () => {
                     const showBorder: boolean = index !== arr.length - 1;
 
                     return (
-                        <ProductRow product={product} productColumns={productColumns} showBorder={showBorder} key={product.sku} />
+                        <ProductRow product={product} productColumns={columns} showBorder={showBorder} key={product.sku} />
                     )
                 })}
             </tbody>

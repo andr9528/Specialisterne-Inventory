@@ -1,5 +1,5 @@
 import type z from "zod";
-import type { ApiProductSchema, InventoryStatusSchema, ProductSchema, WarehouseSchema } from "../schemas/productSchema";
+import type { ApiProductSchema, InventoryStatusSchema, ProductSchema, ProductWarehouseSchema } from "../schemas/productSchema";
 
 export const InventoryStatus: Record<z.infer<typeof InventoryStatusSchema>, string> = {
   IN_STOCK: "In Stock",
@@ -11,6 +11,6 @@ export type InventoryStatusType = typeof InventoryStatus;
 
 export type ProductType = z.infer<typeof ProductSchema>;
 
-export type WarehouseType = z.infer<typeof WarehouseSchema>;
+export type ProductWarehouseType = z.infer<typeof ProductWarehouseSchema>;
 
 export type ApiProductType = z.infer<typeof ApiProductSchema>;

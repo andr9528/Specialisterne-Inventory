@@ -1,4 +1,3 @@
-import ActionButtons from "../components/ActionButtons";
 import type { ProductType } from "../types/productType";
 
 export type Column<T> = {
@@ -17,9 +16,5 @@ export const productColumns: Column<ProductType>[] = [
     { key: "totalStock", label: "Total Stock", width: "10%", },
     { key: "price", label: "Pris", width: "10%", },
     { key: "inventoryStatus", label: "Status", width: "20%", },
-    {
-        key: "action", label: "Handlinger", textFloat: "right", width: "10%", render: (row: ProductType) => (
-            <ActionButtons row={row} excludeEdit={false} />
-        )
-    }
+    { key: "action", label: "Handlinger", textFloat: "right", width: "10%" }
 ]

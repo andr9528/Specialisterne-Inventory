@@ -17,7 +17,7 @@ const ProductsPage = () => {
         <PageWrapper>
             <div className="flex justify-between">
                 <div className="flex flex-col">
-                    <h2 className="mt-5">Products</h2>
+                    <h2 className="mt-5">Produkter</h2>
                     <p className="text-[16px]">{products.length} produkter fundet</p>
                 </div>
                 <div className="mt-auto">

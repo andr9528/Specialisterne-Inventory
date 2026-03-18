@@ -5,9 +5,14 @@ import Button from "../../../shared/components/ui/Button";
 import { textKeys } from "../../../app/constants/textKeys";
 import Input from "../../../shared/components/ui/Input";
 import Select from "../../../shared/components/ui/Select";
+import useCategories from "../hooks/useCategories";
+import useWarehouses from "../hooks/useWarehouses";
 
 
 const ProductFilter = () => {
+    const { categories } = useCategories();
+    const { warehouses } = useWarehouses();
+
     const defaultItemValue = "ALL";
 
     const [searchQuery, setSearchQuery] = useState<string>("");
@@ -56,9 +61,9 @@ const ProductFilter = () => {
                     </div>
                 </div>
 
-                <Select id="categories" selectValue={categoryValue} setSelectValue={setCategoryValue} items={["Elektronik", "Møbler", "Audio"]} defaultItem="Alle kategorier" defaultItemValue={defaultItemValue} />
+                <Select id="categories" selectValue={categoryValue} setSelectValue={setCategoryValue} items={categories} defaultItem="Alle kategorier" defaultItemValue={defaultItemValue} />
 
-                <Select id="warehouses" selectValue={warehouseValue} setSelectValue={setWarehouseValue} items={["Lager A", "Lager B", "Lager C"]} defaultItem="Alle Lagre" defaultItemValue={defaultItemValue} />
+                <Select id="warehouses" selectValue={warehouseValue} setSelectValue={setWarehouseValue} items={warehouses} defaultItem="Alle Lagre" defaultItemValue={defaultItemValue} />
 
                 <Select id="sort" selectValue={sortValue} setSelectValue={setSortValue} items={sortItems} />
             </div>

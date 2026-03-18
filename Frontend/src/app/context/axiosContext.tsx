@@ -20,7 +20,8 @@ const AxiosContext = createContext<AxiosContextI | undefined>(undefined);
 export const AxiosProvider = ({ children }: React.PropsWithChildren) => {
 
   const authAxios = axios.create({
-    baseURL: API_BASE_URL + "/api"
+    baseURL: API_BASE_URL + "/api",
+    timeout: 5000
   });
 
   authAxios.interceptors.request.use(
