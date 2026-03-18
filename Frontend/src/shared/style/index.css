@@ -21,10 +21,14 @@
 @layer base {
     body {
         @apply font-serif tracking-wide;
+        height: 100%;
+        overflow: hidden;
     }
 
     html {
         font-weight: var(--font-weight-medium);
+        height: 100%;
+        overflow: hidden;
     }
 
     h1 {

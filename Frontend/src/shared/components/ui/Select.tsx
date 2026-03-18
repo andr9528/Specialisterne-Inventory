@@ -1,3 +1,4 @@
+import { SelectPortal } from "@radix-ui/react-select";
 import type { SortItemType } from "../../types/SelectTypes";
 import { Select as RadixSelect, SelectContent, SelectIcon, SelectItem, SelectTriger, SelectValue, SelectViewport } from "./RadixSelect";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
@@ -34,6 +35,7 @@ const Select = ({ id, items, placeholder, defaultItem, defaultItemValue = "ALL",
                 className="bg-gray-50 border border-gray-300 w-(--radix-select-trigger-width) rounded shadow text-gray-900"
             >
                 <SelectViewport>
+
                     {defaultItem && <SelectItem value={defaultItemValue}>{defaultItem}</SelectItem>}
                     {items.map(item => {
                         if (isObjectItem(item)) {
