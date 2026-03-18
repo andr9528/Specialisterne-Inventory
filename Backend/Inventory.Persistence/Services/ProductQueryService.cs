@@ -53,17 +53,13 @@ public class ProductQueryService : BaseEntityQueryService<InventoryDatabaseConte
             return query;
         }
 
-        var includedQuery = query.Include(x => x.Locations);
+        query = query.Include(x => x.Locations).ThenInclude(x=> x.Location);
 
         if (!string.IsNullOrWhiteSpace(complexSearchableProduct.LocationNameContains))
         {
             string keyword = $"%{complexSearchableProduct.LocationNameContains}%";
-            query = includedQuery.ThenInclude(x => x.Location).Where(x =>
+            query = query.Where(x =>
                 x.Locations.Any(loc => EF.Functions.Like(loc.Location.Name, keyword)));
-        }
-        else
-        {
-            query = includedQuery;
         }
 
         if (complexSearchableProduct.HasInventoryStatus.HasValue)
