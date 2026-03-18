@@ -27,7 +27,7 @@ public class ProductQueryService : BaseEntityQueryService<InventoryDatabaseConte
 
         if (complexSearchableProduct.IncludeOrders.HasValue)
         {
-            query = query.Include(x => x.Orders);
+            query = query.Include(x => x.Orders).ThenInclude(x => x.Order);
         }
 
         if (!string.IsNullOrWhiteSpace(complexSearchableProduct.CategoryNameContains))
