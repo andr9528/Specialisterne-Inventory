@@ -7,9 +7,10 @@ import ProductFilter from "./_components/ProductFilters";
 import ProductTable from "./_components/ProductTable";
 import ProductModal from "./_components/ProductModal";
 import { useState } from "react";
+import Loader from "../../../shared/components/Loader";
 
 const ProductsPage = () => {
-    const { products } = useProducts();
+    const { products, isLoading } = useProducts();
     const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
 
     return (
@@ -23,9 +24,14 @@ const ProductsPage = () => {
                     <Button variant="primary" onClick={() => setModalIsOpen(true)} icon={Plus}>{textKeys.ADD_PRODUCT}</Button>
                 </div>
             </div>
+            
             <ProductFilter />
 
-            <ProductTable />
+            {isLoading ? (
+                <Loader />
+            ) : (
+                <ProductTable />
+            )}
 
             <ProductModal modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} />
         </PageWrapper>

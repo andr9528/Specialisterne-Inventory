@@ -17,3 +17,23 @@ export const ProductSchema = z.object({
     inventoryStatus: InventoryStatusSchema,
     warehouses: z.array(WarehouseSchema)
 });
+
+export const ApiProductSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  price: z.number(),
+  status: InventoryStatusSchema,
+  totalQuantity: z.number(),
+  locations: z.array(
+    z.object({
+      quantity: z.number(),
+      status: InventoryStatusSchema,
+      name: z.string().optional() //TO-DO fix optional
+    })
+  ),
+  category: z.object({
+    name: z.string(),
+  }),
+});
+
+export const ApiProductsSchema = z.array(ApiProductSchema);

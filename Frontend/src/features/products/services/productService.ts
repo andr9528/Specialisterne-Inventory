@@ -1,17 +1,22 @@
 import type { AxiosInstance } from "axios";
-import type { ProductType } from "../types/productType";
-import { ProductSchema } from "../schemas/productSchema";
+import type { ApiProductType, ProductType } from "../types/productType";
+import { ApiProductsSchema } from "../schemas/productSchema";
+import { mapProduct } from "../mappers/productMapper";
 
 export const createProductService = (api: AxiosInstance) => ({
-    getProducts: async () => {
-        const res = await api.get<ProductType[]>("/api/Product/GetAll");
-        const parsed = ProductSchema.safeParse(res.data);
+    getProducts: async (): Promise<ProductType[]> => {
+        const res = await api.post<ApiProductType[]>("/Product/GetAllByComplexQuery", {
+            includeLocations: true
+        }, {
+            headers: { "Content-Type": "application/json" }
+        });
+
+        const parsed = ApiProductsSchema.safeParse(res.data);
 
         if (!parsed.success) {
-            console.error("Invalid product data", parsed.error);
-            return null;
+            throw `Invalid product data: ${parsed.error}`;
         }
 
-        return parsed.data;
+        return parsed.data.map(p => mapProduct(p));
     }
 })
