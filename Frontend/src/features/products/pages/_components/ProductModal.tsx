@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Modal from "../../../../shared/components/Modal";
 import type { InventoryStatusType, WarehouseType } from "../../types/productType";
-import { textKeys } from "../../../../shared/constants/textKeys";
+import { textKeys } from "../../../../app/constants/textKeys";
 import Input from "../../../../shared/components/ui/Input";
 import Select from "../../../../shared/components/ui/Select";
 import Button from "../../../../shared/components/ui/Button";

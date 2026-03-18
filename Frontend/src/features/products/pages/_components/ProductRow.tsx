@@ -1,7 +1,7 @@
 import { Check, ChevronDown, ChevronRight } from "lucide-react";
 import type { Column } from "../../table/productColumns";
 import { InventoryStatus, type ProductType } from "../../types/productType";
-import { textKeys } from "../../../../shared/constants/textKeys";
+import { textKeys } from "../../../../app/constants/textKeys";
 import { useState, type ReactNode } from "react";
 
 type ProdutcRowType = {

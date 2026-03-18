@@ -1,7 +1,7 @@
 import axios, { type AxiosInstance } from 'axios';
 import React, { createContext, useContext } from 'react';
 
-import { API_BASE_URL } from '../../shared/constants/api';
+import { API_BASE_URL } from '../constants/api';
 
 interface AxiosContextI {
   authAxios: AxiosInstance;
@@ -19,7 +19,6 @@ const AxiosContext = createContext<AxiosContextI | undefined>(undefined);
 
 export const AxiosProvider = ({ children }: React.PropsWithChildren) => {
 
-
   const authAxios = axios.create({
     baseURL: API_BASE_URL
   });
@@ -34,10 +33,6 @@ export const AxiosProvider = ({ children }: React.PropsWithChildren) => {
       config.headers['Content-Type'] = 'application/json'
       config.headers['Accept'] = 'application/json'
 
-/*       if (credentials?.userId) {
-        config.baseURL = LOCALHOST_API_BASE_URL + `/api/v1/app/protected/users/${credentials.userId}`
-      }
- */
       return config;
     },
     error => {

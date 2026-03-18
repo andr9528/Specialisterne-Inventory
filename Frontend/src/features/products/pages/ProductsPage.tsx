@@ -1,7 +1,7 @@
 import { Plus } from "lucide-react";
 import Button from "../../../shared/components/ui/Button";
 import PageWrapper from "../../../shared/components/PageWrapper";
-import { textKeys } from "../../../shared/constants/textKeys";
+import { textKeys } from "../../../app/constants/textKeys";
 import useProducts from "../hooks/useProducts";
 import ProductFilter from "./_components/ProductFilters";
 import ProductTable from "./_components/ProductTable";

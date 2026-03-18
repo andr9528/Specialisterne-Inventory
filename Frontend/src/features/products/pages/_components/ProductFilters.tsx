@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { SortItemType } from "../../../../shared/types/SelectTypes";
 import { Search } from "lucide-react";
 import Button from "../../../../shared/components/ui/Button";
-import { textKeys } from "../../../../shared/constants/textKeys";
+import { textKeys } from "../../../../app/constants/textKeys";
 import Input from "../../../../shared/components/ui/Input";
 import Select from "../../../../shared/components/ui/Select";
 
