@@ -1,3 +1,4 @@
+using Inventory.Persistence.Services;
 using Inventory.Tests.Core;
 
 namespace Inventory.Tests;
@@ -8,6 +9,8 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
     public async Task AddEntity_WithSaveImmediatelyTrue_PersistsEntity()
     {
         // Arrange
+        var c = CreateContext();
+        var x = new LocationItemQueryService(c);
 
         // Act
 
