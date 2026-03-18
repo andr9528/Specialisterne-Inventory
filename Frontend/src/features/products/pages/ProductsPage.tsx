@@ -3,9 +3,9 @@ import Button from "../../../shared/components/ui/Button";
 import PageWrapper from "../../../shared/components/PageWrapper";
 import { textKeys } from "../../../app/constants/textKeys";
 import useProducts from "../hooks/useProducts";
-import ProductFilter from "./_components/ProductFilters";
-import ProductTable from "./_components/ProductTable";
-import ProductModal from "./_components/ProductModal";
+import ProductFilter from "../components/ProductFilters";
+import ProductTable from "../components/ProductTable";
+import ProductModal from "../components/ProductModal";
 import { useState } from "react";
 import Loader from "../../../shared/components/Loader";
 

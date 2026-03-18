@@ -30,7 +30,7 @@ const Button: React.FC<ButtoneProps> = ({
             variantStyle = "rounded-lg p-1 px-3 border border-gray-300 hover:bg-gray-100";
             break;
         case "ghost":
-            variantStyle = "border-none";
+            variantStyle = "border-none hover:bg-gray-300/80 rounded-lg p-2";
             break;
         case "tag":
             variantStyle = "bg-gray-200 text-gray-700 hover:bg-gray-300 rounded-2xl px-3 py-0.5 text-sm font-medium";

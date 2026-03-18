@@ -1,10 +1,10 @@
 import { useState } from "react";
-import type { SortItemType } from "../../../../shared/types/SelectTypes";
+import type { SortItemType } from "../../../shared/types/SelectTypes";
 import { Search } from "lucide-react";
-import Button from "../../../../shared/components/ui/Button";
-import { textKeys } from "../../../../app/constants/textKeys";
-import Input from "../../../../shared/components/ui/Input";
-import Select from "../../../../shared/components/ui/Select";
+import Button from "../../../shared/components/ui/Button";
+import { textKeys } from "../../../app/constants/textKeys";
+import Input from "../../../shared/components/ui/Input";
+import Select from "../../../shared/components/ui/Select";
 
 
 const ProductFilter = () => {
@@ -56,11 +56,11 @@ const ProductFilter = () => {
                     </div>
                 </div>
 
-                <Select selectValue={categoryValue} setSelectValue={setCategoryValue} items={["Elektronik", "Møbler", "Audio"]} defaultItem="Alle kategorier" defaultItemValue={defaultItemValue} />
+                <Select id="categories" selectValue={categoryValue} setSelectValue={setCategoryValue} items={["Elektronik", "Møbler", "Audio"]} defaultItem="Alle kategorier" defaultItemValue={defaultItemValue} />
 
-                <Select selectValue={warehouseValue} setSelectValue={setWarehouseValue} items={["Lager A", "Lager B", "Lager C"]} defaultItem="Alle Lagre" defaultItemValue={defaultItemValue} />
+                <Select id="warehouses" selectValue={warehouseValue} setSelectValue={setWarehouseValue} items={["Lager A", "Lager B", "Lager C"]} defaultItem="Alle Lagre" defaultItemValue={defaultItemValue} />
 
-                <Select selectValue={sortValue} setSelectValue={setSortValue} items={sortItems} />
+                <Select id="sort" selectValue={sortValue} setSelectValue={setSortValue} items={sortItems} />
             </div>
 
             <div className="flex flex-wrap mt-7 gap-2">

@@ -9,8 +9,8 @@ type SelectType = {
     defaultItemValue?: string;
     items: string[] | SortItemType;
     selectValue: string;
-    setSelectValue: (value: string) => void;
-    id?: string;
+    setSelectValue: (value: string, id: string) => void;
+    id: string;
 }
 
 const Select = ({ id, items, placeholder, defaultItem, defaultItemValue = "ALL", selectValue, setSelectValue }: SelectType) => {
@@ -20,7 +20,7 @@ const Select = ({ id, items, placeholder, defaultItem, defaultItemValue = "ALL",
     }
 
     return (
-        <RadixSelect value={selectValue} onValueChange={setSelectValue}>
+        <RadixSelect value={selectValue} onValueChange={(value) => setSelectValue(value, id)} name={id}>
             <SelectTriger id={id} className="min-h-8 rounded-lg border border-gray-300 outline-none focus-visible:ring-[1px] focus-visible:border-ring focus-visible:ring-ring py-1 px-2 flex flex-row justify-between w-full items-center bg-input-background font-bold text-sm ">
                 <SelectValue placeholder={placeholder} />
                 <SelectIcon className="SelectIcon">
@@ -43,7 +43,7 @@ const Select = ({ id, items, placeholder, defaultItem, defaultItemValue = "ALL",
                         } else {
                             return <SelectItem value={item} key={item}>{item}</SelectItem>
                         }
-
+                        
                     })}
                 </SelectViewport>
             </SelectContent>
