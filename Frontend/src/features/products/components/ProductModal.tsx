@@ -23,6 +23,8 @@ const ProductModal = ({ modalIsOpen, setModalIsOpen }: ProductModalType) => {
         warehouses: [] as Omit<WarehouseType, "inventoryStatus">[],
     });
 
+    const totalQuantity = formData.warehouses.reduce((prev, current) => prev + Number(current.stock), 0);
+
     const handleSubmit = () => {
 
     }
@@ -140,8 +142,18 @@ const ProductModal = ({ modalIsOpen, setModalIsOpen }: ProductModalType) => {
                                             </div>
                                         </div>
                                     )
-                                })
-                                }
+                                })}
+
+                                <div className="p-3 bg-blue-50 rounded-md">
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-sm font-medium text-blue-900">Total {textKeys.WAREHOUSES_AMOUNT}:</span>
+                                        <span className="text-lg font-semibold text-blue-900">{totalQuantity} stk</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <Button variant="primary" onClick={() => setModalIsOpen(true)} icon={Plus}>{textKeys.ADD_PRODUCT}</Button>
                             </div>
                         </div>
                     </form>
