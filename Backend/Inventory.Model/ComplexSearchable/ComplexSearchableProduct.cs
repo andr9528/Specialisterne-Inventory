@@ -14,4 +14,5 @@ public class ComplexSearchableProduct : IComplexSearchable<SearchableProduct>
     public InventoryStatus? HasInventoryStatus { get; set; }
     public string? CategoryNameContains { get; set; }
     public string? LocationNameContains { get; set; }
+    public string? ProductNameContains { get; set; }
 }

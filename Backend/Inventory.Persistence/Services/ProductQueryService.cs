@@ -36,6 +36,12 @@ public class ProductQueryService : BaseEntityQueryService<InventoryDatabaseConte
             query = query.Where(x => EF.Functions.Like(x.Category.Name, keyword));
         }
 
+        if (!string.IsNullOrWhiteSpace(complexSearchableProduct.ProductNameContains))
+        {
+            string keyword = $"%{complexSearchableProduct.ProductNameContains}%";
+            query = query.Where(x => EF.Functions.Like(x.Name, keyword));
+        }
+
         return query;
     }
 
