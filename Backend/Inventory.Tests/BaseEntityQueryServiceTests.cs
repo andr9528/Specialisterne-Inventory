@@ -17,8 +17,6 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
         var cat = BogusService.GetCategories(1);
         var loc = BogusService.GetLocations(1);
         var prod = BogusService.GetProducts(1, cat);
-        c.AddRange(cat.First(), loc.First(), prod.First());
-        await c.SaveChangesAsync();
 
         var li = BogusService.GetLocationItemsForEach(loc, prod).First();
         var x = new LocationItemQueryService(c);
@@ -41,8 +39,6 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
         var loc = BogusService.GetLocations(1);
         var prod = BogusService.GetProducts(1, cat);
         var ord = BogusService.GetOrders(1, loc);
-        c.AddRange(cat.First(), loc.First(), prod.First());
-        await c.SaveChangesAsync();
 
         var oi = BogusService.GetOrderItems(1, ord, prod.ToList()).First();
         var x = new OrderItemQueryService(c);
