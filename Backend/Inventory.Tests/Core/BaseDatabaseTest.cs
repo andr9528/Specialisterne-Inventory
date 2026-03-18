@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Npgsql;
 
-namespace Inventory.Tests;
+namespace Inventory.Tests.Core;
 
 public abstract class BaseDatabaseTest
 {
