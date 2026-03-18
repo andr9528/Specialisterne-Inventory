@@ -146,4 +146,14 @@ public class LocationQueryServiceTests : BaseDatabaseTest
 
         // Assert
     }
+
+    [Test]
+    public async Task GetEntity_WithWhitespaceName_DoesNotFilterByName()
+    {
+        // Arrange
+
+        // Act
+
+        // Assert
+    }
 }
