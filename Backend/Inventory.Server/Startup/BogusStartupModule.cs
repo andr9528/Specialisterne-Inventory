@@ -69,13 +69,19 @@ public static class FakeData
     internal static IEnumerable<LocationItem> GetLocationItems(List<Location> locations, List<Product> products)
     {
         var locationItemFaker = new Faker<LocationItem>()
-            .RuleFor(li => li.Product, f => f.PickRandom(products))
-            .RuleFor(li => li.Location, f => f.PickRandom(locations))
             .RuleFor(li => li.Quantity, f => f.Random.Number(0, 1000))
             .RuleFor(li => li.TargetQuantity, f => f.Random.Number(100, 500))
-            .RuleFor(li => li.ReservedQuantity, f => f.Random.Number(0, 50))
-            .RuleFor(li => li.Status, f => f.PickRandom<InventoryStatus>());
-        return locationItemFaker.Generate(100);
+            .RuleFor(li => li.ReservedQuantity, f => f.Random.Number(0, 50));
+        foreach (var location in locations)
+        {
+            foreach(var product in products)
+            {
+                var x = locationItemFaker.Generate(1).First();
+                x.Location = location;
+                x.Product = product;
+                yield return x;
+            }
+        }
     }
 
     internal static IEnumerable<Order> GetOrders(List<Location> locations)
