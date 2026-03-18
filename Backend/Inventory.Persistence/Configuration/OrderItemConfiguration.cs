@@ -21,7 +21,6 @@ public class OrderItemConfiguration : EntityConfiguration<OrderItem>
         builder.HasOne(x => (Product)x.Product).WithMany(x => (ICollection<OrderItem>)x.Orders)
             .HasForeignKey(x => x.ProductId);
 
-        // Todo: Cannot add below requirements, until we figure out how Bogus will handle the uniqueness.
-        //builder.HasIndex(x => new {x.OrderId, x.ProductId}).IsUnique();
+        builder.HasIndex(x => new {x.OrderId, x.ProductId}).IsUnique();
     }
 }
