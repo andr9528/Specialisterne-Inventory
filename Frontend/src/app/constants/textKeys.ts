@@ -8,5 +8,6 @@ export const textKeys = {
    OUT_OF_STOCK: "Udsolgt",
    ADD_PRODUCT: "Tilføj Produkt",
    ADD_NEW_PRODUCT: "Tilføj Nyt Produkt",
-   ADD_WAREHOUSE: "Add lager"
+   ADD_WAREHOUSE: "Add lager",
+   CANCEL: "Annuller"
 }

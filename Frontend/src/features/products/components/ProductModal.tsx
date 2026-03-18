@@ -15,18 +15,25 @@ type ProductModalType = {
 
 const ProductModal = ({ modalIsOpen, setModalIsOpen }: ProductModalType) => {
     const warehouses = ["Lager A", "Lager B", "Lager C"];
-
-    const [formData, setFormData] = useState({
+    const categories = ["Elektronik", "Møbler", "Audio"];
+    const initialFormData = {
         name: "",
-        category: "Elektronik",
+        category: categories[0],
         price: 0,
         warehouses: [] as Omit<WarehouseType, "inventoryStatus">[],
-    });
+    }
+
+    const [formData, setFormData] = useState(initialFormData);
 
     const totalQuantity = formData.warehouses.reduce((prev, current) => prev + Number(current.stock), 0);
 
     const handleSubmit = () => {
 
+    }
+
+    const handleCancel = () => {
+        setFormData(initialFormData);
+        setModalIsOpen(false);
     }
 
     const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -85,7 +92,7 @@ const ProductModal = ({ modalIsOpen, setModalIsOpen }: ProductModalType) => {
                                         id="category"
                                         selectValue={formData.category}
                                         setSelectValue={handleSelectChange}
-                                        items={["Elektronik", "Møbler", "Audio"]}
+                                        items={categories}
                                     />
                                 </div>
 
@@ -103,7 +110,7 @@ const ProductModal = ({ modalIsOpen, setModalIsOpen }: ProductModalType) => {
 
                             <div className="space-y-2 flex flex-row justify-between">
                                 <label htmlFor="price">Lagerplacering *</label>
-                                <Button variant="outline" onClick={handleAddWarehouse} icon={Plus}>{textKeys.ADD_WAREHOUSE}</Button>
+                                <Button variant="outline-slim" onClick={handleAddWarehouse} icon={Plus}>{textKeys.ADD_WAREHOUSE}</Button>
                             </div>
 
                             {formData.warehouses.length === 0 && (
@@ -151,10 +158,11 @@ const ProductModal = ({ modalIsOpen, setModalIsOpen }: ProductModalType) => {
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-                            <div>
-                                <Button variant="primary" onClick={() => setModalIsOpen(true)} icon={Plus}>{textKeys.ADD_PRODUCT}</Button>
-                            </div>
+                        <div className="flex flex-row justify-end gap-3 mt-auto">
+                            <Button variant="outline" onClick={handleCancel}>{textKeys.CANCEL}</Button>
+                            <Button variant="primary" onClick={() => setModalIsOpen(true)}>{textKeys.ADD_PRODUCT}</Button>
                         </div>
                     </form>
                 </div>
