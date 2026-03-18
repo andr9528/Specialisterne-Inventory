@@ -18,22 +18,27 @@ namespace Inventory.Model.Entity
         }
 
         /// <inheritdoc />
-        public byte[] Version { get; set; }
+        public uint Version { get; set; }
 
         /// <inheritdoc />
         public DateTime CreatedDateTime { get; set; }
 
         /// <inheritdoc />
         public DateTime UpdatedDateTime { get; set; }
-
-        /// <inheritdoc />
-        public string Name { get; set; }
-
         /// <inheritdoc />
         public ICollection<IOrderItem> Products { get ; set ; }
 
         /// <inheritdoc />
+        public ILocation Location { get; set; }
+
+        /// <inheritdoc />
         public OrderStatus Status { get; set; }
+
+        /// <inheritdoc />
+        public Guid ReferenceId { get; set; }
+
+        /// <inheritdoc />
+        public int? LocationId { get; set; }
 
         /// <summary>
         /// Constructor for Entity Framework Core to use.

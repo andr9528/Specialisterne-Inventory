@@ -1,4 +1,4 @@
-﻿namespace Inventory.Abstraction.Interfaces.Persistence
+namespace Inventory.Abstraction.Interfaces.Persistence
 {
     public interface IEntity : ISearchable
     {
@@ -7,7 +7,7 @@
         /// Most databases can use a byte array for this purpose, but you can change it to something else if needed.
         /// The important thing is that it should be able to detect changes to the entity and prevent concurrent updates from overwriting each other.
         /// </summary>
-        byte[] Version { get; set; }
+        uint Version { get; set; }
 
         DateTime CreatedDateTime { get; set; }
         DateTime UpdatedDateTime { get; set; }

@@ -1,4 +1,5 @@
 using Inventory.Abstraction.Interfaces.Persistence;
+using Inventory.Model.ComplexSearchable;
 using Inventory.Model.Entity;
 using Inventory.Model.Searchable;
 using Inventory.Persistence.Core;
@@ -14,10 +15,25 @@ public class ProductQueryService : BaseEntityQueryService<InventoryDatabaseConte
     }
 
     /// <inheritdoc />
-    protected override IQueryable<Product> AddComplexQueryArguments(IQueryable<Product> basicQuery, IComplexSearchable<SearchableProduct> complex)
+    protected override IQueryable<Product> AddComplexQueryArguments(IQueryable<Product> query, IComplexSearchable<SearchableProduct> complex)
     {
-        // No implementation of `IComplexSearchable<SearchableProduct>` exist - Throwing.
-        throw new NotImplementedException();
+        if (complex is not ComplexSearchableProduct complexSearchableProduct)
+        {
+            throw new ArgumentException(
+                $"Expected {nameof(complex)} to be of type {nameof(ComplexSearchableProduct)}, but it wasn't.");
+        }
+
+        if (complexSearchableProduct.IncludeLocations.HasValue)
+        {
+            query = query.Include(x => x.Locations);
+        }
+
+        if (complexSearchableProduct.IncludeOrders.HasValue)
+        {
+            query = query.Include(x => x.Orders);
+        }
+
+        return query;
     }
 
     /// <inheritdoc />

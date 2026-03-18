@@ -1,4 +1,5 @@
 using Inventory.Abstraction.Interfaces.Persistence;
+using Inventory.Model.ComplexSearchable;
 using Inventory.Model.Entity;
 using Inventory.Model.Searchable;
 using Inventory.Persistence.Core;
@@ -14,10 +15,24 @@ public class LocationItemQueryService : BaseEntityQueryService<InventoryDatabase
     }
 
     /// <inheritdoc />
-    protected override IQueryable<LocationItem> AddComplexQueryArguments(IQueryable<LocationItem> basicQuery, IComplexSearchable<SearchableLocationItem> complex)
+    protected override IQueryable<LocationItem> AddComplexQueryArguments(IQueryable<LocationItem> query, IComplexSearchable<SearchableLocationItem> complex)
     {
-        // No implementation of `IComplexSearchable<SearchableLocationItem>` exist - Throwing.
-        throw new NotImplementedException();
+        if (complex is not ComplexSearchableLocationItem complexSearchableLocationItem)
+        {
+            throw new ArgumentException($"Expected {nameof(complex)} to be of type {nameof(ComplexSearchableLocationItem)}, but it wasn't.");
+        }
+
+        if (complexSearchableLocationItem.MinimumItemsInStock.HasValue)
+        {
+            query = query.Where(x => x.Quantity > complexSearchableLocationItem.MinimumItemsInStock);
+        }
+
+        if (complexSearchableLocationItem.MinimumItemsReserved.HasValue)
+        {
+            query = query.Where(x => x.ReservedQuantity > complexSearchableLocationItem.MinimumItemsReserved);
+        }
+
+        return query;
     }
 
     /// <inheritdoc />
@@ -42,6 +57,11 @@ public class LocationItemQueryService : BaseEntityQueryService<InventoryDatabase
         if (searchable.Quantity != 0)
         {
             query = query.Where(x => x.Quantity == searchable.Quantity);
+        }
+
+        if (searchable.ReservedQuantity != 0)
+        {
+            query = query.Where(x => x.ReservedQuantity == searchable.ReservedQuantity);
         }
 
         return query;

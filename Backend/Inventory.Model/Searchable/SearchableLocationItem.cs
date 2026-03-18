@@ -5,12 +5,18 @@ namespace Inventory.Model.Searchable
     public class SearchableLocationItem : ISearchableLocationItem
     {
         /// <inheritdoc />
-        public int LocationId { get; set; }
+        public int LocationId { get; set; } = 0;
+
         /// <inheritdoc />
-        public int ProductId { get; set; }
+        public int ProductId { get; set; } = 0;
+
         /// <inheritdoc />
-        public int Quantity { get; set; }
+        public int Quantity { get; set; } = 0;
+
         /// <inheritdoc />
-        public int Id { get; set; }
+        public int ReservedQuantity { get; set; } = 0;
+
+        /// <inheritdoc />
+        public int Id { get; set; } = 0;
     }
 }

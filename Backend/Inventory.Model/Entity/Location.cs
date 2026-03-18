@@ -16,7 +16,7 @@ namespace Inventory.Model.Entity
         }
 
         /// <inheritdoc />
-        public byte[] Version { get; set; }
+        public uint Version { get; set; }
 
         /// <inheritdoc />
         public DateTime CreatedDateTime { get; set; }
@@ -29,6 +29,9 @@ namespace Inventory.Model.Entity
 
         /// <inheritdoc />
         public ICollection<ILocationItem> Products { get ; set ; }
+
+        /// <inheritdoc />
+        public ICollection<IOrder> Orders { get; set; }
 
         /// <summary>
         /// Constructor for Entity Framework Core to use.
