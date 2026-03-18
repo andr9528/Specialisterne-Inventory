@@ -50,7 +50,6 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
         // Act
         await x.AddEntity(oi, false);
 
-
         // Assert
         await Assert.That(c.OrderItems).DoesNotContain(oi);
     }
@@ -81,11 +80,20 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
     public async Task GetEntity_WithMatchingId_ReturnsEntity()
     {
         // Arrange
+        var c = CreateContext();
+
+        var cat = BogusService.GetCategories(1);
+        var prod = BogusService.GetProducts(1, cat).First();
+        c.AddRange(cat.First(), prod);
+        await c.SaveChangesAsync();
+
+        var x = new ProductQueryService(c);
 
         // Act
+        var prod2 = await x.GetEntity( new Model.Searchable.SearchableProduct() { Id = prod.Id});
 
         // Assert
-
+        await Assert.That(prod2).IsEqualTo(prod);
     }
 
     [Test]
