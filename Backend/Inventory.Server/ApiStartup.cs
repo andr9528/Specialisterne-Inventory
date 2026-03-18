@@ -6,6 +6,7 @@ using Inventory.Model.Searchable;
 using Inventory.Model.Server;
 using Inventory.Persistence;
 using Inventory.Persistence.Services;
+using Inventory.Server.JsonConverters;
 using Inventory.Server.Startup;
 using Inventory.Services;
 using Inventory.Startup;
@@ -67,6 +68,7 @@ public class ApiStartup : ModularStartup<IApplicationBuilder>
         {
             options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             options.SerializerSettings.Converters.Add(new StringEnumConverter());
+            options.SerializerSettings.Converters.Add(new ProductJsonConverter());
         });
 
         // When a class implementation for a Complex Searchable is added, Add a line below, and update the Type used in the Controller.
