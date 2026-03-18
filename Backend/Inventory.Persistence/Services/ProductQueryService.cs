@@ -23,14 +23,47 @@ public class ProductQueryService : BaseEntityQueryService<InventoryDatabaseConte
                 $"Expected {nameof(complex)} to be of type {nameof(ComplexSearchableProduct)}, but it wasn't.");
         }
 
-        if (complexSearchableProduct.IncludeLocations.HasValue)
-        {
-            query = query.Include(x => x.Locations);
-        }
+        query = AddLocationRelatedQueryArguments(query, complexSearchableProduct);
 
         if (complexSearchableProduct.IncludeOrders.HasValue)
         {
             query = query.Include(x => x.Orders);
+        }
+
+        if (!string.IsNullOrWhiteSpace(complexSearchableProduct.CategoryNameContains))
+        {
+            string keyword = $"%{complexSearchableProduct.CategoryNameContains}%";
+            query = query.Where(x => EF.Functions.Like(x.Category.Name, keyword));
+        }
+
+        return query;
+    }
+
+    private IQueryable<Product> AddLocationRelatedQueryArguments(
+        IQueryable<Product> query, ComplexSearchableProduct complexSearchableProduct)
+    {
+        if (!complexSearchableProduct.IncludeLocations.HasValue)
+        {
+            return query;
+        }
+
+        var includedQuery = query.Include(x => x.Locations);
+
+        if (!string.IsNullOrWhiteSpace(complexSearchableProduct.LocationNameContains))
+        {
+            string keyword = $"%{complexSearchableProduct.LocationNameContains}%";
+            query = includedQuery.ThenInclude(x => x.Location).Where(x =>
+                x.Locations.Any(loc => EF.Functions.Like(loc.Location.Name, keyword)));
+        }
+        else
+        {
+            query = includedQuery;
+        }
+
+        if (complexSearchableProduct.HasInventoryStatus.HasValue)
+        {
+            query = query.Where(x =>
+                x.Locations.Any(loc => loc.Status == complexSearchableProduct.HasInventoryStatus));
         }
 
         return query;
