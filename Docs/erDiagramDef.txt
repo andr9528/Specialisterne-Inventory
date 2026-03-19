@@ -1,11 +1,13 @@
 erDiagram
     ORDER ||--|{ ORDER_ITEM : contains
+    ORDER |o--o{ LOCATION : at
     PRODUCT ||--o{ ORDER_ITEM : includes
     PRODUCT ||--o{ LOCATION_ITEM : includes
     LOCATION ||--o{ LOCATION_ITEM : contains
     CATEGORY }|--|| PRODUCT : is
         ORDER {
         int id
+        guid refenceId
         date orderDate
         string status
     }
@@ -29,6 +31,6 @@ erDiagram
     LOCATION_ITEM{
         int quantity
         int targetQuantity
+        int reservedQuantity
     }
-
-https://mermaid.ai/open-source/syntax/entityRelationshipDiagram.html
+    

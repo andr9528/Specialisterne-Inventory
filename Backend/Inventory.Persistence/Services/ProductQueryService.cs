@@ -56,8 +56,7 @@ public class ProductQueryService : BaseEntityQueryService<InventoryDatabaseConte
 
         if (complexSearchableProduct is {IncludeLocations: not null, HasInventoryStatus: not null})
         {
-            entities = entities.Where(x => x.Locations.Any(loc =>
-                loc.Status.ToString() == complexSearchableProduct.HasInventoryStatus.ToString()));
+            entities = entities.Where(x => x.Status == complexSearchableProduct.HasInventoryStatus).ToList();
         }
 
         return entities;
