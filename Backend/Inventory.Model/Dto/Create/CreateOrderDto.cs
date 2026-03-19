@@ -2,15 +2,16 @@ using Inventory.Abstraction.Interfaces.Model.Entity;
 using Inventory.Abstraction.Interfaces.Services;
 using Inventory.Model.Entity;
 
-namespace Inventory.Model.Dto;
+namespace Inventory.Model.Dto.Create;
 
 public class CreateOrderDto
 {
     public Guid Reference { get; set; } = Guid.NewGuid();
+    // Todo: Change OrderItem to a CreateOrderItemDto
     public required IEnumerable<OrderItem> Items { get; set; }
     int? PreferredLocationId { get; set; }
 
-    public async Task<IEnumerable<IOrder>> UnpackDto(IOrderService service)
+    public async Task<IList<IOrder>> UnpackDto(IOrderService service)
     {
         return await service.CreateOrders(Reference, Items, PreferredLocationId);
     }

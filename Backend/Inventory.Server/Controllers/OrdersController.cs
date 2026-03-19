@@ -2,7 +2,7 @@ using Inventory.Abstraction.Interfaces.Model.Entity;
 using Inventory.Abstraction.Interfaces.Persistence;
 using Inventory.Abstraction.Interfaces.Services;
 using Inventory.Model.ComplexSearchable;
-using Inventory.Model.Dto;
+using Inventory.Model.Dto.Create;
 using Inventory.Model.Entity;
 using Inventory.Model.Searchable;
 using Inventory.Server.Controllers.Core;
