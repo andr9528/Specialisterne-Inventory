@@ -67,7 +67,7 @@ const ProductRow = ({ product, productColumns, showBorder }: ProdutcRowType) => 
             {product.warehouses.length > 0 && (
                 <tr>
                     <td colSpan={8} className="p-0">
-                        <div className={`transition-all duration-500 overflow-hidden ${isExpanded ? "max-h-125 opacity-100" : "max-h-0 opacity-0"}`}>
+                        <div className={`transition-all duration-500 overflow-hidden ${isExpanded ? "max-h-300 opacity-100" : "max-h-0 opacity-0"}`}>
                             <h4 className="mx-12 my-3">{textKeys.WAREHOUSES_DISTRIBUTION}</h4>
                             <div className="mx-12 flex flex-wrap gap-5 mt-2 mb-4">
                                 {product.warehouses.map((warehouse, index) => {
