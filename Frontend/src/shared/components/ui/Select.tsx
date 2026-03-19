@@ -1,7 +1,7 @@
-import { SelectPortal } from "@radix-ui/react-select";
 import type { SortItemType } from "../../types/SelectTypes";
 import { Select as RadixSelect, SelectContent, SelectIcon, SelectItem, SelectTriger, SelectValue, SelectViewport } from "./RadixSelect";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
+import { DEFAULT_ITEM_VALUE } from "../../../app/constants/filterDefaultValue";
 
 type SelectType = {
     placeholder?: string;
@@ -13,7 +13,7 @@ type SelectType = {
     id: string;
 }
 
-const Select = ({ id, items, placeholder, defaultItem, defaultItemValue = "ALL", selectValue, setSelectValue }: SelectType) => {
+const Select = ({ id, items, placeholder, defaultItem, defaultItemValue = DEFAULT_ITEM_VALUE, selectValue, setSelectValue }: SelectType) => {
 
     const isObjectItem = (item: any): item is SortItemType[number] => {
         return item && typeof item === "object" && "value" in item && "text" in item;

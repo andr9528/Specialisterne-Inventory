@@ -136,7 +136,7 @@ const ProductModal = ({ modalIsOpen, setModalIsOpen }: ProductModalType) => {
                                 </div>
                             )}
 
-                            <div className="space-y-3 overflow-y-auto max-h-[90vh]">
+                            <div className="space-y-3">
                                 {formData.warehouses.map((warehouse, index) => {
                                     return (
                                         <div className="grid grid-cols-7 gap-4" key={warehouse.name + index}>

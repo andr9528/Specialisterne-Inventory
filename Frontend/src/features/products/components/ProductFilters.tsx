@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { type ChangeEvent, type Dispatch, type SetStateAction } from "react";
 import type { SortItemType } from "../../../shared/types/SelectTypes";
 import { Search } from "lucide-react";
 import Button from "../../../shared/components/ui/Button";
@@ -7,19 +7,29 @@ import Input from "../../../shared/components/ui/Input";
 import Select from "../../../shared/components/ui/Select";
 import useCategories from "../hooks/useCategories";
 import useWarehouses from "../hooks/useWarehouses";
+import type { ProductFilterOptionsType } from "../types/productType";
+import { DEFAULT_ITEM_VALUE } from "../../../app/constants/filterDefaultValue";
 
+type ProductFilterType = {
+    filterOptions: Required<ProductFilterOptionsType>,
+    setFilterOptions: Dispatch<SetStateAction<Required<ProductFilterOptionsType>>>;
+}
 
-const ProductFilter = () => {
+const ProductFilter = ({ filterOptions, setFilterOptions }: ProductFilterType) => {
     const { categories } = useCategories();
     const { warehouses } = useWarehouses();
 
-    const defaultItemValue = "ALL";
+    const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setFilterOptions(prev => ({ ...prev, [e.target.id]: e.target.value }))
+    }
 
-    const [searchQuery, setSearchQuery] = useState<string>("");
-    const [categoryValue, setCategoryValue] = useState<string>(defaultItemValue);
-    const [warehouseValue, setWarehouseValue] = useState<string>(defaultItemValue);
-    const [sortValue, setSortValue] = useState<string>("name");
-    const [statusFilter, setStatusFilter] = useState<string>(defaultItemValue);
+    const handleSelectChange = (value: string, name: string) => {
+        setFilterOptions(prev => ({ ...prev, [name]: value }))
+    }
+
+    const handleSetStatusValue = (statusValue: string) => {
+        setFilterOptions(prev => ({ ...prev, status: statusValue }))
+    }
 
     const sortItems: SortItemType = [
         { value: "name", text: "Navn (A-Å)" },
@@ -33,7 +43,7 @@ const ProductFilter = () => {
         if (statusFilterValue !== buttonValue) return "";
 
         switch (statusFilterValue) {
-            case defaultItemValue:
+            case DEFAULT_ITEM_VALUE:
                 return "bg-blue-500! text-white!";
             case "IN_STOCK":
                 return "bg-green-500! text-white!";
@@ -53,26 +63,27 @@ const ProductFilter = () => {
                     <div className="relative">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-gray-400" />
                         <Input
+                            id="searchQuery"
                             type="search"
-                            placeholder="Søg efter produkt eller SKU..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
+                            placeholder="Søg efter produkt..."
+                            value={filterOptions.searchQuery}
+                            onChange={(e) => handleOnChange(e)}
                         />
                     </div>
                 </div>
 
-                <Select id="categories" selectValue={categoryValue} setSelectValue={setCategoryValue} items={categories} defaultItem="Alle kategorier" defaultItemValue={defaultItemValue} />
+                <Select id="category" selectValue={filterOptions.category} setSelectValue={handleSelectChange} items={categories} defaultItem="Alle kategorier" defaultItemValue={DEFAULT_ITEM_VALUE} />
 
-                <Select id="warehouses" selectValue={warehouseValue} setSelectValue={setWarehouseValue} items={warehouses} defaultItem="Alle Lagre" defaultItemValue={defaultItemValue} />
+                <Select id="warehouse" selectValue={filterOptions.warehouse} setSelectValue={handleSelectChange} items={warehouses} defaultItem="Alle Lagre" defaultItemValue={DEFAULT_ITEM_VALUE} />
 
-                <Select id="sort" selectValue={sortValue} setSelectValue={setSortValue} items={sortItems} />
+                <Select id="sort" selectValue={filterOptions.sort} setSelectValue={handleSelectChange} items={sortItems} />
             </div>
 
             <div className="flex flex-wrap mt-7 gap-2">
-                <Button variant="tag" className={filterStatusStyle(statusFilter, defaultItemValue)} onClick={() => setStatusFilter(defaultItemValue)}>{textKeys.ALL}</Button>
-                <Button variant="tag" className={filterStatusStyle(statusFilter, "IN_STOCK")} onClick={() => setStatusFilter("IN_STOCK")}>{textKeys.IN_STOCK}</Button>
-                <Button variant="tag" className={filterStatusStyle(statusFilter, "LOW_STOCK")} onClick={() => setStatusFilter("LOW_STOCK")}>{textKeys.LOW_STOCK}</Button>
-                <Button variant="tag" className={filterStatusStyle(statusFilter, "OUT_OF_STOCK")} onClick={() => setStatusFilter("OUT_OF_STOCK")}>{textKeys.OUT_OF_STOCK}</Button>
+                <Button variant="tag" className={filterStatusStyle(filterOptions.status, DEFAULT_ITEM_VALUE)} onClick={() => handleSetStatusValue(DEFAULT_ITEM_VALUE)}>{textKeys.ALL}</Button>
+                <Button variant="tag" className={filterStatusStyle(filterOptions.status, "IN_STOCK")} onClick={() => handleSetStatusValue("IN_STOCK")}>{textKeys.IN_STOCK}</Button>
+                <Button variant="tag" className={filterStatusStyle(filterOptions.status, "LOW_STOCK")} onClick={() => handleSetStatusValue("LOW_STOCK")}>{textKeys.LOW_STOCK}</Button>
+                <Button variant="tag" className={filterStatusStyle(filterOptions.status, "OUT_OF_STOCK")} onClick={() => handleSetStatusValue("OUT_OF_STOCK")}>{textKeys.OUT_OF_STOCK}</Button>
             </div>
         </div>
     )

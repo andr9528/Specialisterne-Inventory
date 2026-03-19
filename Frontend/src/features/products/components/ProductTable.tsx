@@ -1,12 +1,18 @@
-import useProducts from "../hooks/useProducts";
+import type { UseMutationResult } from "@tanstack/react-query";
 import { productColumns } from "../table/productColumns";
 import type { ProductType } from "../types/productType";
 import ActionButtons from "./ActionButtons";
 
 import ProductRow from "./ProductRow";
 
-const ProductTable = () => {
-    const { products, deleteProductMutation } = useProducts();
+type ProductTableType = {
+    products: ProductType[];
+    deleteProductMutation: UseMutationResult<void, Error, {
+        id: number;
+    }, unknown>;
+}
+
+const ProductTable = ({ products, deleteProductMutation }: ProductTableType) => {
 
     const columns = productColumns.map(column => {
         if (column.key === "action") {
