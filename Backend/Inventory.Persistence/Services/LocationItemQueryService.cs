@@ -36,6 +36,12 @@ public class LocationItemQueryService : BaseEntityQueryService<InventoryDatabase
     }
 
     /// <inheritdoc />
+    protected override IEnumerable<LocationItem> ApplyComplexNonDatabaseQueryArguments(IEnumerable<LocationItem> entities, IComplexSearchable<SearchableLocationItem> complex)
+    {
+        return entities;
+    }
+
+    /// <inheritdoc />
     protected override IQueryable<LocationItem> GetBaseQuery()
     {
         return context.LocationItems.AsQueryable().Include(x=> x.Location).Include(x=> x.Product);
