@@ -5,5 +5,4 @@ namespace Inventory.Abstraction.Interfaces.Model.Entity;
 
 public interface ICategory : ISearchableCategory, IEntity
 {
-    ICollection<IProduct> Products { get; set; }
 }

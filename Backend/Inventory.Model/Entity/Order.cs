@@ -18,17 +18,13 @@ namespace Inventory.Model.Entity
         }
 
         /// <inheritdoc />
-        public byte[] Version { get; set; }
+        public uint Version { get; set; }
 
         /// <inheritdoc />
         public DateTime CreatedDateTime { get; set; }
 
         /// <inheritdoc />
         public DateTime UpdatedDateTime { get; set; }
-
-        /// <inheritdoc />
-        public string Name { get; set; }
-
         /// <inheritdoc />
         public ICollection<IOrderItem> Products { get ; set ; }
 

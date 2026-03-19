@@ -1,4 +1,5 @@
 using Inventory.Abstraction.Interfaces.Persistence;
+using Inventory.Model.ComplexSearchable;
 using Inventory.Model.Entity;
 using Inventory.Model.Searchable;
 using Inventory.Persistence.Core;
@@ -16,8 +17,58 @@ public class ProductQueryService : BaseEntityQueryService<InventoryDatabaseConte
     /// <inheritdoc />
     protected override IQueryable<Product> AddComplexQueryArguments(IQueryable<Product> query, IComplexSearchable<SearchableProduct> complex)
     {
-        // No implementation of `IComplexSearchable<SearchableProduct>` exist - Throwing.
-        throw new NotImplementedException();
+        if (complex is not ComplexSearchableProduct complexSearchableProduct)
+        {
+            throw new ArgumentException(
+                $"Expected {nameof(complex)} to be of type {nameof(ComplexSearchableProduct)}, but it wasn't.");
+        }
+
+        query = AddLocationRelatedQueryArguments(query, complexSearchableProduct);
+
+        if (complexSearchableProduct.IncludeOrders.HasValue)
+        {
+            query = query.Include(x => x.Orders).ThenInclude(x => x.Order);
+        }
+
+        if (!string.IsNullOrWhiteSpace(complexSearchableProduct.CategoryNameContains))
+        {
+            string keyword = $"%{complexSearchableProduct.CategoryNameContains}%";
+            query = query.Where(x => EF.Functions.Like(x.Category.Name, keyword));
+        }
+
+        if (!string.IsNullOrWhiteSpace(complexSearchableProduct.ProductNameContains))
+        {
+            string keyword = $"%{complexSearchableProduct.ProductNameContains}%";
+            query = query.Where(x => EF.Functions.Like(x.Name, keyword));
+        }
+
+        return query;
+    }
+
+    private IQueryable<Product> AddLocationRelatedQueryArguments(
+        IQueryable<Product> query, ComplexSearchableProduct complexSearchableProduct)
+    {
+        if (!complexSearchableProduct.IncludeLocations.HasValue)
+        {
+            return query;
+        }
+
+        query = query.Include(x => x.Locations).ThenInclude(x=> x.Location);
+
+        if (!string.IsNullOrWhiteSpace(complexSearchableProduct.LocationNameContains))
+        {
+            string keyword = $"%{complexSearchableProduct.LocationNameContains}%";
+            query = query.Where(x =>
+                x.Locations.Any(loc => EF.Functions.Like(loc.Location.Name, keyword)));
+        }
+
+        if (complexSearchableProduct.HasInventoryStatus.HasValue)
+        {
+            query = query.Where(x =>
+                x.Locations.Any(loc => loc.Status == complexSearchableProduct.HasInventoryStatus));
+        }
+
+        return query;
     }
 
     /// <inheritdoc />

@@ -15,7 +15,11 @@ public class ProductConfiguration: EntityConfiguration<Product>
     public override void Configure(EntityTypeBuilder<Product> builder)
     {
         base.Configure(builder);
-        builder.HasOne(x => (Category)x.Category).WithMany(x => (ICollection<Product>)x.Products)
+        builder.HasOne(x => (Category)x.Category).WithMany()
             .HasForeignKey(x => x.CategoryId);
+
+        builder.Ignore(x => x.Status);
+        builder.Ignore(x => x.TotalQuantity);
+        builder.Ignore(x => x.TotalTargetQuantity);
     }
 }

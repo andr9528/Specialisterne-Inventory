@@ -20,5 +20,7 @@ public class OrderItemConfiguration : EntityConfiguration<OrderItem>
             .HasForeignKey(x => x.OrderId);
         builder.HasOne(x => (Product)x.Product).WithMany(x => (ICollection<OrderItem>)x.Orders)
             .HasForeignKey(x => x.ProductId);
+
+        builder.HasIndex(x => new {x.OrderId, x.ProductId}).IsUnique();
     }
 }

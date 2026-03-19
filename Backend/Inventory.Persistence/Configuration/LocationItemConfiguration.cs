@@ -20,5 +20,9 @@ public class LocationItemConfiguration : EntityConfiguration<LocationItem>
             .HasForeignKey(x => x.LocationId);
         builder.HasOne(x => (Product)x.Product).WithMany(x => (ICollection<LocationItem>)x.Locations)
             .HasForeignKey(x => x.ProductId);
+
+        builder.Ignore(x => x.Status);
+
+        builder.HasIndex(x => new {x.LocationId, x.ProductId}).IsUnique();
     }
 }
