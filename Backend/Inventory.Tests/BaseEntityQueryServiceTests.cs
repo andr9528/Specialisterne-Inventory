@@ -48,6 +48,8 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
 
         // Assert
         await Assert.That(c.OrderItems).DoesNotContain(oi);
+        await c.SaveChangesAsync();
+        await Assert.That(c.OrderItems).Contains(oi);
     }
 
     [Test]
@@ -96,11 +98,19 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
     public async Task GetEntity_WithoutMatch_ReturnsNull()
     {
         // Arrange
+        var c = CreateContext();
+
+        var cat = BogusService.GetCategories(10);
+        c.AddRange(cat);
+        await c.SaveChangesAsync();
+
+        var x = new CategoryQueryService(c);
 
         // Act
+        var cat2 = await x.GetEntity(new Model.Searchable.SearchableCategory() { Id = int.MaxValue });
 
         // Assert
-
+        await Assert.That(cat2).IsNull();
     }
 
     [Test]
@@ -294,11 +304,20 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
     public async Task DeleteEntityById_WithExistingId_RemovesEntity()
     {
         // Arrange
+        var c = CreateContext();
+
+        var cat = BogusService.GetCategories(1);
+        var prod = BogusService.GetProducts(3, cat);
+
+        var x = new ProductQueryService(c);
+        await x.AddEntities(prod);
 
         // Act
+        await x.DeleteEntityById(prod.First().Id);
 
         // Assert
-
+        await Assert.That(c.Products).Count().IsEqualTo(2);
+        await Assert.That(c.Products).DoesNotContain(prod.First());
     }
 
     [Test]
