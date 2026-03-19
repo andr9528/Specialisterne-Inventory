@@ -21,6 +21,12 @@ public class OrderQueryService : BaseEntityQueryService<InventoryDatabaseContext
     }
 
     /// <inheritdoc />
+    protected override IEnumerable<Order> ApplyComplexNonDatabaseQueryArguments(IEnumerable<Order> entities, IComplexSearchable<SearchableOrder> complex)
+    {
+        return entities;
+    }
+
+    /// <inheritdoc />
     protected override IQueryable<Order> GetBaseQuery()
     {
         return context.Orders.AsQueryable();

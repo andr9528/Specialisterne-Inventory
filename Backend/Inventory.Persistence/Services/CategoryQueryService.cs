@@ -33,6 +33,12 @@ public class CategoryQueryService : BaseEntityQueryService<InventoryDatabaseCont
     }
 
     /// <inheritdoc />
+    protected override IEnumerable<Category> ApplyComplexNonDatabaseQueryArguments(IEnumerable<Category> entities, IComplexSearchable<SearchableCategory> complex)
+    {
+        return entities;
+    }
+
+    /// <inheritdoc />
     protected override IQueryable<Category> GetBaseQuery()
     {
         return context.Categories.AsQueryable();
