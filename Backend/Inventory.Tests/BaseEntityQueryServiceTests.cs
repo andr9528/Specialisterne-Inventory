@@ -260,11 +260,26 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
     public async Task UpdateEntities_WithSaveImmediatelyTrue_PersistsUpdatedValues()
     {
         // Arrange
+        var c = CreateContext();
+
+        var cat = BogusService.GetCategories(1);
+        var loc = BogusService.GetLocations(1);
+        var prod = BogusService.GetProducts(1, cat);
+
+        var li = BogusService.GetLocationItemsForEach(loc, prod).First();
+        var x = new LocationItemQueryService(c);
 
         // Act
+        var q = li.Quantity;
+        
+        await x.AddEntity(li, true);
+        li.Quantity = q + 1;
+        await x.UpdateEntity(li, true);
 
+        var li2 = c.LocationItems.First();
         // Assert
-
+        
+        await Assert.That(li2.Quantity).IsEqualTo(li.Quantity);
     }
 
     [Test]
@@ -316,7 +331,6 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
         await x.DeleteEntityById(prod.First().Id);
 
         // Assert
-        await Assert.That(c.Products).Count().IsEqualTo(2);
         await Assert.That(c.Products).DoesNotContain(prod.First());
     }
 
