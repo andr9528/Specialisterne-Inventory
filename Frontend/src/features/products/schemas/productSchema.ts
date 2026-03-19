@@ -3,36 +3,38 @@ import z from "zod";
 export const InventoryStatusSchema = z.enum(["IN_STOCK", "LOW_STOCK", "OUT_OF_STOCK"]);
 
 export const ProductWarehouseSchema = z.object({
-    name: z.string(),
-    stock: z.number(),
-    inventoryStatus: InventoryStatusSchema
+  name: z.string(),
+  stock: z.number(),
+  inventoryStatus: InventoryStatusSchema
 })
 
 export const ProductSchema = z.object({
-    name: z.string(),
-    sku: z.string(),
-    category: z.string(),
-    totalStock: z.number(),
-    price: z.number(),
-    inventoryStatus: InventoryStatusSchema,
-    warehouses: z.array(ProductWarehouseSchema)
+  name: z.string(),
+  sku: z.string(),
+  category: z.string(),
+  totalStock: z.number(),
+  price: z.number(),
+  inventoryStatus: InventoryStatusSchema,
+  warehouses: z.array(ProductWarehouseSchema)
 });
 
 export const ApiProductSchema = z.object({
-  id: z.number(),
-  name: z.string(),
-  price: z.number(),
-  status: InventoryStatusSchema,
-  totalQuantity: z.number(),
-  locations: z.array(
+  Id: z.number(),
+  Name: z.string(),
+  Price: z.number(),
+  Status: InventoryStatusSchema,
+  TotalQuantity: z.number(),
+  Locations: z.array(
     z.object({
-      quantity: z.number(),
-      status: InventoryStatusSchema,
-      name: z.string().optional() //TO-DO fix optional
+      Quantity: z.number(),
+      Status: InventoryStatusSchema,
+      Location: z.object({
+        Name: z.string()
+      })
     })
   ),
-  category: z.object({
-    name: z.string(),
+  Category: z.object({
+    Name: z.string(),
   }),
 });
 
