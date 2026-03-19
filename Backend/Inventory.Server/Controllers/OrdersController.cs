@@ -2,6 +2,7 @@ using Inventory.Abstraction.Interfaces.Model.Entity;
 using Inventory.Abstraction.Interfaces.Persistence;
 using Inventory.Abstraction.Interfaces.Services;
 using Inventory.Model.ComplexSearchable;
+using Inventory.Model.Dto;
 using Inventory.Model.Entity;
 using Inventory.Model.Searchable;
 using Inventory.Server.Controllers.Core;
@@ -22,12 +23,12 @@ public sealed class OrdersController : EntityController<Order, SearchableOrder, 
         this.orderService = orderService;
     }
 
-    [HttpPost("reference")]
-    public async Task<IActionResult> CreateOrder(Guid reference, [FromBody] IEnumerable<OrderItem> items, [FromQuery] int? locationId)
+    [HttpPost]
+    public async Task<IActionResult> CreateOrder([FromBody] CreateOrderDto dto)
     {
         try
         {
-            IList<IOrder> orders = await orderService.CreateOrders(reference, items, locationId);
+            IList<IOrder> orders = await dto.UnpackDto(orderService);
             await entityService.AddEntities(orders.Cast<Order>());
 
             return Ok(orders);
