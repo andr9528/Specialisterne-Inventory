@@ -17,7 +17,7 @@ namespace Inventory.Persistence
             var configuration = configurationService.BuildConfiguration();
 
             var optionsBuilder = new DbContextOptionsBuilder<InventoryDatabaseContext>();
-            configurationService.BuildDatabaseOptions(optionsBuilder);
+            configurationService.ConfigureDatabaseOptions(optionsBuilder);
 
             return new InventoryDatabaseContext(optionsBuilder.Options);
         }
