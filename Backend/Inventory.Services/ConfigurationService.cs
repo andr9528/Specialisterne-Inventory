@@ -23,19 +23,29 @@ public class ConfigurationService
     /// </summary>
     public IConfiguration BuildConfiguration()
     {
-        EnsureSecretsFileExists();
-        EnsureAppSettingsFileExists();
-
-        var fullAppFilePath = Path.Combine(GetApplicationDataPath(), APP_SETTINGS_FILE);
-        var fullSecretFilePath = Path.Combine(GetApplicationDataPath(), SECRETS_FILE);
-
         IConfigurationBuilder configBuilder = new ConfigurationBuilder();
 
-        configBuilder.AddJsonFile(fullAppFilePath, false, true);
-        configBuilder.AddJsonFile(fullSecretFilePath, false, true);
+        configBuilder.AddEnvironmentVariables();
+
+        if (!IsRunningInCi())
+        {
+            EnsureSecretsFileExists();
+            EnsureAppSettingsFileExists();
+
+            var fullAppFilePath = Path.Combine(GetApplicationDataPath(), APP_SETTINGS_FILE);
+            var fullSecretFilePath = Path.Combine(GetApplicationDataPath(), SECRETS_FILE);
+
+            configBuilder.AddJsonFile(fullAppFilePath, false, true);
+            configBuilder.AddJsonFile(fullSecretFilePath, false, true);
+        }
 
         configuration = configBuilder.Build();
         return configuration;
+    }
+
+    private bool IsRunningInCi()
+    {
+        return string.Equals(Environment.GetEnvironmentVariable("CI"), "true", StringComparison.OrdinalIgnoreCase);
     }
 
     /// <summary>
@@ -62,6 +72,32 @@ public class ConfigurationService
     }
 
     public string GetConnectionString()
+    {
+        if (GetDirectConnectionString(out string connectionString))
+        {
+            return connectionString;
+        }
+
+        return GetSecretsConnectionString();
+    }
+
+    private bool GetDirectConnectionString(out string connection)
+    {
+        IConfiguration activeConfiguration = configuration ?? BuildConfiguration();
+
+        var directConnectionString = activeConfiguration["ConnectionStrings:InventoryDatabase"];
+
+        if (!string.IsNullOrWhiteSpace(directConnectionString))
+        {
+            connection = directConnectionString;
+            return true;
+        }
+
+        connection = string.Empty;
+        return false;
+    }
+
+    private string GetSecretsConnectionString()
     {
         SecretsConfig secrets = GetSecrets();
 
