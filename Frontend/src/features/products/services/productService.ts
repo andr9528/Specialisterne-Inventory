@@ -1,5 +1,5 @@
 import type { AxiosInstance } from "axios";
-import type { ApiProductType, ProductFilterOptionsType, ProductType } from "../types/productType";
+import type { AddProductType, ApiProductType, ProductFilterOptionsType, ProductType } from "../types/productType";
 import { ApiProductsSchema } from "../schemas/productSchema";
 import { mapProduct } from "../mappers/productMapper";
 
@@ -38,8 +38,37 @@ export const createProductService = (api: AxiosInstance) => ({
 
         return parsed.data.map(p => mapProduct(p));
     },
-    addProduct: async () => {
+    addProduct: async (product: AddProductType) => {
+        console.log({
+            name: product.name,
+            price: product.price,
+            locations: product.warehouses.map(warehouse => ({
+                locationId: warehouse.id,
+                targetQuantity: warehouse.stock,
+                quantity: warehouse.stock
+            })),
+            category: {
+                name: product.category
+            }
+        })
+        const res = await api.post<ApiProductType[]>("/Product/CreateProduct", {
+            name: product.name,
+            price: product.price,
+            locations: product.warehouses.map(warehouse => ({
+                locationId: warehouse.id,
+                targetQuantity: warehouse.stock,
+                quantity: warehouse.stock
+            })),
+            category: {
+                name: product.category
+            }
+        }, {
+            headers: { "Content-Type": "application/json" }
+        });
 
+        if (res.status !== 200) {
+            throw `Add product failed: ${res.statusText}`
+        }
     },
     editProduct: async () => {
 

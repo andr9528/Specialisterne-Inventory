@@ -22,3 +22,14 @@ export type ProductFilterOptionsType = {
   sort?: string;
   status?: string;
 }
+
+export type ProductWarehouseWithIdType = Omit<ProductWarehouseType, "inventoryStatus"> & {
+  id: number;
+};
+
+export type AddProductType = {
+  name: string,
+  category: string,
+  price: number,
+  warehouses: ProductWarehouseWithIdType[],
+}

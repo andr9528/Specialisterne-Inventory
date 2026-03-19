@@ -1,6 +1,6 @@
 import { useEffect, useState, type ChangeEvent } from "react";
 import Modal from "../../../shared/components/Modal";
-import type { ProductWarehouseType } from "../types/productType";
+import type { AddProductType, ProductWarehouseType } from "../types/productType";
 import { textKeys } from "../../../app/constants/textKeys";
 import Input from "../../../shared/components/ui/Input";
 import Select from "../../../shared/components/ui/Select";
@@ -9,21 +9,25 @@ import { Plus } from "lucide-react";
 import ActionButtons from "./ActionButtons";
 import useCategories from "../hooks/useCategories";
 import useWarehouses from "../hooks/useWarehouses";
+import useProducts from "../hooks/useProducts";
 
 type ProductModalType = {
     modalIsOpen: boolean;
     setModalIsOpen: (value: boolean) => void;
 }
 
+
+
 const ProductModal = ({ modalIsOpen, setModalIsOpen }: ProductModalType) => {
     const { warehouses } = useWarehouses();
     const { categories } = useCategories();
+    const { addProductMutation } = useProducts();
 
-    const initialFormData = {
+    const initialFormData: AddProductType = {
         name: "",
         category: categories[0],
         price: 0,
-        warehouses: [] as Omit<ProductWarehouseType, "inventoryStatus">[],
+        warehouses: [],
     }
 
     const [formData, setFormData] = useState(initialFormData);
@@ -42,7 +46,7 @@ const ProductModal = ({ modalIsOpen, setModalIsOpen }: ProductModalType) => {
     const totalQuantity = formData.warehouses.reduce((prev, current) => prev + Number(current.stock), 0);
 
     const handleSubmit = () => {
-        // TO-DO handle form submit
+        addProductMutation.mutate(formData);
 
         setFormData(initialFormData);
         setModalIsOpen(false);
@@ -61,10 +65,10 @@ const ProductModal = ({ modalIsOpen, setModalIsOpen }: ProductModalType) => {
         setFormData(prev => ({ ...prev, [name]: value }))
     }
 
-    const handleWarehouseChange = (index: number, field: string, value: string) => {
+    const handleWarehouseChange = (index: number, field: string, value: string, id?: number) => {
         setFormData((prev) => {
             const newWarehouses = [...prev.warehouses];
-            newWarehouses[index] = { ...newWarehouses[index], [field]: value };
+            newWarehouses[index] = { ...newWarehouses[index], [field]: value, ...(id && { id }), };
             return { ...prev, warehouses: newWarehouses };
         });
     }
@@ -79,7 +83,7 @@ const ProductModal = ({ modalIsOpen, setModalIsOpen }: ProductModalType) => {
     const handleAddWarehouse = () => {
         setFormData(prev => ({
             ...prev,
-            warehouses: [...prev.warehouses, { name: warehouses[0], stock: 0 }],
+            warehouses: [...prev.warehouses, { id: warehouses[0].id, name: warehouses[0].name, stock: 0 }],
         }));
     };
 
@@ -145,8 +149,8 @@ const ProductModal = ({ modalIsOpen, setModalIsOpen }: ProductModalType) => {
                                                 <Select
                                                     id="warehouses"
                                                     selectValue={warehouse.name}
-                                                    setSelectValue={(value) => handleWarehouseChange(index, "name", value)}
-                                                    items={warehouses}
+                                                    setSelectValue={(value, _, itemId) => handleWarehouseChange(index, "name", value, itemId)}
+                                                    items={warehouses.map(warehouse => ({ id: warehouse.id, text: warehouse.name, value: warehouse.name }))}
                                                 />
                                             </div>
 

@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAxiosContext } from "../../../app/context/axiosContext";
 import { createProductService } from "../services";
-import type { ProductFilterOptionsType } from "../types/productType";
+import type { AddProductType, ProductFilterOptionsType } from "../types/productType";
 import { mapFilter } from "../mappers/productMapper";
 
 const useProducts = (filters?: ProductFilterOptionsType) => {
@@ -16,7 +16,7 @@ const useProducts = (filters?: ProductFilterOptionsType) => {
     })
 
     const addProductMutation = useMutation({
-        mutationFn: () => productService.addProduct(),
+        mutationFn: (product: AddProductType) => productService.addProduct(product),
         onSuccess: () => queryClient.invalidateQueries({ queryKey: ["products"] }),
         onError: (err) => console.error(err)
     })

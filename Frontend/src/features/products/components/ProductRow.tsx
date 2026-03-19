@@ -92,18 +92,18 @@ const ProductRow = ({ product, productColumns, showBorder }: ProdutcRowType) => 
 
 
                                     return (
-                                        <div key={warehouse.name + index} className={`flex flex-col gap-2 w-[30%] p-4 border-2 rounded-lg ${statusColors[warehouse.inventoryStatus]}`}>
+                                        <div key={warehouse.name + index} className={`flex flex-col gap-2 lg:w-[30%] w-[45%] p-4 border-2 rounded-lg ${statusColors[warehouse.inventoryStatus]}`}>
                                             <div className="flex flex-row">
                                                 <div className="flex flex-row gap-2">
-                                                    <div className={`mt-2 w-2 h-2 rounded-full ${statusDotColors[warehouse.inventoryStatus]}`}></div>
-                                                    <h5>{warehouse.name}</h5>
+                                                    <div className={`md:mt-2.5 mt-1.5 w-2 h-2 rounded-full ${statusDotColors[warehouse.inventoryStatus]}`}></div>
+                                                    <h5 className="md:text-lg text-sm">{warehouse.name}</h5>
                                                 </div>
                                                 <span className="ml-auto text-sm">{((warehouse.stock / product.totalStock) * 100).toFixed()} %</span>
                                             </div>
 
-                                            <div className="flex flex-row justify-between">
-                                                <span>{textKeys.WAREHOUSES_AMOUNT}</span>
-                                                <span className="text-lg text-black font-black">{warehouse.stock} stk</span>
+                                            <div className="flex flex-row justify-between gap-2">
+                                                <span className="md:text-lg text-sm">{textKeys.WAREHOUSES_AMOUNT}</span>
+                                                <span className="md:text-lg text-sm text-black font-black">{warehouse.stock} stk</span>
                                             </div>
                                             <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
                                                 <div className={`h-full transition-all ${statusDotColors[warehouse.inventoryStatus]}`}

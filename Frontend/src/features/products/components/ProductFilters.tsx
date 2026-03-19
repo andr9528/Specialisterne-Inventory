@@ -1,5 +1,5 @@
 import { type ChangeEvent, type Dispatch, type SetStateAction } from "react";
-import type { SortItemType } from "../../../shared/types/SelectTypes";
+import type { ObjectItemType } from "../../../shared/types/SelectTypes";
 import { Search } from "lucide-react";
 import Button from "../../../shared/components/ui/Button";
 import { textKeys } from "../../../app/constants/textKeys";
@@ -31,7 +31,7 @@ const ProductFilter = ({ filterOptions, setFilterOptions }: ProductFilterType) =
         setFilterOptions(prev => ({ ...prev, status: statusValue }))
     }
 
-    const sortItems: SortItemType = [
+    const sortItems: ObjectItemType = [
         { value: "name", text: "Navn (A-Å)" },
         { value: "price-asc", text: "Pris (lav-høj)" },
         { value: "price-desc", text: "Pris (høj-lav)" },
@@ -74,7 +74,7 @@ const ProductFilter = ({ filterOptions, setFilterOptions }: ProductFilterType) =
 
                 <Select id="category" selectValue={filterOptions.category} setSelectValue={handleSelectChange} items={categories} defaultItem="Alle kategorier" defaultItemValue={DEFAULT_ITEM_VALUE} />
 
-                <Select id="warehouse" selectValue={filterOptions.warehouse} setSelectValue={handleSelectChange} items={warehouses} defaultItem="Alle Lagre" defaultItemValue={DEFAULT_ITEM_VALUE} />
+                <Select id="warehouse" selectValue={filterOptions.warehouse} setSelectValue={handleSelectChange} items={warehouses.map(warehouse => warehouse.name)} defaultItem="Alle Lagre" defaultItemValue={DEFAULT_ITEM_VALUE} />
 
                 <Select id="sort" selectValue={filterOptions.sort} setSelectValue={handleSelectChange} items={sortItems} />
             </div>

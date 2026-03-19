@@ -9,7 +9,7 @@ export const mapProduct = (api: ApiProductType): ProductType => ({
     price: api.Price,
     inventoryStatus: api.Status,
     warehouses: api.Locations.map(location => ({
-        name: location.Location.Name ?? "Name missing", //TO-DO Fix optional locaiton name
+        name: location.Location.Name,
         inventoryStatus: location.Status,
         stock: location.Quantity
     }))
@@ -17,7 +17,7 @@ export const mapProduct = (api: ApiProductType): ProductType => ({
 
 export const mapFilter = (filterOptions: ProductFilterOptionsType): ProductFilterOptionsType => {
     const result: ProductFilterOptionsType = {};
-    
+
     if (filterOptions.status && filterOptions.status !== DEFAULT_ITEM_VALUE) {
         result.status = filterOptions.status;
     }
@@ -39,7 +39,6 @@ export const mapFilter = (filterOptions: ProductFilterOptionsType): ProductFilte
     if (filterOptions.sort) {
         result.sort = filterOptions.sort;
     }
-    console.log("result", result)
 
     return result;
 };
