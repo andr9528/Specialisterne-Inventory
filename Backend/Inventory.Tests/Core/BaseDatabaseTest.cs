@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Npgsql;
 
-namespace Inventory.Tests;
+namespace Inventory.Tests.Core;
 
-public abstract class BaseDatabaseTest
+public abstract class BaseDatabaseTest : IDisposable
 {
-    private static readonly string TestDatabaseName = $"inventory_test_{Guid.NewGuid():N}";
+    private readonly string TestDatabaseName = $"inventory_test_{Guid.NewGuid():N}";
     private IDbContextFactory<InventoryDatabaseContext> contextFactory;
     private readonly ConfigurationService configurationService;
     private bool disposed;
