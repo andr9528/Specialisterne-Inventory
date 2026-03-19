@@ -44,8 +44,9 @@ namespace Inventory.Persistence.Core
         public async Task<TEntity?> GetEntityComplex(IComplexSearchable<TSearchable> complex)
         {
             var basicQuery = BuildQuery(complex.Searchable);
+            var databaseResult = await AddComplexQueryArguments(basicQuery, complex).ToListAsync();
 
-            return (await AddComplexQueryArguments(basicQuery, complex).ToListAsync()).FirstOrDefault();
+            return ApplyComplexNonDatabaseQueryArguments(databaseResult, complex).FirstOrDefault();
         }
 
         /// <inheritdoc />
@@ -58,8 +59,9 @@ namespace Inventory.Persistence.Core
         public async Task<IEnumerable<TEntity>> GetEntitiesComplex(IComplexSearchable<TSearchable> complex)
         {
             var basicQuery = BuildQuery(complex.Searchable);
+            var databaseResult = await AddComplexQueryArguments(basicQuery, complex).ToListAsync();
 
-            return await AddComplexQueryArguments(basicQuery, complex).ToListAsync();
+            return ApplyComplexNonDatabaseQueryArguments(databaseResult, complex);
         }
 
         /// <inheritdoc />
@@ -124,6 +126,9 @@ namespace Inventory.Persistence.Core
         /// <exception cref="InvalidOperationException">Thrown when supplied properties would guarantee no results.</exception>
         protected abstract IQueryable<TEntity> AddComplexQueryArguments(
             IQueryable<TEntity> query, IComplexSearchable<TSearchable> complex);
+
+        protected abstract IEnumerable<TEntity> ApplyComplexNonDatabaseQueryArguments(
+            IEnumerable<TEntity> entities, IComplexSearchable<TSearchable> complex);
 
         /// <summary>
         /// Gets the base <see cref="IQueryable{TEntity}"/> from the <see cref="TContext"/>.

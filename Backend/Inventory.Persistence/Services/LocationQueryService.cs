@@ -20,6 +20,12 @@ public class LocationQueryService : BaseEntityQueryService<InventoryDatabaseCont
     }
 
     /// <inheritdoc />
+    protected override IEnumerable<Location> ApplyComplexNonDatabaseQueryArguments(IEnumerable<Location> entities, IComplexSearchable<SearchableLocation> complex)
+    {
+        return entities;
+    }
+
+    /// <inheritdoc />
     protected override IQueryable<Location> GetBaseQuery()
     {
         return context.Locations.AsQueryable();
