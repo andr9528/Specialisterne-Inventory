@@ -1,7 +1,9 @@
 using Inventory.Abstraction.Interfaces.Persistence;
+using Inventory.Model.ComplexSearchable;
 using Inventory.Model.Entity;
 using Inventory.Model.Searchable;
 using Inventory.Persistence.Core;
+using Microsoft.EntityFrameworkCore;
 
 namespace Inventory.Persistence.Services;
 
@@ -15,8 +17,19 @@ public class CategoryQueryService : BaseEntityQueryService<InventoryDatabaseCont
     /// <inheritdoc />
     protected override IQueryable<Category> AddComplexQueryArguments(IQueryable<Category> query, IComplexSearchable<SearchableCategory> complex)
     {
-        // No implementation of `IComplexSearchable<SearchableCategory>` exist - Throwing.
-        throw new NotImplementedException();
+        if (complex is not ComplexSearchableCategory complexSearchableProduct)
+        {
+            throw new ArgumentException(
+                $"Expected {nameof(complex)} to be of type {nameof(ComplexSearchableCategory)}, but it wasn't.");
+        }
+
+        if (!string.IsNullOrWhiteSpace(complexSearchableProduct.CategoryNameContains))
+        {
+            string keyword = $"%{complexSearchableProduct.CategoryNameContains}%";
+            query = query.Where(x => EF.Functions.Like(x.Name, keyword));
+        }
+
+        return query;
     }
 
     /// <inheritdoc />
