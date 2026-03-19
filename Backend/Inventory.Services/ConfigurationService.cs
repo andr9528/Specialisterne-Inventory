@@ -23,28 +23,36 @@ public class ConfigurationService
     /// </summary>
     public IConfiguration BuildConfiguration()
     {
-        EnsureSecretsFileExists();
-        EnsureAppSettingsFileExists();
-
-        var fullAppFilePath = Path.Combine(GetApplicationDataPath(), APP_SETTINGS_FILE);
-        var fullSecretFilePath = Path.Combine(GetApplicationDataPath(), SECRETS_FILE);
-
         IConfigurationBuilder configBuilder = new ConfigurationBuilder();
 
-        configBuilder.AddJsonFile(fullAppFilePath, false, true);
-        configBuilder.AddJsonFile(fullSecretFilePath, false, true);
+        configBuilder.AddEnvironmentVariables();
+
+        if (!IsRunningInCi())
+        {
+            EnsureSecretsFileExists();
+            EnsureAppSettingsFileExists();
+
+            var fullAppFilePath = Path.Combine(GetApplicationDataPath(), APP_SETTINGS_FILE);
+            var fullSecretFilePath = Path.Combine(GetApplicationDataPath(), SECRETS_FILE);
+
+            configBuilder.AddJsonFile(fullAppFilePath, false, true);
+            configBuilder.AddJsonFile(fullSecretFilePath, false, true);
+        }
 
         configuration = configBuilder.Build();
         return configuration;
     }
 
-    /// <summary>
-    /// Configures the database options using the configured connection string.
-    /// </summary>
-    public void BuildDatabaseOptions(DbContextOptionsBuilder options)
+    private bool IsRunningInCi()
     {
-        var connectionString = GetConnectionString();
+        return string.Equals(Environment.GetEnvironmentVariable("CI"), "true", StringComparison.OrdinalIgnoreCase);
+    }
 
+    /// <summary>
+    /// Configures the database options using the supplied connection string.
+    /// </summary>
+    public void ConfigureDatabaseOptions(DbContextOptionsBuilder options, string connectionString)
+    {
         options.UseNpgsql(connectionString);
 
 #if DEBUG
@@ -53,8 +61,43 @@ public class ConfigurationService
 #endif
     }
 
+    /// <summary>
+    /// Configures the database options using the configured connection string.
+    /// </summary>
+    public void ConfigureDatabaseOptions(DbContextOptionsBuilder options)
+    {
+        var connectionString = GetConnectionString();
+
+        ConfigureDatabaseOptions(options, connectionString);
+    }
 
     public string GetConnectionString()
+    {
+        if (GetDirectConnectionString(out string connectionString))
+        {
+            return connectionString;
+        }
+
+        return GetSecretsConnectionString();
+    }
+
+    private bool GetDirectConnectionString(out string connection)
+    {
+        IConfiguration activeConfiguration = configuration ?? BuildConfiguration();
+
+        var directConnectionString = activeConfiguration["ConnectionStrings:InventoryDatabase"];
+
+        if (!string.IsNullOrWhiteSpace(directConnectionString))
+        {
+            connection = directConnectionString;
+            return true;
+        }
+
+        connection = string.Empty;
+        return false;
+    }
+
+    private string GetSecretsConnectionString()
     {
         SecretsConfig secrets = GetSecrets();
 
