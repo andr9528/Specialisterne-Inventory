@@ -20,8 +20,36 @@ public class ProductJsonConverter : JsonConverter<Product>
         writer.WriteStartObject();
 
         WriteSimpleProperties(writer, value, serializer);
+        WriteCategory(writer, value, serializer);
         WriteLocationItems(writer, value, serializer);
         WriteOrderItems(writer, value, serializer);
+
+        writer.WriteEndObject();
+    }
+
+    private void WriteCategory(JsonWriter writer, Product product, JsonSerializer serializer)
+    {
+        writer.WritePropertyName(nameof(Product.Category));
+
+        if (product.Category is null)
+        {
+            writer.WriteNull();
+            return;
+        }
+
+        var category = product.Category as Category ?? throw new JsonSerializationException(
+            $"{nameof(Product.Category)} must be of type {nameof(Category)} when serializing {nameof(Product)}.");
+
+        writer.WriteStartObject();
+
+        var categoryProperties = typeof(Category).GetProperties()
+            .Where(property => property.CanRead && IsSimpleType(property.PropertyType));
+
+        foreach (var property in categoryProperties)
+        {
+            writer.WritePropertyName(property.Name);
+            serializer.Serialize(writer, property.GetValue(category));
+        }
 
         writer.WriteEndObject();
     }
@@ -103,7 +131,7 @@ public class ProductJsonConverter : JsonConverter<Product>
             .GetProperties()
             .Where(property =>
                 property.CanRead &&
-                property.CanWrite && property.Name != nameof(Product.Locations) &&
+                property.Name != nameof(Product.Locations) &&
                 property.Name != nameof(Product.Orders) &&
                 IsSimpleType(property.PropertyType));
 
@@ -143,7 +171,6 @@ public class ProductJsonConverter : JsonConverter<Product>
             .GetProperties()
             .Where(property =>
                 property.CanRead &&
-                property.CanWrite &&
                 property.Name != nameof(LocationItem.Product) &&
                 property.Name != nameof(LocationItem.Location) &&
                 IsSimpleType(property.PropertyType));
@@ -209,14 +236,110 @@ public class ProductJsonConverter : JsonConverter<Product>
 
         JObject jsonObject = JObject.Load(reader);
 
-        int id = jsonObject[nameof(Product.Id)]?.ToObject<int>() ?? 0;
+        int id = jsonObject[nameof(Product.Id)]?.ToObject<int>(serializer) ?? 0;
 
         Product product = CreateProduct(jsonObject, id, serializer);
 
-        PopulateSimpleProperties(jsonObject, product, serializer);
-        PopulateLocationItems(jsonObject, product, serializer);
+        ReadSimpleProperties(jsonObject, product, serializer);
+        ReadCategory(jsonObject, product, serializer);
+        ReadLocationItems(jsonObject, product, serializer);
+        ReadOrderItems(jsonObject, product, serializer);
 
         return product;
+    }
+
+    private void ReadOrderItems(JObject jsonObject, Product product, JsonSerializer serializer)
+    {
+        JArray? ordersArray = jsonObject[nameof(Product.Orders)] as JArray;
+        if (ordersArray is null)
+        {
+            return;
+        }
+
+        product.Orders.Clear();
+
+        foreach (JObject orderItemObject in ordersArray.OfType<JObject>())
+        {
+            OrderItem orderItem = CreateOrderItem(orderItemObject, product, serializer);
+            product.Orders.Add(orderItem);
+        }
+    }
+
+    private OrderItem CreateOrderItem(JObject orderItemObject, Product product, JsonSerializer serializer)
+    {
+        int id = orderItemObject[nameof(OrderItem.Id)]?.ToObject<int>(serializer) ?? 0;
+
+        Order order = CreateOrder(orderItemObject, serializer) ?? new Order();
+
+        OrderItem orderItem = (OrderItem) Activator.CreateInstance(typeof(OrderItem),
+            BindingFlags.Instance | BindingFlags.NonPublic, binder: null, args: new object[] {id, product, order},
+            culture: null)!;
+
+        ReadOrderItemSimpleProperties(orderItemObject, orderItem, serializer);
+
+        return orderItem;
+    }
+
+    private void ReadOrderItemSimpleProperties(JObject orderItemObject, OrderItem orderItem, JsonSerializer serializer)
+    {
+        var properties = typeof(OrderItem).GetProperties().Where(property =>
+            property.CanRead && property.CanWrite && property.Name != nameof(OrderItem.Id) &&
+            property.Name != nameof(OrderItem.Product) && property.Name != nameof(OrderItem.Order) &&
+            IsSimpleType(property.PropertyType));
+
+        foreach (var property in properties)
+        {
+            JToken? token = orderItemObject[property.Name];
+
+            if (token is null || token.Type == JTokenType.Null)
+            {
+                continue;
+            }
+
+            object? value = token.ToObject(property.PropertyType, serializer);
+            property.SetValue(orderItem, value);
+        }
+    }
+
+    private Order? CreateOrder(JObject orderItemObject, JsonSerializer serializer)
+    {
+        JObject? orderObject = orderItemObject[nameof(OrderItem.Order)] as JObject;
+        if (orderObject is null)
+        {
+            return null;
+        }
+
+        int id = orderObject[nameof(Order.Id)]?.ToObject<int>(serializer) ?? 0;
+
+        List<OrderItem> products = []; // empty list (no back-reference population)
+
+        Order order = (Order) Activator.CreateInstance(typeof(Order), BindingFlags.Instance | BindingFlags.NonPublic,
+            binder: null, args: new object[] {id, products}, culture: null)!;
+
+        ReadOrderSimpleProperties(orderObject, order, serializer);
+
+        return order;
+    }
+
+    private void ReadOrderSimpleProperties(JObject orderObject, Order order, JsonSerializer serializer)
+    {
+        var properties = typeof(Order).GetProperties().Where(property =>
+            property.CanRead && property.CanWrite && property.Name != nameof(Order.Id) &&
+            property.Name != nameof(Order.Products) && property.Name != nameof(Order.Location) &&
+            IsSimpleType(property.PropertyType));
+
+        foreach (var property in properties)
+        {
+            JToken? token = orderObject[property.Name];
+
+            if (token is null || token.Type == JTokenType.Null)
+            {
+                continue;
+            }
+
+            object? value = token.ToObject(property.PropertyType, serializer);
+            property.SetValue(order, value);
+        }
     }
 
     private Product CreateProduct(JObject jsonObject, int id, JsonSerializer serializer)
@@ -247,15 +370,12 @@ public class ProductJsonConverter : JsonConverter<Product>
         return new Category();
     }
 
-    private void PopulateSimpleProperties(JObject jsonObject, Product product, JsonSerializer serializer)
+    private void ReadSimpleProperties(JObject jsonObject, Product product, JsonSerializer serializer)
     {
-        var properties = typeof(Product)
-            .GetProperties()
-            .Where(property =>
-                property.CanRead &&
-                property.CanWrite && property.Name != nameof(Product.Id) &&
-                property.Name != nameof(Product.Locations) &&
-                IsSimpleType(property.PropertyType));
+        var properties = typeof(Product).GetProperties().Where(property =>
+            property.CanRead && property.CanWrite && property.Name != nameof(Product.Id) &&
+            property.Name != nameof(Product.Category) && property.Name != nameof(Product.Locations) &&
+            property.Name != nameof(Product.Orders) && IsSimpleType(property.PropertyType));
 
         foreach (var property in properties)
         {
@@ -271,7 +391,12 @@ public class ProductJsonConverter : JsonConverter<Product>
         }
     }
 
-    private void PopulateLocationItems(JObject jsonObject, Product product, JsonSerializer serializer)
+    private void ReadCategory(JObject jsonObject, Product product, JsonSerializer serializer)
+    {
+        product.Category = ResolveCategory(jsonObject, serializer)!;
+    }
+
+    private void ReadLocationItems(JObject jsonObject, Product product, JsonSerializer serializer)
     {
         JArray? locationsArray = jsonObject[nameof(Product.Locations)] as JArray;
         if (locationsArray is null)
