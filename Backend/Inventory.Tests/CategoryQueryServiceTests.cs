@@ -115,7 +115,7 @@ public class CategoryQueryServiceTests : BaseDatabaseTest
     }
 
     [Test]
-    public async Task GetEntityComplex_ThrowsNotImplementedException()
+    public async Task GetEntityComplex_WithIncorrectType_ThrowsArgumentException()
     {
         // Arrange
 
@@ -125,7 +125,47 @@ public class CategoryQueryServiceTests : BaseDatabaseTest
     }
 
     [Test]
-    public async Task GetEntitiesComplex_ThrowsNotImplementedException()
+    public async Task GetEntitiesComplex_WithIncorrectType_ThrowsArgumentException()
+    {
+        // Arrange
+
+        // Act
+
+        // Assert
+    }
+
+    [Test]
+    public async Task GetEntityComplex_WithCategoryNameContains_ReturnsMatchingCategory()
+    {
+        // Arrange
+
+        // Act
+
+        // Assert
+    }
+
+    [Test]
+    public async Task GetEntitiesComplex_WithCategoryNameContains_ReturnsAllMatches()
+    {
+        // Arrange
+
+        // Act
+
+        // Assert
+    }
+
+    [Test]
+    public async Task GetEntitiesComplex_WithEmptyCategoryNameContains_ReturnsAllCategories()
+    {
+        // Arrange
+
+        // Act
+
+        // Assert
+    }
+
+    [Test]
+    public async Task GetEntitiesComplex_WithPartialMatch_ReturnsMatchingCategories()
     {
         // Arrange
 
