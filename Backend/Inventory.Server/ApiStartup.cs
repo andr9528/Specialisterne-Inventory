@@ -74,6 +74,7 @@ public class ApiStartup : ModularStartup<IApplicationBuilder>
         // When a class implementation for a Complex Searchable is added, Add a line below, and update the Type used in the Controller.
         services.AddTransient<IComplexSearchable<SearchableLocationItem>, ComplexSearchableLocationItem>();
         services.AddTransient<IComplexSearchable<SearchableProduct>, ComplexSearchableProduct>();
+        services.AddTransient<IComplexSearchable<SearchableCategory>, ComplexSearchableCategory>();
 
         services.AddCors();
     }
