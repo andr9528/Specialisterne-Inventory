@@ -45,6 +45,24 @@ public class ProductQueryService : BaseEntityQueryService<InventoryDatabaseConte
         return query;
     }
 
+    /// <inheritdoc />
+    protected override IEnumerable<Product> ApplyComplexNonDatabaseQueryArguments(IEnumerable<Product> entities, IComplexSearchable<SearchableProduct> complex)
+    {
+        if (complex is not ComplexSearchableProduct complexSearchableProduct)
+        {
+            throw new ArgumentException(
+                $"Expected {nameof(complex)} to be of type {nameof(ComplexSearchableProduct)}, but it wasn't.");
+        }
+
+        if (complexSearchableProduct is {IncludeLocations: not null, HasInventoryStatus: not null})
+        {
+            entities = entities.Where(x => x.Locations.Any(loc =>
+                loc.Status.ToString() == complexSearchableProduct.HasInventoryStatus.ToString()));
+        }
+
+        return entities;
+    }
+
     private IQueryable<Product> AddLocationRelatedQueryArguments(
         IQueryable<Product> query, ComplexSearchableProduct complexSearchableProduct)
     {
@@ -60,12 +78,6 @@ public class ProductQueryService : BaseEntityQueryService<InventoryDatabaseConte
             string keyword = $"%{complexSearchableProduct.LocationNameContains}%";
             query = query.Where(x =>
                 x.Locations.Any(loc => EF.Functions.Like(loc.Location.Name, keyword)));
-        }
-
-        if (complexSearchableProduct.HasInventoryStatus.HasValue)
-        {
-            query = query.Where(x =>
-                x.Locations.Any(loc => loc.Status == complexSearchableProduct.HasInventoryStatus));
         }
 
         return query;

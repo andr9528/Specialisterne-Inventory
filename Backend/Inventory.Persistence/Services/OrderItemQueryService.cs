@@ -21,6 +21,12 @@ public class OrderItemQueryService : BaseEntityQueryService<InventoryDatabaseCon
     }
 
     /// <inheritdoc />
+    protected override IEnumerable<OrderItem> ApplyComplexNonDatabaseQueryArguments(IEnumerable<OrderItem> entities, IComplexSearchable<SearchableOrderItem> complex)
+    {
+        return entities;
+    }
+
+    /// <inheritdoc />
     protected override IQueryable<OrderItem> GetBaseQuery()
     {
         return context.OrderItems.AsQueryable().Include(x => x.Order).Include(x => x.Product);
