@@ -279,8 +279,6 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
 
         var li2 = c.LocationItems.First();
         // Assert
-        
-        await Assert.That(li2.Quantity).IsEqualTo(li.Quantity);
         li2.Quantity.Should().Be(li.Quantity);
     }
 
