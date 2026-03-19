@@ -19,20 +19,22 @@ export const ProductSchema = z.object({
 });
 
 export const ApiProductSchema = z.object({
-  id: z.number(),
-  name: z.string(),
-  price: z.number(),
-  status: InventoryStatusSchema,
-  totalQuantity: z.number(),
-  locations: z.array(
+  Id: z.number(),
+  Name: z.string(),
+  Price: z.number(),
+  Status: InventoryStatusSchema,
+  TotalQuantity: z.number(),
+  Locations: z.array(
     z.object({
-      quantity: z.number(),
-      status: InventoryStatusSchema,
-      name: z.string().optional() //TO-DO fix optional
+      Quantity: z.number(),
+      Status: InventoryStatusSchema,
+      Location: z.object({
+        Name: z.string()
+      })
     })
   ),
-  category: z.object({
-    name: z.string(),
+  Category: z.object({
+    Name: z.string(),
   }),
 });
 

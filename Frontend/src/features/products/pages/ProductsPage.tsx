@@ -15,13 +15,13 @@ const ProductsPage = () => {
 
     return (
         <PageWrapper>
-            <div className="flex justify-between">
+            <div className="flex justify-between ">
                 <div className="flex flex-col">
-                    <h2 className="mt-5">Produkter</h2>
-                    <p className="text-[16px]">{products.length} produkter fundet</p>
+                    <h2 className="mt-5 text-[20px] md:text-2xl! transition-all duration-500">Produkter</h2>
+                    <p className="text-sm md:text-[16px] transition-all duration-500">{products.length} produkter fundet</p>
                 </div>
                 <div className="mt-auto">
-                    <Button variant="primary" onClick={() => setModalIsOpen(true)} icon={Plus}>{textKeys.ADD_PRODUCT}</Button>
+                    <Button variant="primary" onClick={() => setModalIsOpen(true)} icon={Plus} customIconStyle="size-4 mt-1 mr-3">{textKeys.ADD_PRODUCT}</Button>
                 </div>
             </div>
             

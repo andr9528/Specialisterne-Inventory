@@ -127,7 +127,7 @@ const ProductModal = ({ modalIsOpen, setModalIsOpen }: ProductModalType) => {
 
                             <div className="space-y-2 flex flex-row justify-between">
                                 <label htmlFor="price">Lagerplacering *</label>
-                                <Button variant="outline-slim" onClick={handleAddWarehouse} icon={Plus}>{textKeys.ADD_WAREHOUSE}</Button>
+                                <Button variant="outline-slim" onClick={handleAddWarehouse} icon={Plus} customIconStyle="size-4 mt-1 mr-3">{textKeys.ADD_WAREHOUSE}</Button>
                             </div>
 
                             {formData.warehouses.length === 0 && (
@@ -136,7 +136,7 @@ const ProductModal = ({ modalIsOpen, setModalIsOpen }: ProductModalType) => {
                                 </div>
                             )}
 
-                            <div className="space-y-3">
+                            <div className="space-y-3 overflow-y-auto max-h-[90vh]">
                                 {formData.warehouses.map((warehouse, index) => {
                                     return (
                                         <div className="grid grid-cols-7 gap-4" key={warehouse.name + index}>

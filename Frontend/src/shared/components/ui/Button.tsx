@@ -1,12 +1,13 @@
 import { LoaderIcon, type LucideProps } from "lucide-react";
 import type { ButtonHTMLAttributes } from "react";
 
-export type ButtonVariant = "primary" | "ghost" | "tag" | "outline" | "outline-slim";
+export type ButtonVariant = "primary" | "ghost" | "tag" | "outline" | "outline-slim" ;
 
 interface ButtoneProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: ButtonVariant;
     isLoading?: boolean;
     icon?: React.ForwardRefExoticComponent<Omit<LucideProps, "ref">> | null;
+    customIconStyle?: string;
 }
 
 const Button: React.FC<ButtoneProps> = ({
@@ -14,6 +15,7 @@ const Button: React.FC<ButtoneProps> = ({
     variant = "primary",
     className = "",
     icon: Icon,
+    customIconStyle = "",
     isLoading = false,
     ...props
 }) => {
@@ -33,14 +35,14 @@ const Button: React.FC<ButtoneProps> = ({
             variantStyle = "self-center rounded-lg p-1 px-3 border border-gray-300 hover:bg-gray-100";
             break;
         case "ghost":
-            variantStyle = "border-none hover:bg-gray-300/80 rounded-lg p-2";
+            variantStyle = "border-none hover:bg-gray-300/80 rounded-lg p-2 bg-gray-300/80";
             break;
         case "tag":
             variantStyle = "bg-gray-200 text-gray-700 hover:bg-gray-300 rounded-2xl px-3 py-0.5 text-sm font-medium";
             break;
     }
 
-    const iconStyle = "size-4 mt-1 mr-3";
+    const iconStyle = "";
 
     return (
         <button
@@ -49,7 +51,7 @@ const Button: React.FC<ButtoneProps> = ({
         >
             {Icon &&
                 <span>
-                    <Icon className={iconStyle} />
+                    <Icon className={`${iconStyle} ${customIconStyle}`} />
                 </span>
             }
             {isLoading ? <LoaderIcon className="animate-spin" style={{ animation: "spin 2.5s linear infinite" }} /> : children}
