@@ -48,6 +48,8 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
 
         // Assert
         await Assert.That(c.OrderItems).DoesNotContain(oi);
+        await c.SaveChangesAsync();
+        await Assert.That(c.OrderItems).Contains(oi);
     }
 
     [Test]
