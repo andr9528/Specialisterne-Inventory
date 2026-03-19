@@ -175,16 +175,6 @@ public class LocationItemQueryServiceTests : BaseDatabaseTest
     }
 
     [Test]
-    public async Task GetEntitiesComplex_WithIncorrectComplexSearchableType_ThrowsArgumentException()
-    {
-        // Arrange
-
-        // Act
-
-        // Assert
-    }
-
-    [Test]
     public async Task GetEntity_WhenReturnedItem_HasLocationIncluded()
     {
         // Arrange

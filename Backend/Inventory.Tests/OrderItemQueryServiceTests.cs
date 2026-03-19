@@ -176,24 +176,4 @@ public class OrderItemQueryServiceTests : BaseDatabaseTest
 
         // Assert
     }
-
-    [Test]
-    public async Task GetEntityComplex_ThrowsNotImplementedException()
-    {
-        // Arrange
-
-        // Act
-
-        // Assert
-    }
-
-    [Test]
-    public async Task GetEntitiesComplex_ThrowsNotImplementedException()
-    {
-        // Arrange
-
-        // Act
-
-        // Assert
-    }
 }

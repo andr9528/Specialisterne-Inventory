@@ -115,26 +115,6 @@ public class CategoryQueryServiceTests : BaseDatabaseTest
     }
 
     [Test]
-    public async Task GetEntityComplex_WithIncorrectType_ThrowsArgumentException()
-    {
-        // Arrange
-
-        // Act
-
-        // Assert
-    }
-
-    [Test]
-    public async Task GetEntitiesComplex_WithIncorrectType_ThrowsArgumentException()
-    {
-        // Arrange
-
-        // Act
-
-        // Assert
-    }
-
-    [Test]
     public async Task GetEntityComplex_WithCategoryNameContains_ReturnsMatchingCategory()
     {
         // Arrange

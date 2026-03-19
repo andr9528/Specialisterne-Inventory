@@ -1,9 +1,6 @@
-using FluentAssertions;
-using Inventory.Persistence.Services;
 using Inventory.Tests.Core;
-using TUnit.Core;
 
-namespace Inventory.Tests.Persistence.Services;
+namespace Inventory.Tests;
 
 public class OrderQueryServiceTests : BaseDatabaseTest
 {
@@ -259,26 +256,6 @@ public class OrderQueryServiceTests : BaseDatabaseTest
 
     [Test]
     public async Task DeleteEntityById_RemovesOrder()
-    {
-        // Arrange
-
-        // Act
-
-        // Assert
-    }
-
-    [Test]
-    public async Task GetEntityComplex_ThrowsNotImplementedException()
-    {
-        // Arrange
-
-        // Act
-
-        // Assert
-    }
-
-    [Test]
-    public async Task GetEntitiesComplex_ThrowsNotImplementedException()
     {
         // Arrange
 

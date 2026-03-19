@@ -1,9 +1,6 @@
-using FluentAssertions;
-using Inventory.Persistence.Services;
 using Inventory.Tests.Core;
-using TUnit.Core;
 
-namespace Inventory.Tests.Persistence.Services;
+namespace Inventory.Tests;
 
 public class ProductQueryServiceTests : BaseDatabaseTest
 {
@@ -129,16 +126,6 @@ public class ProductQueryServiceTests : BaseDatabaseTest
 
     [Test]
     public async Task GetEntity_WhenReturnedProduct_HasCategoryIncluded()
-    {
-        // Arrange
-
-        // Act
-
-        // Assert
-    }
-
-    [Test]
-    public async Task GetEntityComplex_WithIncorrectComplexSearchableType_ThrowsArgumentException()
     {
         // Arrange
 
