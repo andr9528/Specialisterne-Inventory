@@ -90,6 +90,7 @@ const ProductRow = ({ product, productColumns, showBorder }: ProdutcRowType) => 
                                         OUT_OF_STOCK: <span>⚠️ Udsolgt</span>
                                     };
 
+                                    const percentageStock = product.totalStock === 0 ? 0 : ((warehouse.stock / product.totalStock) * 100).toFixed();
 
                                     return (
                                         <div key={warehouse.name + index} className={`flex flex-col gap-2 lg:w-[30%] w-[45%] p-4 border-2 rounded-lg ${statusColors[warehouse.inventoryStatus]}`}>
@@ -98,7 +99,7 @@ const ProductRow = ({ product, productColumns, showBorder }: ProdutcRowType) => 
                                                     <div className={`md:mt-2.5 mt-1.5 w-2 h-2 rounded-full ${statusDotColors[warehouse.inventoryStatus]}`}></div>
                                                     <h5 className="md:text-lg text-sm">{warehouse.name}</h5>
                                                 </div>
-                                                <span className="ml-auto text-sm">{((warehouse.stock / product.totalStock) * 100).toFixed()} %</span>
+                                                <span className="ml-auto text-sm">{percentageStock} %</span>
                                             </div>
 
                                             <div className="flex flex-row justify-between gap-2">
