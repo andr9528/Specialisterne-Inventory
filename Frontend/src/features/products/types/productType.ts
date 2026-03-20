@@ -14,3 +14,22 @@ export type ProductType = z.infer<typeof ProductSchema>;
 export type ProductWarehouseType = z.infer<typeof ProductWarehouseSchema>;
 
 export type ApiProductType = z.infer<typeof ApiProductSchema>;
+
+export type ProductFilterOptionsType = {
+  searchQuery?: string;
+  category?: string;
+  warehouse?: string;
+  sort?: string;
+  status?: string;
+}
+
+export type ProductWarehouseWithIdType = Omit<ProductWarehouseType, "inventoryStatus"> & {
+  id: number;
+};
+
+export type AddProductType = {
+  name: string,
+  category: string,
+  price: number,
+  warehouses: ProductWarehouseWithIdType[],
+}

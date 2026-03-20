@@ -1,7 +1,6 @@
 import type { AxiosInstance } from "axios";
 import { ApiWarehousesSchema } from "../schemas/warehouseSchema";
 import type { ApiWarehouseType, WarehouseType } from "../types/warehouseType";
-import { mapWarehouse } from "../mappers/warehouseMapper";
 
 export const createWarehouseService = (api: AxiosInstance) => ({
     getWarehouses: async (): Promise<WarehouseType[]> => {
@@ -13,6 +12,7 @@ export const createWarehouseService = (api: AxiosInstance) => ({
             throw `Invalid product data: ${parsed.error}`;
         }
 
-        return parsed.data.map(c => mapWarehouse(c));
+
+        return parsed.data;
     }
 })
