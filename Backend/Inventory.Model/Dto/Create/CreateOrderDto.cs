@@ -7,7 +7,6 @@ namespace Inventory.Model.Dto.Create;
 public class CreateOrderDto
 {
     public Guid Reference { get; set; } = Guid.NewGuid();
-    // Todo: Change OrderItem to a CreateOrderItemDto
     public required IEnumerable<CreateOrderItemDto> Items { get; set; }
     int? PreferredLocationId { get; set; }
 
