@@ -40,6 +40,7 @@ public class ApiStartup : ModularStartup<IApplicationBuilder>
         AddModule(new EntityQueryServiceStartupModule<OrderQueryService, Order, SearchableOrder>());
         AddModule(new EntityQueryServiceStartupModule<ProductQueryService, Product, SearchableProduct>());
 
+        // Todo: Make only added when running in Debug.
         AddModule(new BogusStartupModule());
     }
 

@@ -42,7 +42,31 @@ jobs:
 
   unit_test:
     name: Unit Tests
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      checks: write
+      pull-requests: write
+
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: inventory_test_host
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d inventory_test_host"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      ConnectionStrings__InventoryDatabase: Host=127.0.0.1;Port=5432;Database=inventory_test_host;Username=postgres;Password=postgres;Include Error Detail=true
+
     steps:
       - uses: actions/checkout@v3
         with:
@@ -52,16 +76,12 @@ jobs:
         timeout-minutes: ${{ fromJSON(env.STEP_TIMEOUT_MINUTES) }}
         uses: "./.github/steps/install_dependencies"
 
-      # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
-      - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v1.3.1
-
       - name: Build Inventory.Tests (Release)
-        shell: pwsh
+        shell: bash
         run: dotnet build ./Backend/Inventory.Tests/Inventory.Tests.csproj /p:Configuration=Release /p:OverrideTargetFramework=net10.0 /r
 
       - name: Run Unit Tests
-        shell: pwsh
+        shell: bash
         working-directory: ./Backend
         run: dotnet test --project ./Inventory.Tests/Inventory.Tests.csproj --no-build -c Release --results-directory ../TestResults -- --coverage --report-trx
 
@@ -74,7 +94,7 @@ jobs:
 
       - name: Publish test results
         if: always()
-        uses: EnricoMi/publish-unit-test-result-action/windows@v2
+        uses: EnricoMi/publish-unit-test-result-action/linux@v2
         with:
           files: ./TestResults/**/*.trx
 

@@ -1,7 +1,10 @@
 import z from "zod";
 
-export const WarehouseSchema = z.string();
+export const WarehouseSchema = z.object({
+    id: z.number(),
+    name: z.string()
+});
 
-export const ApiWarehouseSchema = z.object({ name: WarehouseSchema });
+export const ApiWarehouseSchema = z.object(WarehouseSchema);
 
-export const ApiWarehousesSchema = z.array(ApiWarehouseSchema);
+export const ApiWarehousesSchema = z.array(WarehouseSchema);

@@ -1,3 +1,7 @@
+using Inventory.Model.Entity;
+using Inventory.Model.Searchable;
+using Inventory.Persistence.Services;
+using Inventory.Services;
 using Inventory.Tests.Core;
 
 namespace Inventory.Tests;
@@ -8,10 +12,23 @@ public class CategoryQueryServiceTests : BaseDatabaseTest
     public async Task GetEntity_WithMatchingName_ReturnsCategory()
     {
         // Arrange
+        await using var context = CreateContext();
+        Category expected = BogusService.GetCategories(1).Single();
+        expected.Name = "Electronics";
+
+        context.Categories.Add(expected);
+        await context.SaveChangesAsync();
+
+        var service = new CategoryQueryService(context);
+        SearchableCategory searchable = new() {Name = "Electronics"};
 
         // Act
+        Category? result = await service.GetEntity(searchable);
 
         // Assert
+        result.Should().NotBeNull();
+        result!.Id.Should().Be(expected.Id);
+        result.Name.Should().Be("Electronics");
     }
 
     [Test]
