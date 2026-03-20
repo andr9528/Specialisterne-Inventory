@@ -13,10 +13,22 @@ const ActionButtons = <T,>({ row, onDelete, onEdit, excludeEdit = false }: Actio
   return (
     <div className="flex flex-row justify-center gap-2">
       {!excludeEdit && (
-        <Button variant="ghost" className="text-primary" onClick={() => onEdit?.(row)}><Edit className="size-4" /></Button>
+        <Button
+          variant="ghost"
+          className="text-primary"
+          onClick={(e) => {
+            e.stopPropagation();
+            onEdit?.(row)
+          }}><Edit className="size-4" /></Button>
       )}
 
-      <Button variant="ghost" className="text-destructive" onClick={() => onDelete?.(row)}><Trash2 className="size-4 text-red-600" /></Button>
+      <Button
+        variant="ghost"
+        className="text-destructive"
+        onClick={(e) => {
+          e.stopPropagation();
+          onDelete?.(row)
+        }}><Trash2 className="size-4 text-red-600" /></Button>
     </div>
   )
 };
