@@ -33,7 +33,7 @@
     <PackageVersion Include="Serilog.Sinks.File" Version="7.0.0" />
     <PackageVersion Include="Swashbuckle.AspNetCore" Version="10.1.5" />
     <PackageVersion Include="Swashbuckle.AspNetCore.Newtonsoft" Version="10.1.5" />
-    <PackageVersion Include="TUnit" Version="1.19.57" />
+    <PackageVersion Include="TUnit" Version="1.28.7" />
   </ItemGroup>
   <ItemGroup Condition="$(UsingUnoSdk) != 'true'">
     <PackageVersion Include="Uno.Wasm.Bootstrap.Server" Version="10.0.15" />
