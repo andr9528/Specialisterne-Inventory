@@ -331,6 +331,7 @@ public class BaseEntityQueryServiceTests : BaseDatabaseTest
         await x.DeleteEntityById(prod.First().Id);
 
         // Assert
+        c.Products.Should().HaveCount(2);
         c.Products.Should().NotContain(prod.First());
     }
 
